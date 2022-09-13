@@ -1,0 +1,37 @@
+ca.bntec.firebasebasicauth.app-play-services-basement-18.1.0-0 C:\Users\Sergei\.gradle\caches\transforms-3\109961dc2cd3107b21e939aff74a3195\transformed\play-services-basement-18.1.0\res
+ca.bntec.firebasebasicauth.app-lifecycle-runtime-2.5.0-1 C:\Users\Sergei\.gradle\caches\transforms-3\26491632351e00a37adce531e7ef344f\transformed\lifecycle-runtime-2.5.0\res
+ca.bntec.firebasebasicauth.app-emoji2-1.2.0-2 C:\Users\Sergei\.gradle\caches\transforms-3\2b3f9803f8d427f6633b962e48190cb1\transformed\emoji2-1.2.0\res
+ca.bntec.firebasebasicauth.app-savedstate-1.2.0-3 C:\Users\Sergei\.gradle\caches\transforms-3\2c4f2ee92ff2acb24b72abcd687159e0\transformed\savedstate-1.2.0\res
+ca.bntec.firebasebasicauth.app-core-ktx-1.8.0-4 C:\Users\Sergei\.gradle\caches\transforms-3\3fcbaa20b1d4bab3ead8bc92c1257bc9\transformed\core-ktx-1.8.0\res
+ca.bntec.firebasebasicauth.app-lifecycle-livedata-core-2.5.0-5 C:\Users\Sergei\.gradle\caches\transforms-3\4554bb83b927ab861b6041087f74345e\transformed\lifecycle-livedata-core-2.5.0\res
+ca.bntec.firebasebasicauth.app-browser-1.4.0-6 C:\Users\Sergei\.gradle\caches\transforms-3\4d815d1b02f9ec76a067e04ac070e71d\transformed\browser-1.4.0\res
+ca.bntec.firebasebasicauth.app-cardview-1.0.0-7 C:\Users\Sergei\.gradle\caches\transforms-3\5a18192997fdee315264a24d192860d0\transformed\cardview-1.0.0\res
+ca.bntec.firebasebasicauth.app-recyclerview-1.1.0-8 C:\Users\Sergei\.gradle\caches\transforms-3\5de898d1d81852574536a10f28a295cf\transformed\recyclerview-1.1.0\res
+ca.bntec.firebasebasicauth.app-emoji2-views-helper-1.2.0-9 C:\Users\Sergei\.gradle\caches\transforms-3\723972a26804de7395c2bd336656b763\transformed\emoji2-views-helper-1.2.0\res
+ca.bntec.firebasebasicauth.app-activity-1.5.0-10 C:\Users\Sergei\.gradle\caches\transforms-3\942e79db177279f88170065477b2d1ab\transformed\activity-1.5.0\res
+ca.bntec.firebasebasicauth.app-startup-runtime-1.1.1-11 C:\Users\Sergei\.gradle\caches\transforms-3\94e4849b2f6d40010e8df25318c8dfee\transformed\startup-runtime-1.1.1\res
+ca.bntec.firebasebasicauth.app-viewpager2-1.0.0-12 C:\Users\Sergei\.gradle\caches\transforms-3\96ba07bf3a1e6a1887c02d36fd33f58e\transformed\viewpager2-1.0.0\res
+ca.bntec.firebasebasicauth.app-lifecycle-viewmodel-savedstate-2.5.0-13 C:\Users\Sergei\.gradle\caches\transforms-3\a80bbd9eff3bf421552edf069d5d5be3\transformed\lifecycle-viewmodel-savedstate-2.5.0\res
+ca.bntec.firebasebasicauth.app-firebase-common-20.1.2-14 C:\Users\Sergei\.gradle\caches\transforms-3\aea415df1b31d78ab68c86a7c336b209\transformed\firebase-common-20.1.2\res
+ca.bntec.firebasebasicauth.app-appcompat-1.5.0-15 C:\Users\Sergei\.gradle\caches\transforms-3\bd0619c23148e827524032e7d22dba85\transformed\appcompat-1.5.0\res
+ca.bntec.firebasebasicauth.app-appcompat-resources-1.5.0-16 C:\Users\Sergei\.gradle\caches\transforms-3\c12dd2233d6cfe981eac5afa8220c98f\transformed\appcompat-resources-1.5.0\res
+ca.bntec.firebasebasicauth.app-coordinatorlayout-1.1.0-17 C:\Users\Sergei\.gradle\caches\transforms-3\c66e6c18d369980ee5c5f30034a0981b\transformed\coordinatorlayout-1.1.0\res
+ca.bntec.firebasebasicauth.app-lifecycle-viewmodel-2.5.0-18 C:\Users\Sergei\.gradle\caches\transforms-3\cc7639ce0717625b1e645c060dcb8e2f\transformed\lifecycle-viewmodel-2.5.0\res
+ca.bntec.firebasebasicauth.app-constraintlayout-2.1.4-19 C:\Users\Sergei\.gradle\caches\transforms-3\cd6766b704d8018927b6feaabb650f9d\transformed\constraintlayout-2.1.4\res
+ca.bntec.firebasebasicauth.app-core-1.8.0-20 C:\Users\Sergei\.gradle\caches\transforms-3\d2669caa8f832fc0e1e450f6ab9cf88b\transformed\core-1.8.0\res
+ca.bntec.firebasebasicauth.app-material-1.6.1-21 C:\Users\Sergei\.gradle\caches\transforms-3\d5947dccf361603c4cb357b580fdd2a2\transformed\material-1.6.1\res
+ca.bntec.firebasebasicauth.app-drawerlayout-1.1.1-22 C:\Users\Sergei\.gradle\caches\transforms-3\d5aedf264bfd7e224feefc10833afe7d\transformed\drawerlayout-1.1.1\res
+ca.bntec.firebasebasicauth.app-transition-1.2.0-23 C:\Users\Sergei\.gradle\caches\transforms-3\df901ad2e10c950d97daadaaecc8d7fa\transformed\transition-1.2.0\res
+ca.bntec.firebasebasicauth.app-play-services-base-17.1.0-24 C:\Users\Sergei\.gradle\caches\transforms-3\ed1dfc75f950ce691afa2a7234b44728\transformed\play-services-base-17.1.0\res
+ca.bntec.firebasebasicauth.app-lifecycle-process-2.4.1-25 C:\Users\Sergei\.gradle\caches\transforms-3\f2c638545b245efa4968ee902a40be41\transformed\lifecycle-process-2.4.1\res
+ca.bntec.firebasebasicauth.app-annotation-experimental-1.1.0-26 C:\Users\Sergei\.gradle\caches\transforms-3\f3d9f40181ebe7863618a28b855eae66\transformed\annotation-experimental-1.1.0\res
+ca.bntec.firebasebasicauth.app-fragment-1.3.6-27 C:\Users\Sergei\.gradle\caches\transforms-3\ffe7f7f4b2a133cb938735780a220e0a\transformed\fragment-1.3.6\res
+ca.bntec.firebasebasicauth.app-google-services-28 D:\College\AEC Mobiles\420-325-AH APPLICATIONS NATIVES SOUS ANDROID 2\Final Project\projet\workspace\FirebaseBasicAuthonticationTest\app\build\generated\res\google-services\debug
+ca.bntec.firebasebasicauth.app-pngs-29 D:\College\AEC Mobiles\420-325-AH APPLICATIONS NATIVES SOUS ANDROID 2\Final Project\projet\workspace\FirebaseBasicAuthonticationTest\app\build\generated\res\pngs\debug
+ca.bntec.firebasebasicauth.app-resValues-30 D:\College\AEC Mobiles\420-325-AH APPLICATIONS NATIVES SOUS ANDROID 2\Final Project\projet\workspace\FirebaseBasicAuthonticationTest\app\build\generated\res\resValues\debug
+ca.bntec.firebasebasicauth.app-rs-31 D:\College\AEC Mobiles\420-325-AH APPLICATIONS NATIVES SOUS ANDROID 2\Final Project\projet\workspace\FirebaseBasicAuthonticationTest\app\build\generated\res\rs\debug
+ca.bntec.firebasebasicauth.app-packageDebugResources-32 D:\College\AEC Mobiles\420-325-AH APPLICATIONS NATIVES SOUS ANDROID 2\Final Project\projet\workspace\FirebaseBasicAuthonticationTest\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+ca.bntec.firebasebasicauth.app-packageDebugResources-33 D:\College\AEC Mobiles\420-325-AH APPLICATIONS NATIVES SOUS ANDROID 2\Final Project\projet\workspace\FirebaseBasicAuthonticationTest\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+ca.bntec.firebasebasicauth.app-merged_res-34 D:\College\AEC Mobiles\420-325-AH APPLICATIONS NATIVES SOUS ANDROID 2\Final Project\projet\workspace\FirebaseBasicAuthonticationTest\app\build\intermediates\merged_res\debug
+ca.bntec.firebasebasicauth.app-debug-35 D:\College\AEC Mobiles\420-325-AH APPLICATIONS NATIVES SOUS ANDROID 2\Final Project\projet\workspace\FirebaseBasicAuthonticationTest\app\src\debug\res
+ca.bntec.firebasebasicauth.app-main-36 D:\College\AEC Mobiles\420-325-AH APPLICATIONS NATIVES SOUS ANDROID 2\Final Project\projet\workspace\FirebaseBasicAuthonticationTest\app\src\main\res
