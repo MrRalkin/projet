@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "491412897255",
+    "project_id": "itineraireplusplus",
+    "storage_bucket": "itineraireplusplus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:491412897255:android:9b4bd06974eb7c1ecc1142",
+        "android_client_info": {
+          "package_name": "ca.bntec.itineraireplusplus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "491412897255-ngql7dvkpasftgs0rl6vi9n690bg7q70.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDujryn-llyPT6DOkXr8AjR2BxULOkufY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "491412897255-ngql7dvkpasftgs0rl6vi9n690bg7q70.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
