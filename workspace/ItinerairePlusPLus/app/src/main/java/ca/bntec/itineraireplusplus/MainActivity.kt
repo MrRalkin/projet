@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import classes.AppGlobal
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.async
@@ -16,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     //lateinit var mAuth: FirebaseAuth
-    val database = AppGlobal.instance.database
+    val userManager = AppGlobal.instance.userManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -24,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         // in on start method checking if
         // the user is already sign in.
         MainScope().launch(Dispatchers.IO) {
-            val user = database.getCurrentUser()
+            val user = userManager.userGetCurrent()
             if (user == null) {
                 // if the user is not null then we are
                 // opening a main activity on below line.
@@ -51,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "User Logged Out", Toast.LENGTH_LONG).show()
                 // on below line we are signing out our user.
                 MainScope().launch(Dispatchers.IO) {
-                    var result = async { database.logout() }.await()
+                    var result = async { userManager.userLogout() }.await()
                     val i = Intent(this@MainActivity, LoginActivity::class.java)
                     startActivity(i)
                     finish()

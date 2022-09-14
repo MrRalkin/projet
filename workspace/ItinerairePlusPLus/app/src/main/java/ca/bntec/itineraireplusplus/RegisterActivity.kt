@@ -12,9 +12,6 @@ import android.widget.Toast
 import classes.AppGlobal
 import classes.Register
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.auth.FirebaseAuth
-import dbfirestore.FsOperations
-import interfaces.auth.IRegister
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.async
@@ -27,7 +24,7 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var userEmailEdt: TextInputEditText
     lateinit var loginTV: TextView
     lateinit var registerBtn: Button
-    val database = AppGlobal.instance.database
+    val userManager = AppGlobal.instance.userManager
     lateinit var loadingPB: ProgressBar
     lateinit var msgShow: Toast
 
@@ -86,7 +83,7 @@ class RegisterActivity : AppCompatActivity() {
                 MainScope().launch(Dispatchers.IO) {
 
                     val result =
-                        async { database.register(Register(userName, email, pwd)) }.await()
+                        async { userManager.userRegister(Register(userName, email, pwd)) }.await()
                     if (result.isSuccess) {
                         // in on success method we are hiding our progress bar and opening a login activity.
                         loadingPB.visibility = View.GONE

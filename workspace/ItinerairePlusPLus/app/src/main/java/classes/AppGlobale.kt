@@ -1,11 +1,12 @@
 package classes
 
-import dbfirestore.FsOperations
+import dbfirestore.FsUserManager
 import interfaces.IDBOperation
+import interfaces.user.IUserManager
 
 class AppGlobal private constructor() {
 
-    val database: IDBOperation = FsOperations()
+    val userManager: IUserManager = FsUserManager()
 
     companion object {
         val instance = AppGlobal()

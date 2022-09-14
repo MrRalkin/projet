@@ -23,27 +23,27 @@ class LoginActivity : AppCompatActivity() {
     lateinit var passwordEdt: TextInputEditText
     lateinit var loginBtn: Button
     lateinit var newUserTV: TextView
-    val database = AppGlobal.instance.database
+    val userManager = AppGlobal.instance.userManager
     lateinit var loadingPB: ProgressBar
     lateinit var msgShow: Toast
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         msgShow = Toast.makeText(this, "", Toast.LENGTH_SHORT)
-        // initializing all our variables.
+
         userNameEdt = findViewById(R.id.idEdtUserName)
         passwordEdt = findViewById(R.id.idEdtPassword)
         loginBtn = findViewById(R.id.idBtnLogin)
         newUserTV = findViewById(R.id.idTVNewUser)
         loadingPB = findViewById(R.id.idPBLoading)
 
-        // adding click listener for our new user tv.
-        newUserTV.setOnClickListener { // on below line opening a login activity.
+
+        newUserTV.setOnClickListener {
             val i = Intent(this, RegisterActivity::class.java)
             startActivity(i)
         }
 
-        // adding on click listener for our login button.
+
         loginBtn.setOnClickListener(View.OnClickListener {
             // hiding our progress bar.
             loadingPB.visibility = View.VISIBLE
@@ -56,10 +56,9 @@ class LoginActivity : AppCompatActivity() {
                     "Please enter your credentials..")
                 return@OnClickListener
             }
-            // on below line we are calling a sign in method and passing email and password to it.
-
+          
             MainScope().launch(Dispatchers.IO) {
-                val result = async { database.login(Login(email, password)) }.await()
+                val result = async { userManager.userLogin(Login(email, password)) }.await()
                 if (result.isSuccess) {
 
                     this@LoginActivity.runOnUiThread(java.lang.Runnable {
