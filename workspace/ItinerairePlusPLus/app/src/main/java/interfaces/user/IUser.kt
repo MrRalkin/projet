@@ -8,5 +8,6 @@ interface IUser {
     var state: String
     var postalCode: String
     var country: String
+    var email: String
     var role_id: String
 }

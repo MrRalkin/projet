@@ -15,6 +15,7 @@ object FsContract {
             val COLUMN_STATE = "state"
             val COLUMN_ZIP = "zip"
             val COLUMN_COUNTRY = "country"
+            val COLUMN_EMAIL ="email"
             val COLUMN_ROLE_ID= "role"
         }
     }

@@ -20,25 +20,27 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //mAuth = FirebaseAuth.getInstance()
-
+        val txt = findViewById<TextView>(R.id.hello)
         // in on start method checking if
         // the user is already sign in.
-        val user = database.getCurrentUser()
-        if (user == null) {
-            // if the user is not null then we are
-            // opening a main activity on below line.
-            val i = Intent(this, LoginActivity::class.java)
-            startActivity(i)
-            finish()
-        } else {
-
-            val txt = findViewById<TextView>(R.id.hello)
-
-            txt.text = "Hello ${user.name}"
+        MainScope().launch(Dispatchers.IO) {
+            val user = database.getCurrentUser()
+            if (user == null) {
+                // if the user is not null then we are
+                // opening a main activity on below line.
+                this@MainActivity.runOnUiThread(java.lang.Runnable {
+                    val i = Intent(this@MainActivity, LoginActivity::class.java)
+                    startActivity(i)
+                    finish()
+                })
+            } else {
+                this@MainActivity.runOnUiThread(java.lang.Runnable {
+                    txt.text = "Hello ${user.name}"
+                })
+            }
         }
-
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // adding a click listener for option selected on below line.

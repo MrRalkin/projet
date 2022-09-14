@@ -7,6 +7,7 @@ import ca.bntec.itineraireplusplus.R
 import classes.ActionResult
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -14,6 +15,9 @@ import interfaces.IDBOperation
 import interfaces.auth.ILogin
 import interfaces.auth.IRegister
 import interfaces.user.IUser
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class FsOperations : IDBOperation {
@@ -44,9 +48,6 @@ class FsOperations : IDBOperation {
             var snp: QuerySnapshot = db.collection(FsContract.FsUser.TABLE_USER)
                 .whereEqualTo(FsContract.FsUser.COLUMN_ID, rsp.user!!.uid.toString()).get().await()
 
-//            var u = snp.toObjects(FsUser::class.java)
-//            curUser = u as FsUser
-
             for (item in snp.documents) {
                 if (item != null) {
                     item.toObject(FsUser::class.java)
@@ -74,23 +75,58 @@ class FsOperations : IDBOperation {
     }
 
     override suspend fun getUserById(id: String): IUser? {
+        try {
+            var snp: QuerySnapshot = db.collection(FsContract.FsUser.TABLE_USER)
+                .whereEqualTo(FsContract.FsUser.COLUMN_ID, id).get().await()
 
-        TODO("Not yet implemented")
+            for (item in snp.documents) {
+                if (item != null) {
+                    item.toObject(FsUser::class.java)
+                        ?.let {
+                            curUser = it
+                            return curUser
+                        }
+                }
+            }
+        } catch (e: Exception) {
+            println(e.message)
+        }
+        return null
     }
 
     override suspend fun getUserByEmail(email: String): IUser? {
+        try {
 
-        TODO("Not yet implemented")
+            var snp: QuerySnapshot = db.collection(FsContract.FsUser.TABLE_USER)
+                .whereEqualTo(FsContract.FsUser.COLUMN_EMAIL,email).get().await()
+
+            for (item in snp.documents) {
+                if (item != null) {
+                    item.toObject(FsUser::class.java)
+                        ?.let {
+                            curUser = it
+                            return curUser
+                        }
+                }
+            }
+        } catch (e: Exception) {
+            println(e.message)
+        }
+        return null
     }
 
-    override fun getCurrentUser(): IUser? {
+    override suspend fun getCurrentUser(): IUser? {
         val credential = mAuth.currentUser
 
         if (credential != null) {
-            if (curUser != null) return curUser
-
-            
+            if (curUser != null) {
+                return curUser
+            } else {
+                curUser = getUserById(credential.uid)
+                return curUser
+            }
         }
+
         return null
     }
 
@@ -100,8 +136,8 @@ class FsOperations : IDBOperation {
 
     companion object {
         val db = Firebase.firestore
+        val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
         private var curUser: IUser? = null
-        private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
         private val MESSAGE_USER_REGISTERED = "User created"
         private val MESSAGE_USER_SIGNIN = "User created"
         private val MESSAGE_USER_SIGNOUT = "User logged out"

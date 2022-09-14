@@ -11,5 +11,5 @@ interface IUserManager {
     suspend fun getUserById(id: String): IUser?
     suspend fun getUserByEmail(email: String): IUser?
     suspend fun setUser(user: IUser)
-    fun getCurrentUser(): IUser?
+    suspend fun getCurrentUser(): IUser?
 }

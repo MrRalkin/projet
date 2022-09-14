@@ -13,6 +13,7 @@ class FsUser(
     override var state: String = "",
     override var postalCode: String = "",
     override var country: String = "",
+    override var email: String = "",
     override var role_id: String = ""
 ) : IUser, Parcelable {
 }
