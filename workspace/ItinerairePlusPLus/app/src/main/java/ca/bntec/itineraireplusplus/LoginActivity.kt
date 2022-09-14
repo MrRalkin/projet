@@ -9,26 +9,32 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import classes.AppGlobal
+import classes.Login
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     lateinit var userNameEdt: TextInputEditText
     lateinit var passwordEdt: TextInputEditText
     lateinit var loginBtn: Button
     lateinit var newUserTV: TextView
-    lateinit var mAuth: FirebaseAuth
+    val database = AppGlobal.instance.database
     lateinit var loadingPB: ProgressBar
+    lateinit var msgShow: Toast
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        msgShow = Toast.makeText(this, "", Toast.LENGTH_SHORT)
         // initializing all our variables.
         userNameEdt = findViewById(R.id.idEdtUserName)
         passwordEdt = findViewById(R.id.idEdtPassword)
         loginBtn = findViewById(R.id.idBtnLogin)
         newUserTV = findViewById(R.id.idTVNewUser)
-        mAuth = FirebaseAuth.getInstance()
         loadingPB = findViewById(R.id.idPBLoading)
 
         // adding click listener for our new user tv.
@@ -46,35 +52,40 @@ class LoginActivity : AppCompatActivity() {
             val password = passwordEdt.text.toString()
             // on below line validating the text input.
             if (TextUtils.isEmpty(email) && TextUtils.isEmpty(password)) {
-                Toast.makeText(
-                    this@LoginActivity,
-                    "Please enter your credentials..",
-                    Toast.LENGTH_SHORT
-                ).show()
+               showMessage(
+                    "Please enter your credentials..")
                 return@OnClickListener
             }
             // on below line we are calling a sign in method and passing email and password to it.
-            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-                // on below line we are checking if the task is success or not.
-                if (task.isSuccessful) {
-                    // on below line we are hiding our progress bar.
-                    loadingPB.visibility = View.GONE
-                    Toast.makeText(this@LoginActivity, "Login Successful..", Toast.LENGTH_SHORT)
-                        .show()
+
+            MainScope().launch(Dispatchers.IO) {
+                val result = async { database.login(Login(email, password)) }.await()
+                if (result.isSuccess) {
+
+                    this@LoginActivity.runOnUiThread(java.lang.Runnable {
+                        showMessage("Login Successful..")
+                        loadingPB.visibility = View.GONE
+                    })
+
                     // on below line we are opening our mainactivity.
                     val i = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(i)
                     finish()
                 } else {
-                    // hiding our progress bar and displaying a toast message.
-                    loadingPB.visibility = View.GONE
-                    Toast.makeText(
-                        this@LoginActivity,
-                        "Please enter valid user credentials..",
-                        Toast.LENGTH_SHORT
-                    ).show()
+
+                       this@LoginActivity.runOnUiThread(java.lang.Runnable {
+                           loadingPB.visibility = View.GONE
+                        showMessage("Please enter valid user credentials..")
+                    })
                 }
             }
+
+
         })
+    }
+    fun showMessage(message: String) {
+        msgShow.setText(message)
+        msgShow.show()
+
     }
 }

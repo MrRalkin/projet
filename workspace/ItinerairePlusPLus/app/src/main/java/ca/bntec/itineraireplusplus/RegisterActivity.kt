@@ -9,32 +9,41 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import classes.AppGlobal
+import classes.Register
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
+import dbfirestore.FsOperations
+import interfaces.auth.IRegister
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class RegisterActivity : AppCompatActivity() {
     lateinit var userNameEdt: TextInputEditText
     lateinit var passwordEdt: TextInputEditText
     lateinit var confirmPwdEdt: TextInputEditText
+    lateinit var userEmailEdt: TextInputEditText
     lateinit var loginTV: TextView
     lateinit var registerBtn: Button
-    lateinit var mAuth: FirebaseAuth
+    val database = AppGlobal.instance.database
     lateinit var loadingPB: ProgressBar
-
+    lateinit var msgShow: Toast
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-
+        msgShow = Toast.makeText(this, "", Toast.LENGTH_SHORT)
 
         // initializing all our variables.
         userNameEdt = findViewById(R.id.idEdtUserName)
+        userEmailEdt = findViewById(R.id.idEdtEmail)
         passwordEdt = findViewById(R.id.idEdtPassword)
         loadingPB = findViewById(R.id.idPBLoading)
         confirmPwdEdt = findViewById(R.id.idEdtConfirmPassword)
         loginTV = findViewById(R.id.idTVLoginUser)
         registerBtn = findViewById(R.id.idBtnRegister)
-        mAuth = FirebaseAuth.getInstance()
 
 
         // adding on click for login tv.
@@ -53,41 +62,40 @@ class RegisterActivity : AppCompatActivity() {
             val userName = userNameEdt.text.toString()
             val pwd = passwordEdt.text.toString()
             val cnfPwd = confirmPwdEdt.text.toString()
-
+            val email = userEmailEdt.text.toString()
             // checking if the password and confirm password is equal or not.
             if (pwd != cnfPwd) {
-                Toast.makeText(
-                    this@RegisterActivity,
+                showMessage(
                     "Please check both having same password..",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (TextUtils.isEmpty(userName) && TextUtils.isEmpty(pwd) && TextUtils.isEmpty(
+                   )
+            } else if (TextUtils.isEmpty(userName) && TextUtils.isEmpty(email) && TextUtils.isEmpty(
+                    pwd
+                ) && TextUtils.isEmpty(
                     cnfPwd
                 )
             ) {
 
                 // checking if the text fields are empty or not.
-                Toast.makeText(
-                    this@RegisterActivity,
-                    "Please enter your credentials..",
-                    Toast.LENGTH_SHORT
+                showMessage(
+                    "Please enter your credentials.."
                 )
-                    .show()
+
             } else {
 
-                // on below line we are creating a new user by passing email and password.
-                mAuth.createUserWithEmailAndPassword(userName, pwd).addOnCompleteListener { task ->
-                    // on below line we are checking if the task is success or not.
-                    if (task.isSuccessful) {
 
+                MainScope().launch(Dispatchers.IO) {
+
+                    val result =
+                        async { database.register(Register(userName, email, pwd)) }.await()
+                    if (result.isSuccess) {
                         // in on success method we are hiding our progress bar and opening a login activity.
                         loadingPB.visibility = View.GONE
-                        Toast.makeText(
-                            this@RegisterActivity,
-                            "User Registered..",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
+
+
+                        this@RegisterActivity.runOnUiThread(java.lang.Runnable {
+                            showMessage("User Registered..")
+                        })
+
                         val i = Intent(this@RegisterActivity, MainActivity::class.java)
                         startActivity(i)
                         finish()
@@ -95,17 +103,23 @@ class RegisterActivity : AppCompatActivity() {
 
                         // in else condition we are displaying a failure toast message.
                         loadingPB.visibility = View.GONE
-                        Toast.makeText(
-                            this@RegisterActivity,
-                            "Fail to register user..",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
+                        this@RegisterActivity.runOnUiThread(java.lang.Runnable {
+                            showMessage("Fail to register user..")
+                        })
+
                     }
+
                 }
+
             }
         }
 
     }
 
+
+    fun showMessage(message: String) {
+        msgShow.setText(message)
+        msgShow.show()
+
+    }
 }

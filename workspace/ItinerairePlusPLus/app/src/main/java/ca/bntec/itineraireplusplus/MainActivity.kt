@@ -7,18 +7,24 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
+import classes.AppGlobal
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    lateinit var mAuth: FirebaseAuth
+    //lateinit var mAuth: FirebaseAuth
+    val database = AppGlobal.instance.database
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mAuth = FirebaseAuth.getInstance()
+        //mAuth = FirebaseAuth.getInstance()
 
         // in on start method checking if
         // the user is already sign in.
-        val user = mAuth.currentUser
+        val user = database.getCurrentUser()
         if (user == null) {
             // if the user is not null then we are
             // opening a main activity on below line.
@@ -28,7 +34,8 @@ class MainActivity : AppCompatActivity() {
         } else {
 
             val txt = findViewById<TextView>(R.id.hello)
-            txt.text = "Hello ${user.toString()}"
+
+            txt.text = "Hello ${user.name}"
         }
 
     }
@@ -41,11 +48,12 @@ class MainActivity : AppCompatActivity() {
                 // displaying a toast message on user logged out inside on click.
                 Toast.makeText(applicationContext, "User Logged Out", Toast.LENGTH_LONG).show()
                 // on below line we are signing out our user.
-                mAuth.signOut()
-                // on below line we are opening our login activity.
-                val i = Intent(this@MainActivity, LoginActivity::class.java)
-                startActivity(i)
-                finish()
+                MainScope().launch(Dispatchers.IO) {
+                    var result = async { database.logout() }.await()
+                    val i = Intent(this@MainActivity, LoginActivity::class.java)
+                    startActivity(i)
+                    finish()
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
