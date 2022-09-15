@@ -86,16 +86,15 @@ class RegisterActivity : AppCompatActivity() {
                         async { userManager.userRegister(Register(userName, email, pwd)) }.await()
                     if (result.isSuccess) {
                         // in on success method we are hiding our progress bar and opening a login activity.
-                        loadingPB.visibility = View.GONE
-
-
                         this@RegisterActivity.runOnUiThread(java.lang.Runnable {
+                            loadingPB.visibility = View.GONE
                             showMessage("User Registered..")
-                        })
+
 
                         val i = Intent(this@RegisterActivity, MainActivity::class.java)
                         startActivity(i)
                         finish()
+                        })
                     } else {
 
                         // in else condition we are displaying a failure toast message.

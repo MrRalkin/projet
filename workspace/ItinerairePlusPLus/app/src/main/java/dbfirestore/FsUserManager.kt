@@ -31,10 +31,17 @@ class FsUserManager : IUserManager {
     override suspend fun userRegister(user: IRegister): ActionResult {
         var result = ActionResult(true, MESSAGE_USER_REGISTERED, "")
         try {
+            var roles=rolesGet()
+            var roleId=0
+            if(roles.count()>1){
+                roleId=roles.get(roles.count()-1).id
+            }
+
             var rsp: AuthResult =
                 mAuth.createUserWithEmailAndPassword(user.email, user.password).await()
-            val newUser = FsUser(rsp.user!!.uid.toString(), user.name, "", "", "", "", "", "")
-            db.collection(FsContract.FsUser.TABLE_USER).document(user.email).set(newUser)
+
+            val newUser = FsUser(rsp.user!!.uid.toString(), user.name, "", "", "", "", "", user.email,roleId)
+            db.collection(FsContract.FsUser.TABLE_USER).document(newUser.id).set(newUser)
             curUser = newUser
         } catch (e: Exception) {
             println(e.message)
@@ -79,10 +86,10 @@ class FsUserManager : IUserManager {
         return ActionResult(true, MESSAGE_USER_SIGNOUT, "")
     }
 
-    override suspend fun userGetById(id: String): IUser? {
+    override suspend fun userGetByEmail(email: String):  IUser? {
         try {
             var snp: QuerySnapshot = db.collection(FsContract.FsUser.TABLE_USER)
-                .whereEqualTo(FsContract.FsUser.COLUMN_ID, id).get().await()
+                .whereEqualTo(FsContract.FsUser.COLUMN_EMAIL, email).get().await()
 
             for (item in snp.documents) {
                 if (item != null) {
@@ -99,19 +106,19 @@ class FsUserManager : IUserManager {
         return null
     }
 
-    override suspend fun userGetByEmail(email: String): IUser? {
+    override suspend fun  userGetById(id: String):IUser? {
         try {
 
             var snp: DocumentSnapshot? =
-                db.collection(FsContract.FsUser.TABLE_USER).document(email).get().await()
+                db.collection(FsContract.FsUser.TABLE_USER).document(id).get().await()
             //.whereEqualTo(FsContract.FsUser.COLUMN_EMAIL,email).get().await()
 
             //for (item in snp.documents) {
             if (snp != null) {
                 snp.toObject(FsUser::class.java)
                     ?.let {
-                        curUser = it
-                        return curUser
+                      var user:FsUser = it
+                        return user
                     }
             }
             //  }
@@ -136,50 +143,167 @@ class FsUserManager : IUserManager {
         return null
     }
 
+    override suspend fun userUpdateCurrent(user: IUser): ActionResult {
+        var result = ActionResult(true, MESSAGE_USER_UPDATED, "")
+        try {
+            db.collection(FsContract.FsUser.TABLE_USER).document(user.id).set(user)
+            curUser =user
+        } catch (e: Exception) {
+            println(e.message)
+            result.isSuccess = false
+            result.errorMessage = e.message.toString()
+        }
+        return result
+    }
+
     override suspend fun userUpdate(user: IUser): ActionResult {
-        TODO("Not yet implemented")
+        var result = ActionResult(true, MESSAGE_USER_UPDATED, "")
+        try {
+            db.collection(FsContract.FsUser.TABLE_USER).document(user.id).set(user)
+        } catch (e: Exception) {
+            println(e.message)
+            result.isSuccess = false
+            result.errorMessage = e.message.toString()
+        }
+        return result
     }
 
     override suspend fun userDelete(user: IUser): ActionResult {
-        TODO("Not yet implemented")
+        var result = ActionResult(true, MESSAGE_USER_DELETED, "")
+        try {
+            db.collection(FsContract.FsUser.TABLE_USER).document(user.id).delete()
+            curUser = user
+        } catch (e: Exception) {
+            println(e.message)
+            result.isSuccess = false
+            result.errorMessage = e.message.toString()
+        }
+        return result
     }
 
     override suspend fun rolesGet(): ArrayList<IRole> {
         if (roles.count() > 0) {
             return roles
         }
-        val roleSSN: IRole = FsRole(1, "SSN")
-        val roleUser: IRole = FsRole(2, "User")
-        db.collection("Roles").document(roleSSN.id.toString()).set(roleSSN)
-        db.collection("Roles").document(roleUser.id.toString()).set(roleUser)
-        var result=ArrayList<IRole>()
-        result.add(roleSSN)
-        result.add(roleUser)
-        return result
+
+        try {
+            var snp: QuerySnapshot = db.collection(FsContract.FsRole.TABLE_ROLE).get().await()
+            //.whereEqualTo(FsContract.FsRole.COLUMN_ID, id).get().await()
+
+            for (item in snp.documents) {
+                if (item != null) {
+                    item.toObject(FsRole::class.java)
+                        ?.let {
+                            roles.add(it)
+
+                        }
+                }
+            }
+            if (roles.count() > 0) {
+                return roles
+            }
+            val roleSSN: IRole = FsRole(1, "SSN")
+            val roleUser: IRole = FsRole(2, "User")
+            db.collection("Roles").document(roleSSN.id.toString()).set(roleSSN)
+            db.collection("Roles").document(roleUser.id.toString()).set(roleUser)
+            roles.add(roleSSN)
+            roles.add(roleUser)
+
+        } catch (e: Exception) {
+            println(e.message)
+        }
+        return roles
     }
 
-    override suspend fun roleGetByName(name: String): IRole {
-        TODO("Not yet implemented")
+    override suspend fun roleGetByName(name: String): IRole? {
+        var role: IRole
+        try {
+            var snp: QuerySnapshot = db.collection(FsContract.FsRole.TABLE_ROLE)
+                .whereEqualTo(FsContract.FsRole.COLUMN_ROLE, name).get().await()
+
+            for (item in snp.documents) {
+                if (item != null) {
+                    item.toObject(FsRole::class.java)
+                        ?.let {
+                            role = it
+                            return role
+                        }
+                }
+            }
+        } catch (e: Exception) {
+            println(e.message)
+        }
+        return null
     }
 
-    override suspend fun roleGetById(id: String): IRole {
-        TODO("Not yet implemented")
+    override suspend fun roleGetById(id: String): IRole? {
+        var role: IRole
+        try {
+            var snp: QuerySnapshot = db.collection(FsContract.FsRole.TABLE_ROLE)
+                .whereEqualTo(FsContract.FsRole.COLUMN_ID, id).get().await()
+
+            for (item in snp.documents) {
+                if (item != null) {
+                    item.toObject(FsRole::class.java)
+                        ?.let {
+                            role = it
+                            return role
+                        }
+                }
+            }
+        } catch (e: Exception) {
+            println(e.message)
+        }
+        return null
     }
 
     override suspend fun roleDelete(role: IRole): ActionResult {
-        TODO("Not yet implemented")
+        var result = ActionResult(true, MESSAGE_USER_DELETED, "")
+        try {
+            db.collection(FsContract.FsRole.TABLE_ROLE).document(role.id.toString()).delete()
+        } catch (e: Exception) {
+            println(e.message)
+            result.isSuccess = false
+            result.errorMessage = e.message.toString()
+        }
+        return result
     }
 
     override suspend fun roleAdd(role: IRole): ActionResult {
-        TODO("Not yet implemented")
+        var result = ActionResult(true, MESSAGE_ROLE_CREATED, "")
+        try {
+            db.collection(FsContract.FsRole.TABLE_ROLE).document(role.id.toString()).set(role)
+        } catch (e: Exception) {
+            println(e.message)
+            result.isSuccess = false
+            result.errorMessage = e.message.toString()
+        }
+        return result
     }
 
     override suspend fun roleUpdate(role: IRole): ActionResult {
-        TODO("Not yet implemented")
+        var result = ActionResult(true, MESSAGE_ROLE_UPDATED, "")
+        try {
+            db.collection(FsContract.FsRole.TABLE_ROLE).document(role.id.toString()).set(role)
+        } catch (e: Exception) {
+            println(e.message)
+            result.isSuccess = false
+            result.errorMessage = e.message.toString()
+        }
+        return result
     }
 
-    override suspend fun roleAssign(user: IUser, role: IRole) {
-        TODO("Not yet implemented")
+    override suspend fun roleAssign(user: IUser, role: IRole): ActionResult {
+        var result = ActionResult(true, MESSAGE_ROLE_ASSIGNED, "")
+        try {
+            user.role_id=role.id
+            db.collection(FsContract.FsUser.TABLE_USER).document(user.email).set(user)
+        } catch (e: Exception) {
+            println(e.message)
+            result.isSuccess = false
+            result.errorMessage = e.message.toString()
+        }
+        return result
     }
 
     companion object {
@@ -188,8 +312,14 @@ class FsUserManager : IUserManager {
         private var roles = ArrayList<IRole>()
         private var curUser: IUser? = null
         private val MESSAGE_USER_REGISTERED = "User created"
-        private val MESSAGE_USER_SIGNIN = "User created"
+        private val MESSAGE_USER_SIGNIN = "User signedin"
         private val MESSAGE_USER_SIGNOUT = "User logged out"
         private val MESSAGE_USER_LOGIN_ERROR = "Can't login"
+        private val MESSAGE_USER_UPDATED = "user updated"
+        private val MESSAGE_USER_DELETED = "user deleted"
+        private val MESSAGE_ROLE_CREATED = "role created"
+        private val MESSAGE_ROLE_DELETED = "role deleted"
+        private val MESSAGE_ROLE_UPDATED = "role updated"
+        private val MESSAGE_ROLE_ASSIGNED = "role assigned"
     }
 }

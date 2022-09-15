@@ -9,5 +9,5 @@ interface IUser {
     var postalCode: String
     var country: String
     var email: String
-    var role_id: String
+    var role_id: Int
 }

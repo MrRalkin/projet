@@ -7,7 +7,7 @@ object FsContract {
     /* Inner class that defines the tables contents */
     class FsUser : BaseColumns {
         companion object {
-            val TABLE_USER= "user"
+            val TABLE_USER= "users"
             val COLUMN_ID = "id"
             val COLUMN_NAME = "name"
             val COLUMN_ADDRESS = "address"
@@ -21,7 +21,7 @@ object FsContract {
     }
     class FsRole : BaseColumns {
         companion object {
-            val TABLE_ROLE= "role"
+            val TABLE_ROLE= "roles"
             val COLUMN_ID = "id"
             val COLUMN_ROLE = "role"
         }

@@ -52,11 +52,12 @@ class LoginActivity : AppCompatActivity() {
             val password = passwordEdt.text.toString()
             // on below line validating the text input.
             if (TextUtils.isEmpty(email) && TextUtils.isEmpty(password)) {
-               showMessage(
-                    "Please enter your credentials..")
+                showMessage(
+                    "Please enter your credentials.."
+                )
                 return@OnClickListener
             }
-          
+
             MainScope().launch(Dispatchers.IO) {
                 val result = async { userManager.userLogin(Login(email, password)) }.await()
                 if (result.isSuccess) {
@@ -64,16 +65,16 @@ class LoginActivity : AppCompatActivity() {
                     this@LoginActivity.runOnUiThread(java.lang.Runnable {
                         showMessage("Login Successful..")
                         loadingPB.visibility = View.GONE
-                    })
 
-                    // on below line we are opening our mainactivity.
-                    val i = Intent(this@LoginActivity, MainActivity::class.java)
-                    startActivity(i)
-                    finish()
+                        // on below line we are opening our mainactivity.
+                        val i = Intent(this@LoginActivity, MainActivity::class.java)
+                        startActivity(i)
+                        finish()
+                    })
                 } else {
 
-                       this@LoginActivity.runOnUiThread(java.lang.Runnable {
-                           loadingPB.visibility = View.GONE
+                    this@LoginActivity.runOnUiThread(java.lang.Runnable {
+                        loadingPB.visibility = View.GONE
                         showMessage("Please enter valid user credentials..")
                     })
                 }
@@ -82,6 +83,7 @@ class LoginActivity : AppCompatActivity() {
 
         })
     }
+
     fun showMessage(message: String) {
         msgShow.setText(message)
         msgShow.show()
