@@ -1,0 +1,322 @@
+[{
+	"UID" : "nico",
+	"name" : "ssn_admin",
+	"email" : "admin@b.c",
+	"role" : "admin",
+	"adresse" : "1",
+	"city" : "serveur central",
+	"province" : "",
+	"postal_code" : "",
+	"country" : "",
+	"trip_time_limite_minutes" : 240,
+	"destinations" : [
+	{	
+		"name" : "Orlando",
+		"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+		"adresse" : "123 paris",
+		"city" : "Paris",
+		"province" : "oups",
+		"postal_code" : "oups",
+		"country" : "France",
+		"image" : "image_tour_eiffel.jpg",
+		"trip_time_minutes" : 720,
+		"steps" : [
+		{	"step" : 1,
+			"start": {
+				"name" : "Montreal",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"end" : {
+				"name" : "New York",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"trip_time_minutes" : 360,
+			"activities": [
+				{"activity" : 1, "name" : "Manger", "time_minutes" : "120"},
+				{"activity" : 2, "name" : "Essence", "time_minutes" : "15"}]
+		},
+		{	"step" : 2,
+			"start": {
+				"name" : "New York",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"end" : {
+				"name" : "Orlando",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"trip_time_minutes" : 360,
+			"activities": [
+				{"activity" : 1, "name" : "Manger", "time_minutes" : "120"},
+				{"activity" : 2, "name" : "Dormir", "time_minutes" : "480"},
+				{"activity" : 3, "name" : "Tourisme", "time_minutes" : "180"}]
+		}]
+	},
+	{	
+		"name" : "Québec",
+		"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+		"adresse" : "123 paris",
+		"city" : "Paris",
+		"province" : "oups",
+		"postal_code" : "oups",
+		"country" : "France",
+		"image" : "image_tour_eiffel.jpg",
+		"trip_time_minutes" : 720,
+		"steps" : [
+		{	"step" : 1,
+			"start": {
+				"name" : "Montreal",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"end" : {
+				"name" : "Québec",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"trip_time_minutes" : 360,
+			"activities": [
+				{"activity" : 1, "name" : "Manger", "time_minutes" : "120"},
+				{"activity" : 2, "name" : "Dormir", "time_minutes" : "360"}]
+		}]
+	}]
+},
+{
+	"UID" : "sergei",
+	"name" : "sergei",
+	"email" : "admin@b.c",
+	"role" : "user",
+	"adresse" : "1",
+	"city" : "serveur central",
+	"province" : "",
+	"postal_code" : "",
+	"country" : "",
+	"trip_time_limite_minutes" : 240,
+	"destinations" : [
+	{	
+		"name" : "San Francisco",
+		"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+		"adresse" : "123 paris",
+		"city" : "Paris",
+		"province" : "oups",
+		"postal_code" : "oups",
+		"country" : "France",
+		"image" : "image_tour_eiffel.jpg",
+		"trip_time_minutes" : 720,
+		"steps" : [
+		{	"step" : 1,
+			"start": {
+				"name" : "Longueuil",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"end" : {
+				"name" : "Vancouver",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"trip_time_minutes" : 360,
+			"activities": [
+				{"activity" : 1, "name" : "Essence", "time_minutes" : "15"}]
+		},
+		{	"step" : 2,
+			"start": {
+				"name" : "Vancouver",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"end" : {
+				"name" : "San Francisco",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"trip_time_minutes" : 360,
+			"activities": [
+				{"activity" : 1, "name" : "Manger", "time_minutes" : "120"},
+				{"activity" : 2, "name" : "Dormir", "time_minutes" : "480"}]
+		}]
+	}]
+},
+{
+	"UID" : "serge",
+	"name" : "serge",
+	"email" : "admin@b.c",
+	"role" : "user",
+	"adresse" : "1",
+	"city" : "serveur central",
+	"province" : "",
+	"postal_code" : "",
+	"country" : "",
+	"trip_time_limite_minutes" : 240,
+	"destinations" : [
+	{	
+		"name" : "Kinshasa",
+		"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+		"adresse" : "123 paris",
+		"city" : "Paris",
+		"province" : "oups",
+		"postal_code" : "oups",
+		"country" : "France",
+		"image" : "image_tour_eiffel.jpg",
+		"trip_time_minutes" : 720,
+		"steps" : [
+		{	"step" : 1,
+			"start": {
+				"name" : "Montreal",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"end" : {
+				"name" : "New York",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"trip_time_minutes" : 360,
+			"activities": [
+				{"activity" : 1, "name" : "Manger", "time_minutes" : "60"}]
+		},
+		{	"step" : 2,
+			"start": {
+				"name" : "New York",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"end" : {
+				"name" : "Paris",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"trip_time_minutes" : 360,
+			"activities": [
+				{"activity" : 1, "name" : "Manger", "time_minutes" : "60"},
+				{"activity" : 2, "name" : "Dormir", "time_minutes" : "240"}]
+		},
+		{	"step" : 3,
+			"start": {
+				"name" : "Paris",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"end" : {
+				"name" : "Tunis",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"trip_time_minutes" : 360,
+			"activities": [
+				{"activity" : 1, "name" : "Manger", "time_minutes" : "60"},
+				{"activity" : 2, "name" : "Tourisme", "time_minutes" : "60"}]
+		},
+		{	"step" : 4,
+			"start": {
+				"name" : "Tunis",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"end" : {
+				"name" : "Kinshasa",
+				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
+				"adresse" : "123 paris",
+				"city" : "Paris",
+				"province" : "oups",
+				"postal_code" : "oups",
+				"country" : "France"
+			},
+			"trip_time_minutes" : 360,
+			"activities": [
+				{"activity" : 1, "name" : "Dormir", "time_minutes" : "480"},
+				{"activity" : 2, "name" : "Dormir", "time_minutes" : "480"},
+				{"activity" : 3, "name" : "Dormir", "time_minutes" : "480"},
+				{"activity" : 4, "name" : "Dormir", "time_minutes" : "480"},
+				{"activity" : 5, "name" : "Dormir", "time_minutes" : "480"}]
+		}]
+	}]
+}]
+
+
+
+
+for (u of t) {
+	console.log("*** ****************************************")
+	console.log("*** -> " + u.UID)
+	for (d of u.destinations) {
+		console.log("--- -> " + d.name + " " + d.trip_time_minutes)
+		for (e of d.steps) {
+			console.log("--- ----> " + e.step + " " + e.start.name + " " + e.end.name + " " + e.trip_time_minutes)
+			for (a of e.activities) {
+				console.log("--- ------> " + a.name + " " + a.time_minutes)
+			}
+		}
+	}
+}
