@@ -3,21 +3,27 @@
 	"name" : "ssn_admin",
 	"email" : "admin@b.c",
 	"role" : "admin",
-	"adresse" : "1",
-	"city" : "serveur central",
-	"province" : "",
-	"postal_code" : "",
-	"country" : "",
+	"adresse" : {
+		"no_civic" : "123",
+		"street" : "rue paris",
+		"city" : "Paris",
+		"province" : "oups",
+		"postal_code" : "J4J 3K5",
+		"country" : "France",
+	},
 	"trip_time_limite_minutes" : 240,
 	"destinations" : [
 	{	
 		"name" : "Orlando",
 		"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-		"adresse" : "123 paris",
-		"city" : "Paris",
-		"province" : "oups",
-		"postal_code" : "oups",
-		"country" : "France",
+		"adresse" : {
+			"no_civic" : "123",
+			"street" : "rue paris",
+			"city" : "Paris",
+			"province" : "oups",
+			"postal_code" : "J4J 3K5",
+			"country" : "France",
+		},
 		"image" : "image_tour_eiffel.jpg",
 		"trip_time_minutes" : 720,
 		"steps" : [
@@ -25,20 +31,26 @@
 			"start": {
 				"name" : "Montreal",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"end" : {
 				"name" : "New York",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"trip_time_minutes" : 360,
 			"activities": [
@@ -49,20 +61,26 @@
 			"start": {
 				"name" : "New York",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"end" : {
 				"name" : "Orlando",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"trip_time_minutes" : 360,
 			"activities": [
@@ -74,11 +92,14 @@
 	{	
 		"name" : "Québec",
 		"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-		"adresse" : "123 paris",
-		"city" : "Paris",
-		"province" : "oups",
-		"postal_code" : "oups",
-		"country" : "France",
+		"adresse" : {
+			"no_civic" : "123",
+			"street" : "rue paris",
+			"city" : "Paris",
+			"province" : "oups",
+			"postal_code" : "J4J 3K5",
+			"country" : "France",
+		},
 		"image" : "image_tour_eiffel.jpg",
 		"trip_time_minutes" : 720,
 		"steps" : [
@@ -86,20 +107,26 @@
 			"start": {
 				"name" : "Montreal",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"end" : {
 				"name" : "Québec",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"trip_time_minutes" : 360,
 			"activities": [
@@ -113,21 +140,27 @@
 	"name" : "sergei",
 	"email" : "admin@b.c",
 	"role" : "user",
-	"adresse" : "1",
-	"city" : "serveur central",
-	"province" : "",
-	"postal_code" : "",
-	"country" : "",
+	"adresse" : {
+		"no_civic" : "123",
+		"street" : "rue paris",
+		"city" : "Paris",
+		"province" : "oups",
+		"postal_code" : "J4J 3K5",
+		"country" : "France",
+	},
 	"trip_time_limite_minutes" : 240,
 	"destinations" : [
 	{	
 		"name" : "San Francisco",
 		"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-		"adresse" : "123 paris",
-		"city" : "Paris",
-		"province" : "oups",
-		"postal_code" : "oups",
-		"country" : "France",
+		"adresse" : {
+			"no_civic" : "123",
+			"street" : "rue paris",
+			"city" : "Paris",
+			"province" : "oups",
+			"postal_code" : "J4J 3K5",
+			"country" : "France",
+		},
 		"image" : "image_tour_eiffel.jpg",
 		"trip_time_minutes" : 720,
 		"steps" : [
@@ -135,20 +168,26 @@
 			"start": {
 				"name" : "Longueuil",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"end" : {
 				"name" : "Vancouver",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"trip_time_minutes" : 360,
 			"activities": [
@@ -158,20 +197,26 @@
 			"start": {
 				"name" : "Vancouver",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"end" : {
 				"name" : "San Francisco",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"trip_time_minutes" : 360,
 			"activities": [
@@ -185,21 +230,27 @@
 	"name" : "serge",
 	"email" : "admin@b.c",
 	"role" : "user",
-	"adresse" : "1",
-	"city" : "serveur central",
-	"province" : "",
-	"postal_code" : "",
-	"country" : "",
+	"adresse" : {
+		"no_civic" : "123",
+		"street" : "rue paris",
+		"city" : "Paris",
+		"province" : "oups",
+		"postal_code" : "J4J 3K5",
+		"country" : "France",
+	},
 	"trip_time_limite_minutes" : 240,
 	"destinations" : [
 	{	
 		"name" : "Kinshasa",
 		"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-		"adresse" : "123 paris",
-		"city" : "Paris",
-		"province" : "oups",
-		"postal_code" : "oups",
-		"country" : "France",
+		"adresse" : {
+			"no_civic" : "123",
+			"street" : "rue paris",
+			"city" : "Paris",
+			"province" : "oups",
+			"postal_code" : "J4J 3K5",
+			"country" : "France",
+		},
 		"image" : "image_tour_eiffel.jpg",
 		"trip_time_minutes" : 720,
 		"steps" : [
@@ -207,20 +258,26 @@
 			"start": {
 				"name" : "Montreal",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"end" : {
 				"name" : "New York",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"trip_time_minutes" : 360,
 			"activities": [
@@ -230,20 +287,26 @@
 			"start": {
 				"name" : "New York",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"end" : {
 				"name" : "Paris",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"trip_time_minutes" : 360,
 			"activities": [
@@ -254,20 +317,26 @@
 			"start": {
 				"name" : "Paris",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"end" : {
 				"name" : "Tunis",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"trip_time_minutes" : 360,
 			"activities": [
@@ -278,20 +347,26 @@
 			"start": {
 				"name" : "Tunis",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"end" : {
 				"name" : "Kinshasa",
 				"coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-				"adresse" : "123 paris",
-				"city" : "Paris",
-				"province" : "oups",
-				"postal_code" : "oups",
-				"country" : "France"
+				"adresse" : {
+					"no_civic" : "123",
+					"street" : "rue paris",
+					"city" : "Paris",
+					"province" : "oups",
+					"postal_code" : "J4J 3K5",
+					"country" : "France",
+				},
 			},
 			"trip_time_minutes" : 360,
 			"activities": [
