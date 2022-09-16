@@ -10,4 +10,5 @@ interface IUser {
     var country: String
     var email: String
     var role_id: Int
+    var destinations:ArrayList<IDestination>?
 }
