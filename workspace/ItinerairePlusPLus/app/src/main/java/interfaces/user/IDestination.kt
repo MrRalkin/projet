@@ -5,14 +5,18 @@ interface ICoord {
     var latitude: String
 }
 
-interface IPoint {
-    var name: String
-    var coord: ICoord
-    var adresse: String
+interface IAddress {
+    var address: String
     var city: String
     var state: String
     var zip: String
     var country: String
+}
+
+interface IPoint {
+    var name: String
+    var coord: ICoord
+    var address: IAddress
 }
 
 
@@ -26,20 +30,16 @@ interface IStep {
     var step: Int
     var start: IPoint
     var end: IPoint
-    var tripTime: Int
+    var trip_time: Int
     var activities: ArrayList<IActivity>
 }
 
 interface IDestination {
     var name: String
     var coord: ICoord
-    var adresse: String
-    var city: String
-    var province: String
-    var postal_code: String
-    var country: String
+    var address: IAddress
     var image: String
-    var tripTime: Int
+    var trip_time: Int
     var steps: ArrayList<IStep>
 }
 

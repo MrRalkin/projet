@@ -12,6 +12,6 @@ class FsStep(
     override var step: Int = 0,
     override var start: @RawValue IPoint = FsPoint(),
     override var end: @RawValue IPoint = FsPoint(),
-    override var tripTime: Int = 0,
+    override var trip_time: Int = 0,
     override var activities: @RawValue ArrayList<IActivity> = ArrayList<IActivity>()
 ) : IStep, Parcelable

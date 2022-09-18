@@ -1,26 +1,17 @@
 package dbfirestore
 
-import android.content.Intent
-import android.widget.TextView
-import ca.bntec.itineraireplusplus.LoginActivity
-import ca.bntec.itineraireplusplus.R
 import classes.ActionResult
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import interfaces.IDBOperation
 import interfaces.auth.ILogin
 import interfaces.auth.IRegister
 import interfaces.user.IRole
 import interfaces.user.IUser
 import interfaces.user.IUserManager
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class FsUserManager : IUserManager {
@@ -41,7 +32,7 @@ class FsUserManager : IUserManager {
                 mAuth.createUserWithEmailAndPassword(user.email, user.password).await()
 
             val newUser = FsUser(rsp.user!!.uid.toString(), user.name, "", "", "", "", "", user.email,roleId)
-            db.collection(FsContract.FsUser.TABLE_USER).document(newUser.id).set(newUser)
+            db.collection(FsContract.TbUser.COLLECTION_NAME).document(newUser.id).set(newUser)
             curUser = newUser
         } catch (e: Exception) {
             println(e.message)
@@ -57,8 +48,8 @@ class FsUserManager : IUserManager {
             var rsp: AuthResult =
                 mAuth.signInWithEmailAndPassword(user.email, user.password).await()
 
-            var snp: QuerySnapshot = db.collection(FsContract.FsUser.TABLE_USER)
-                .whereEqualTo(FsContract.FsUser.COLUMN_ID, rsp.user!!.uid.toString()).get().await()
+            var snp: QuerySnapshot = db.collection(FsContract.TbUser.COLLECTION_NAME)
+                .whereEqualTo(FsContract.TbUser.FD_ID, rsp.user!!.uid.toString()).get().await()
 
             for (item in snp.documents) {
                 if (item != null) {
@@ -88,8 +79,8 @@ class FsUserManager : IUserManager {
 
     override suspend fun userGetByEmail(email: String):  IUser? {
         try {
-            var snp: QuerySnapshot = db.collection(FsContract.FsUser.TABLE_USER)
-                .whereEqualTo(FsContract.FsUser.COLUMN_EMAIL, email).get().await()
+            var snp: QuerySnapshot = db.collection(FsContract.TbUser.COLLECTION_NAME)
+                .whereEqualTo(FsContract.TbUser.FD_EMAIL, email).get().await()
 
             for (item in snp.documents) {
                 if (item != null) {
@@ -110,7 +101,7 @@ class FsUserManager : IUserManager {
         try {
 
             var snp: DocumentSnapshot? =
-                db.collection(FsContract.FsUser.TABLE_USER).document(id).get().await()
+                db.collection(FsContract.TbUser.COLLECTION_NAME).document(id).get().await()
             //.whereEqualTo(FsContract.FsUser.COLUMN_EMAIL,email).get().await()
 
             //for (item in snp.documents) {
@@ -146,7 +137,7 @@ class FsUserManager : IUserManager {
     override suspend fun userUpdateCurrent(user: IUser): ActionResult {
         var result = ActionResult(true, MESSAGE_USER_UPDATED, "")
         try {
-            db.collection(FsContract.FsUser.TABLE_USER).document(user.id).set(user)
+            db.collection(FsContract.TbUser.COLLECTION_NAME).document(user.id).set(user)
             curUser =user
         } catch (e: Exception) {
             println(e.message)
@@ -159,7 +150,7 @@ class FsUserManager : IUserManager {
     override suspend fun userUpdate(user: IUser): ActionResult {
         var result = ActionResult(true, MESSAGE_USER_UPDATED, "")
         try {
-            db.collection(FsContract.FsUser.TABLE_USER).document(user.id).set(user)
+            db.collection(FsContract.TbUser.COLLECTION_NAME).document(user.id).set(user)
         } catch (e: Exception) {
             println(e.message)
             result.isSuccess = false
@@ -171,7 +162,7 @@ class FsUserManager : IUserManager {
     override suspend fun userDelete(user: IUser): ActionResult {
         var result = ActionResult(true, MESSAGE_USER_DELETED, "")
         try {
-            db.collection(FsContract.FsUser.TABLE_USER).document(user.id).delete()
+            db.collection(FsContract.TbUser.COLLECTION_NAME).document(user.id).delete()
             curUser = user
         } catch (e: Exception) {
             println(e.message)
@@ -187,7 +178,7 @@ class FsUserManager : IUserManager {
         }
 
         try {
-            var snp: QuerySnapshot = db.collection(FsContract.FsRole.TABLE_ROLE).get().await()
+            var snp: QuerySnapshot = db.collection(FsContract.TbRole.COLLECTION_NAME).get().await()
             //.whereEqualTo(FsContract.FsRole.COLUMN_ID, id).get().await()
 
             for (item in snp.documents) {
@@ -218,8 +209,8 @@ class FsUserManager : IUserManager {
     override suspend fun roleGetByName(name: String): IRole? {
         var role: IRole
         try {
-            var snp: QuerySnapshot = db.collection(FsContract.FsRole.TABLE_ROLE)
-                .whereEqualTo(FsContract.FsRole.COLUMN_ROLE, name).get().await()
+            var snp: QuerySnapshot = db.collection(FsContract.TbRole.COLLECTION_NAME)
+                .whereEqualTo(FsContract.TbRole.FD_ROLE, name).get().await()
 
             for (item in snp.documents) {
                 if (item != null) {
@@ -239,8 +230,8 @@ class FsUserManager : IUserManager {
     override suspend fun roleGetById(id: String): IRole? {
         var role: IRole
         try {
-            var snp: QuerySnapshot = db.collection(FsContract.FsRole.TABLE_ROLE)
-                .whereEqualTo(FsContract.FsRole.COLUMN_ID, id).get().await()
+            var snp: QuerySnapshot = db.collection(FsContract.TbRole.COLLECTION_NAME)
+                .whereEqualTo(FsContract.TbRole.FD_ID, id).get().await()
 
             for (item in snp.documents) {
                 if (item != null) {
@@ -260,7 +251,7 @@ class FsUserManager : IUserManager {
     override suspend fun roleDelete(role: IRole): ActionResult {
         var result = ActionResult(true, MESSAGE_USER_DELETED, "")
         try {
-            db.collection(FsContract.FsRole.TABLE_ROLE).document(role.id.toString()).delete()
+            db.collection(FsContract.TbRole.COLLECTION_NAME).document(role.id.toString()).delete()
         } catch (e: Exception) {
             println(e.message)
             result.isSuccess = false
@@ -272,7 +263,7 @@ class FsUserManager : IUserManager {
     override suspend fun roleAdd(role: IRole): ActionResult {
         var result = ActionResult(true, MESSAGE_ROLE_CREATED, "")
         try {
-            db.collection(FsContract.FsRole.TABLE_ROLE).document(role.id.toString()).set(role)
+            db.collection(FsContract.TbRole.COLLECTION_NAME).document(role.id.toString()).set(role)
         } catch (e: Exception) {
             println(e.message)
             result.isSuccess = false
@@ -284,7 +275,7 @@ class FsUserManager : IUserManager {
     override suspend fun roleUpdate(role: IRole): ActionResult {
         var result = ActionResult(true, MESSAGE_ROLE_UPDATED, "")
         try {
-            db.collection(FsContract.FsRole.TABLE_ROLE).document(role.id.toString()).set(role)
+            db.collection(FsContract.TbRole.COLLECTION_NAME).document(role.id.toString()).set(role)
         } catch (e: Exception) {
             println(e.message)
             result.isSuccess = false
@@ -297,7 +288,7 @@ class FsUserManager : IUserManager {
         var result = ActionResult(true, MESSAGE_ROLE_ASSIGNED, "")
         try {
             user.role_id=role.id
-            db.collection(FsContract.FsUser.TABLE_USER).document(user.email).set(user)
+            db.collection(FsContract.TbUser.COLLECTION_NAME).document(user.email).set(user)
         } catch (e: Exception) {
             println(e.message)
             result.isSuccess = false
