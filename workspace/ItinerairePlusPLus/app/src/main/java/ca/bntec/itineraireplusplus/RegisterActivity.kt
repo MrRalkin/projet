@@ -98,8 +98,9 @@ class RegisterActivity : AppCompatActivity() {
                     } else {
 
                         // in else condition we are displaying a failure toast message.
-                        loadingPB.visibility = View.GONE
+
                         this@RegisterActivity.runOnUiThread(java.lang.Runnable {
+                            loadingPB.visibility = View.GONE
                             showMessage("Fail to register user..")
                         })
 

@@ -9,6 +9,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import interfaces.auth.ILogin
 import interfaces.auth.IRegister
+import interfaces.user.IDestination
 import interfaces.user.IRole
 import interfaces.user.IUser
 import interfaces.user.IUserManager
@@ -31,7 +32,9 @@ class FsUserManager : IUserManager {
             var rsp: AuthResult =
                 mAuth.createUserWithEmailAndPassword(user.email, user.password).await()
 
-            val newUser = FsUser(rsp.user!!.uid.toString(), user.name, "", "", "", "", "", user.email,roleId)
+            val newUser = FsUser(rsp.user!!.uid.toString(), user.name,FsAddress(),user.email,roleId,
+                ArrayList<IDestination>()
+            )
             db.collection(FsContract.TbUser.COLLECTION_NAME).document(newUser.id).set(newUser)
             curUser = newUser
         } catch (e: Exception) {
@@ -195,8 +198,8 @@ class FsUserManager : IUserManager {
             }
             val roleSSN: IRole = FsRole(1, "SSN")
             val roleUser: IRole = FsRole(2, "User")
-            db.collection("Roles").document(roleSSN.id.toString()).set(roleSSN)
-            db.collection("Roles").document(roleUser.id.toString()).set(roleUser)
+            db.collection(FsContract.TbRole.COLLECTION_NAME).document(roleSSN.id.toString()).set(roleSSN)
+            db.collection(FsContract.TbRole.COLLECTION_NAME).document(roleUser.id.toString()).set(roleUser)
             roles.add(roleSSN)
             roles.add(roleUser)
 
