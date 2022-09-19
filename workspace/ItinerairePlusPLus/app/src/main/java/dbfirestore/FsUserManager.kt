@@ -122,13 +122,6 @@ class FsUserManager : IUserManager {
                     destinations.add(getDestination(dest as HashMap<String, Any>))
                 }
                 user.destinations = destinations
-//                val sf=s
-//                if (snp[FsContract.TbUser.FD_DESTINATIONS] != null) {
-//                  var destList= snp.get(FsContract.TbUser.FD_DESTINATIONS) as HashMap<String,Any>
-//               var t=destList
-//
-//                }
-
 
             }
             return user
