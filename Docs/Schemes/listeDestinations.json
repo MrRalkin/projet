@@ -1,0 +1,62 @@
+{
+	"predefined_destinations" : [
+	{
+		"name" : "Orlando",
+		"coord" : {"longitude" : "-23.123487", "latitude" : "-12.000909"},
+		"adresse" : { "no_civic" : "123", "street" : "rue paris", "city" : "Paris", "state" : "oups", "zip" : "J4J 3K5", "country" : "France", },
+		"image" : "image_tour_eiffel.jpg",
+	},
+	{
+		"name" : "Montréal",
+		"coord" : {"longitude" : "-23.123487", "latitude" : "-12.000909"},
+		"adresse" : { "no_civic" : "123", "street" : "rue paris", "city" : "Paris", "state" : "oups", "zip" : "J4J 3K5", "country" : "France", },
+		"image" : "image_tour_eiffel.jpg",
+	},
+	{
+		"name" : "Québec",
+		"coord" : {"longitude" : "-23.123487", "latitude" : "-12.000909"},
+		"adresse" : { "no_civic" : "123", "street" : "rue paris", "city" : "Paris", "state" : "oups", "zip" : "J4J 3K5", "country" : "France", },
+		"image" : "image_tour_eiffel.jpg",
+	},
+	{
+		"name" : "San Francisco",
+		"coord" : {"longitude" : "-23.123487", "latitude" : "-12.000909"},
+		"adresse" : { "no_civic" : "123", "street" : "rue paris", "city" : "Paris", "state" : "oups", "zip" : "J4J 3K5", "country" : "France", },
+		"image" : "image_tour_eiffel.jpg",
+	},
+	{
+		"name" : "Texas",
+		"coord" : {"longitude" : "-23.123487", "latitude" : "-12.000909"},
+		"adresse" : { "no_civic" : "123", "street" : "rue paris", "city" : "Paris", "state" : "oups", "zip" : "J4J 3K5", "country" : "France", },
+		"image" : "image_tour_eiffel.jpg",
+	},
+	{
+		"name" : "Mexico",
+		"coord" : {"longitude" : "-23.123487", "latitude" : "-12.000909"},
+		"adresse" : { "no_civic" : "123", "street" : "rue paris", "city" : "Paris", "state" : "oups", "zip" : "J4J 3K5", "country" : "France", },
+		"image" : "image_tour_eiffel.jpg",
+	},
+	{
+		"name" : "Carthagène",
+		"coord" : {"longitude" : "-23.123487", "latitude" : "-12.000909"},
+		"adresse" : { "no_civic" : "123", "street" : "rue paris", "city" : "Paris", "state" : "oups", "zip" : "J4J 3K5", "country" : "France", },
+		"image" : "image_tour_eiffel.jpg",
+	},
+	{
+		"name" : "Bogota",
+		"coord" : {"longitude" : "-23.123487", "latitude" : "-12.000909"},
+		"adresse" : { "no_civic" : "123", "street" : "rue paris", "city" : "Paris", "state" : "oups", "zip" : "J4J 3K5", "country" : "France", },
+		"image" : "image_tour_eiffel.jpg",
+	},
+	{
+		"name" : "Rio de Janeiro",
+		"coord" : {"longitude" : "-23.123487", "latitude" : "-12.000909"},
+		"adresse" : { "no_civic" : "123", "street" : "rue paris", "city" : "Paris", "state" : "oups", "zip" : "J4J 3K5", "country" : "France", },
+		"image" : "image_tour_eiffel.jpg",
+	}]
+}
+
+console.log("*** ****************************************")
+for (d of t.predefined_destinations) {
+	console.log("*** -> " + d.name + " lon:" + d.coord.longitude + " lat:" + d.coord.latitude)
+}

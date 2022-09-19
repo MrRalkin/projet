@@ -1,0 +1,49 @@
+{
+	"settings" : {
+		"vehicles" : [
+		{ "type" : "Auto",
+			"details" : [
+			{ "energy" : "essence", "distance" : "600", "mesure" : "km", "capacity" : "55", "unit": "litre" },
+			{ "energy" : "électricité", "distance" : "600", "mesure" : "km", "capacity" : "100", "unit": "kWh" }
+			]
+		},
+		{ "type" : "Vélo",
+			"details" : [
+			{ "energy" : "nourriture", "distance" : "50", "mesure" : "km", "capacity" : "2", "unit": "jambe" }]
+		}],
+		"activities" : [
+			{ "activity" : "Essence", "time" : ["30"] },
+			{ "activity" : "Recharge", "time" : [ "360", "60" ] },
+			{ "activity" : "Dormir", "time" : ["480"] },
+			{ "activity" : "Manger", "time" : ["120"] },
+			{ "activity" : "Touristique", "time" : ["180"] }],
+		"energies" : [
+			{ "energy" : "essence", "price" : "1.55", "unit" : "litre" },
+			{ "energy" : "électricité", "price" : "0.147", "unit" : "kWh" },
+			{ "energy" : "nourriture", "price" : "25.0", "unit" : "repas" }]
+	}
+}
+
+
+console.log("*** ****************************************")
+for (v of s.settings.vehicles) {
+	console.log("*** -> " + v.type)
+	for (d of v.details) {
+		console.log("--- ---> " + d.energy + " " + d.distance + " " + d.mesure + " " + d.capacity  + " " + d.unit)
+	}
+}
+console.log("*** ****************************************")
+for (a of s.settings.activities) {
+	var m = ""
+	m = a.activity + " [ "
+	for (e of a.time) {
+		m += e + " "
+	}
+	m += "]"
+	console.log("*** -> " + m)
+}
+console.log("*** ****************************************")
+for (e of s.settings.energies) {
+	console.log("*** -> " + e.energy + " " + e.price + " " + e.unit)
+
+}
