@@ -4,7 +4,7 @@
 	"email" : "admin@b.c",
 	"role" : "admin",
 	"adresse" : { "no_civic" : "123", "street" : "rue paris", "city" : "Paris", "state" : "oups", "zip" : "J4J 3K5", "country" : "France"},
-	"my_settings" : {
+	"general_settings" : {
 		"vehicles" : [{
 			"type" : "Auto",
 			"details" : [{ "energy" : "essence", "distance" : "600", "mesure" : "km", "capacity" : "55", "unit": "litre" }],
@@ -25,6 +25,18 @@
 		"adresse" : { "no_civic" : "123", "street" : "rue paris", "city" : "Paris", "state" : "oups", "zip" : "J4J 3K5", "country" : "France"},
 		"image" : "image_tour_eiffel.jpg",
 		"trip_time_minutes" : 720,
+		"destination_settings" : {
+			"vehicles" : [{
+				"type" : "Auto",
+				"details" : [{ "energy" : "essence", "distance" : "600", "mesure" : "km", "capacity" : "55", "unit": "litre" }],
+			}],
+			"activities" : [
+				{ "activity" : "Essence", "time" : ["30"] },
+				{ "activity" : "Recharge", "time" : [ "360", "60" ] },
+				{ "activity" : "Dormir", "time" : ["480"] },
+				{ "activity" : "Manger", "time" : ["120"] },
+				{ "activity" : "Touristique", "time" : ["180"] }],
+		},
 		"steps" : [
 		{	"step" : 1,
 			"start": {
