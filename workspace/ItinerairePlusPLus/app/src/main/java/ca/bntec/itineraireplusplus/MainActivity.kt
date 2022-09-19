@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
                 user = db.userGetCurrent()!!
                 this@MainActivity.runOnUiThread(java.lang.Runnable {
                     if (user != null) {
-                        txt.text = "Hello ${user.name}"
+                        txt.text = "Hello ${user.settings.vehicles.get(0).type}"
                     }
                 })
             } else {
@@ -47,10 +47,20 @@ class MainActivity : AppCompatActivity() {
             setTestData()
         }
 
+        var btnResetDate = findViewById<Button>(R.id.getData)
+        btnResetDate.setOnClickListener() {
+            resetSettings()
+        }
 
     }
 
+    fun resetSettings() {
+        MainScope().launch(Dispatchers.IO) {
+            var result = async { db.resetSettingsToDefault() }.await()
+            var t = result.isSuccess
+        }
 
+    }
 
 
     fun setTestData() {
@@ -88,9 +98,16 @@ class MainActivity : AppCompatActivity() {
         var destanations = ArrayList<IDestination>()
         destanations.add(destination)
         user.destinations = destanations
+
+        user.settings.energies.add(user.settings.energies.get(0))
+        user.settings.activities.add(user.settings.activities.get(0))
+        user.settings.activities.add(user.settings.activities.get(1))
+        user.settings.activities.add(user.settings.activities.get(2))
+        user.settings.vehicles.add(user.settings.vehicles.get(0))
+
         MainScope().launch(Dispatchers.IO) {
-         var result=  async{ db.userUpdateCurrent(user)}.await()
-            var t=result.isSuccess
+            var result = async { db.userUpdateCurrent(user) }.await()
+            var t = result.isSuccess
         }
 //
 //        "step" : 1,

@@ -3,6 +3,7 @@ package dbfirestore
 import android.os.Parcelable
 import interfaces.user.IAddress
 import interfaces.user.IDestination
+import interfaces.user.ISettings
 import interfaces.user.IUser
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
@@ -14,6 +15,7 @@ class FsUser(
     override var address: @RawValue IAddress=FsAddress(),
     override var email: String = "",
     override var role_id: Int = 0,
-    override var destinations: @RawValue ArrayList<IDestination>? = null
+    override var destinations: @RawValue ArrayList<IDestination>? = null,
+    override var settings:@RawValue  ISettings = FsSettings(),
 ) : IUser, Parcelable {
 }

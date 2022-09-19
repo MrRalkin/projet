@@ -20,6 +20,7 @@ class FsUserManager : IUserManager {
     }
 
     override suspend fun userIsAuthenticated(): Boolean {
+
         if (mAuth.currentUser != null) {
             return true
         }
@@ -40,7 +41,7 @@ class FsUserManager : IUserManager {
 
             val newUser = FsUser(
                 rsp.user!!.uid.toString(), user.name, FsAddress(), user.email, roleId,
-                ArrayList<IDestination>()
+                ArrayList<IDestination>(), getSettingsDefault()
             )
             db.collection(FsContract.TbUser.COLLECTION_NAME).document(newUser.id).set(newUser)
             curUser = newUser
@@ -122,116 +123,16 @@ class FsUserManager : IUserManager {
                     destinations.add(getDestination(dest as HashMap<String, Any>))
                 }
                 user.destinations = destinations
-
+                user.settings =
+                    getSettings(snp[FsContract.TbUser.FD_SETTINGS] as HashMap<String, Any>)
             }
             return user
 
         } catch (e: Exception) {
             println(e.message)
+            mAuth.signOut()
         }
         return null
-    }
-
-    fun getDestination(item: HashMap<String, Any>): FsDestination {
-        var result = FsDestination()
-        try {
-            result.name = item[FsContract.TbDestination.FD_NAME].toString()
-            result.address =
-                getAddress(item[FsContract.TbDestination.FD_ADDRESS] as HashMap<String, Any>)
-            result.coord = getCoord(item[FsContract.TbDestination.FD_COORD] as HashMap<String, Any>)
-            result.image = item[FsContract.TbDestination.FD_IMAGE].toString()
-            result.trip_time = item[FsContract.TbDestination.FD_TRIP_TIME].toString().toInt()
-            val items =
-                item[FsContract.TbDestination.FD_STEPS] as ArrayList<HashMap<String, FsStep>>
-
-            var steps = ArrayList<IStep>()
-            for (stp in items) {
-                steps.add(getStep(stp as HashMap<String, Any>))
-            }
-            result.steps = steps
-
-        } catch (e: Exception) {
-            println(e.message)
-        }
-        return result
-    }
-
-    fun getStep(item: HashMap<String, Any>): FsStep {
-        var result = FsStep()
-        try {
-            result.step = item[FsContract.TbStep.FD_STEP].toString().toInt()
-            result.start = getPoint(item[FsContract.TbStep.FD_START] as HashMap<String, Any>)
-            result.end = getPoint(item[FsContract.TbStep.FD_END] as HashMap<String, Any>)
-            result.trip_time = item[FsContract.TbStep.FD_TRIP_TIME].toString().toInt()
-            val items =
-                item[FsContract.TbStep.FD_ACTIVITIES] as ArrayList<HashMap<String, Activity>>
-
-            var activities = ArrayList<IActivity>()
-            for (act in items) {
-                activities.add(getActivity(act as HashMap<String, Any>))
-            }
-            result.activities = activities
-        } catch (e: Exception) {
-            println(e.message)
-        }
-
-        return result
-    }
-
-    fun getPoint(item: HashMap<String, Any>): FsPoint {
-        var result = FsPoint()
-        try {
-            result.name = item[FsContract.TbPoint.FD_NAME].toString()
-            result.coord = getCoord(item[FsContract.TbPoint.FD_COORD] as HashMap<String, Any>)
-            result.address = getAddress(item[FsContract.TbPoint.FD_ADDRESS] as HashMap<String, Any>)
-
-        } catch (e: Exception) {
-            println(e.message)
-        }
-
-        return result
-    }
-
-    fun getActivity(item: HashMap<String, Any>): FsActivity {
-        var result = FsActivity()
-        try {
-            result.activity = item[FsContract.TbActivity.FD_ACTIVITY].toString().toInt()
-            result.name = item[FsContract.TbActivity.FD_NAME].toString()
-            result.time = item[FsContract.TbActivity.FD_TIME].toString().toInt()
-
-        } catch (e: Exception) {
-            println(e.message)
-        }
-
-        return result
-    }
-
-    fun getCoord(item: HashMap<String, Any>): FsCoord {
-        var result = FsCoord()
-        try {
-            result.latitude = item[FsContract.TbCoord.FD_LATITUDE].toString()
-            result.longitude = item[FsContract.TbCoord.FD_LATITUDE].toString()
-        } catch (e: Exception) {
-            println(e.message)
-        }
-
-        return result
-    }
-
-    fun getAddress(item: HashMap<String, Any>): FsAddress {
-        var result = FsAddress()
-        try {
-            result.address = item[FsContract.TbAddress.FD_ADDRESS].toString()
-            result.city = item[FsContract.TbAddress.FD_CITY].toString()
-            result.state = item[FsContract.TbAddress.FD_STATE].toString()
-            result.zip = item[FsContract.TbAddress.FD_ZIP].toString()
-            result.country = item[FsContract.TbAddress.FD_COUNTRY].toString()
-
-        } catch (e: Exception) {
-            println(e.message)
-        }
-
-        return result
     }
 
     override suspend fun userGetCurrent(): IUser? {
@@ -418,6 +319,198 @@ class FsUserManager : IUserManager {
         return result
     }
 
+    private fun getDestination(item: HashMap<String, Any>): FsDestination {
+        var result = FsDestination()
+        try {
+            result.name = item[FsContract.TbDestination.FD_NAME].toString()
+            result.address =
+                getAddress(item[FsContract.TbDestination.FD_ADDRESS] as HashMap<String, Any>)
+            result.coord = getCoord(item[FsContract.TbDestination.FD_COORD] as HashMap<String, Any>)
+            result.image = item[FsContract.TbDestination.FD_IMAGE].toString()
+            result.trip_time = item[FsContract.TbDestination.FD_TRIP_TIME].toString().toInt()
+            val items =
+                item[FsContract.TbDestination.FD_STEPS] as ArrayList<HashMap<String, FsStep>>
+
+            var steps = ArrayList<IStep>()
+            for (stp in items) {
+                steps.add(getStep(stp as HashMap<String, Any>))
+            }
+            result.steps = steps
+
+        } catch (e: Exception) {
+            println(e.message)
+        }
+        return result
+    }
+
+    private fun getStep(item: HashMap<String, Any>): FsStep {
+        var result = FsStep()
+        try {
+            result.step = item[FsContract.TbStep.FD_STEP].toString().toInt()
+            result.start = getPoint(item[FsContract.TbStep.FD_START] as HashMap<String, Any>)
+            result.end = getPoint(item[FsContract.TbStep.FD_END] as HashMap<String, Any>)
+            result.trip_time = item[FsContract.TbStep.FD_TRIP_TIME].toString().toInt()
+            val items =
+                item[FsContract.TbStep.FD_ACTIVITIES] as ArrayList<HashMap<String, Activity>>
+
+            var activities = ArrayList<IActivity>()
+            for (act in items) {
+                activities.add(getActivity(act as HashMap<String, Any>))
+            }
+            result.activities = activities
+        } catch (e: Exception) {
+            println(e.message)
+        }
+
+        return result
+    }
+
+    private fun getPoint(item: HashMap<String, Any>): FsPoint {
+        var result = FsPoint()
+        try {
+            result.name = item[FsContract.TbPoint.FD_NAME].toString()
+            result.coord = getCoord(item[FsContract.TbPoint.FD_COORD] as HashMap<String, Any>)
+            result.address = getAddress(item[FsContract.TbPoint.FD_ADDRESS] as HashMap<String, Any>)
+
+        } catch (e: Exception) {
+            println(e.message)
+        }
+
+        return result
+    }
+
+    private fun getActivity(item: HashMap<String, Any>): FsActivity {
+        var result = FsActivity()
+        try {
+            result.activity = item[FsContract.TbActivity.FD_ACTIVITY].toString().toInt()
+            result.name = item[FsContract.TbActivity.FD_NAME].toString()
+            result.time = item[FsContract.TbActivity.FD_TIME].toString().toInt()
+
+        } catch (e: Exception) {
+            println(e.message)
+        }
+
+        return result
+    }
+
+    private fun getCoord(item: HashMap<String, Any>): FsCoord {
+        var result = FsCoord()
+        try {
+            result.latitude = item[FsContract.TbCoord.FD_LATITUDE].toString()
+            result.longitude = item[FsContract.TbCoord.FD_LATITUDE].toString()
+        } catch (e: Exception) {
+            println(e.message)
+        }
+
+        return result
+    }
+
+    private fun getAddress(item: HashMap<String, Any>): FsAddress {
+        var result = FsAddress()
+        try {
+            result.address = item[FsContract.TbAddress.FD_ADDRESS].toString()
+            result.city = item[FsContract.TbAddress.FD_CITY].toString()
+            result.state = item[FsContract.TbAddress.FD_STATE].toString()
+            result.zip = item[FsContract.TbAddress.FD_ZIP].toString()
+            result.country = item[FsContract.TbAddress.FD_COUNTRY].toString()
+
+        } catch (e: Exception) {
+            println(e.message)
+        }
+
+        return result
+    }
+
+    private fun getVehicle(item: HashMap<String, Any>): FsVehicle {
+        var result = FsVehicle()
+        try {
+            result.type = item[FsContract.TbVehicle.FD_TYPE].toString()
+            result.energy = item[FsContract.TbVehicle.FD_ENERGY].toString()
+            result.distance = item[FsContract.TbVehicle.FD_DISTANCE].toString().toInt()
+            result.mesure = item[FsContract.TbVehicle.FD_MESURE].toString()
+            result.capacity = item[FsContract.TbVehicle.FD_CAPACITY].toString().toInt()
+            result.unit = item[FsContract.TbVehicle.FD_UNIT].toString()
+        } catch (e: Exception) {
+            println(e.message)
+        }
+        return result
+    }
+
+    private fun getEnergy(item: HashMap<String, Any>): FsEnergy {
+        var result = FsEnergy()
+        try {
+            result.type = item[FsContract.TbEnergy.FD_TYPE].toString()
+            result.price = item[FsContract.TbEnergy.FD_PRICE].toString().toDouble()
+            result.unit = item[FsContract.TbEnergy.FD_UNIT].toString()
+
+        } catch (e: Exception) {
+            println(e.message)
+        }
+        return result
+    }
+
+    override suspend fun resetSettingsToDefault(): ActionResult {
+        var result = ActionResult(true, MESSAGE_RESET_SETTING_SUCCESS, "")
+
+        var settings = getSettingsDefault()
+        if (curUser != null) {
+            curUser!!.settings = settings
+        }
+
+        return userUpdateCurrent(curUser!!)
+    }
+
+
+    private fun getSettings(item: HashMap<String, Any>): FsSettings {
+        var result = FsSettings()
+        result.vehicles = ArrayList<IVehicle>()
+        result.activities = ArrayList<IActivity>()
+        result.energies = ArrayList<IEnergy>()
+        try {
+            if (item[FsContract.TbSettings.FD_VEHICLES] != null) {
+                for (vcl in item[FsContract.TbSettings.FD_VEHICLES] as ArrayList<HashMap<String, FsVehicle>>) {
+                    result.vehicles.add(getVehicle(vcl as HashMap<String, Any>))
+                }
+            }
+            if (item[FsContract.TbSettings.FD_ENERGIES] != null) {
+                for (enr in item[FsContract.TbSettings.FD_ENERGIES] as ArrayList<HashMap<String, FsEnergy>>) {
+                    result.energies.add(getEnergy(enr as HashMap<String, Any>))
+                }
+            }
+            if (item[FsContract.TbSettings.FD_ACTIVITIES] != null) {
+                for (act in item[FsContract.TbSettings.FD_ACTIVITIES] as ArrayList<HashMap<String, FsActivity>>) {
+                    result.activities.add(getActivity(act as HashMap<String, Any>))
+                }
+            }
+        } catch (e: Exception) {
+            println(e.message)
+        }
+        return result
+    }
+
+    private fun getSettingsDefault(): ISettings {
+        var result: ISettings = FsSettings()
+
+        result.energies = ArrayList<IEnergy>()
+        result.activities = ArrayList<IActivity>()
+        result.vehicles = ArrayList<IVehicle>()
+
+        result.vehicles.add(FsVehicle("Auto gas", "essence", 600, "km", 55, "litre"))
+        result.vehicles.add(FsVehicle("Auto electric", "électricité", 600, "km", 100, "kWh"))
+        result.vehicles.add(FsVehicle("Vélo", "nourriture", 50, "km", 2, ""))
+
+        result.activities.add(FsActivity(1, "Essence", 30))
+        result.activities.add(FsActivity(2, "Recharge", 60))
+        result.activities.add(FsActivity(3, "Dormir", 480))
+        result.activities.add(FsActivity(4, "Manger", 120))
+        result.activities.add(FsActivity(5, "Touristique", 180))
+
+        result.energies.add(FsEnergy("essence", 1.55, "litre"))
+        result.energies.add(FsEnergy("électricité", 0.147, "kWh"))
+        result.energies.add(FsEnergy("nourriture", 25.0, "repas"))
+        return result
+    }
+
     companion object {
         val db = Firebase.firestore
         val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -433,5 +526,6 @@ class FsUserManager : IUserManager {
         private val MESSAGE_ROLE_DELETED = "role deleted"
         private val MESSAGE_ROLE_UPDATED = "role updated"
         private val MESSAGE_ROLE_ASSIGNED = "role assigned"
+        private val MESSAGE_RESET_SETTING_SUCCESS = "setting updated to default"
     }
 }

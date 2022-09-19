@@ -23,5 +23,6 @@ interface IUserManager {
     suspend fun roleAdd(role:IRole):ActionResult
     suspend fun roleUpdate(role:IRole):ActionResult
     suspend fun roleAssign(user:IUser,role:IRole):ActionResult
+    suspend fun resetSettingsToDefault():ActionResult
 
 }

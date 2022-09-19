@@ -14,6 +14,8 @@ object FsContract {
             val FD_ADDRESS = "address"
             val FD_DESTINATIONS = "destinations"
             val FD_ROLE = "role"
+            val FD_SETTINGS= "settings"
+
         }
     }
 
@@ -79,6 +81,34 @@ object FsContract {
             val FD_IMAGE = "image"
             val FD_TRIP_TIME = "trip_time"
             val FD_STEPS = "steps"
+            val FD_SETTINGS= "settings"
+        }
+    }
+
+    class TbVehicle : BaseColumns {
+        companion object {
+            val FD_TYPE = "type"
+            val FD_ENERGY = "energy"
+            val FD_DISTANCE = "distance"
+            val FD_MESURE = "mesure"
+            val FD_CAPACITY = "capacity"
+            val FD_UNIT = "unit"
+        }
+    }
+
+    class TbEnergy : BaseColumns {
+        companion object {
+            val FD_TYPE = "type"
+            val FD_PRICE = "price"
+            val FD_UNIT = "unit"
+        }
+    }
+
+    class TbSettings : BaseColumns {
+        companion object {
+            val FD_VEHICLES = "vehicles"
+            val FD_ACTIVITIES = "activities"
+            val FD_ENERGIES = "energies"
         }
     }
 
