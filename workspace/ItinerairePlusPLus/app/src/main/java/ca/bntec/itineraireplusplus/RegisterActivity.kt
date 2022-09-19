@@ -85,6 +85,7 @@ class RegisterActivity : AppCompatActivity() {
                     val result =
                         async { userManager.userRegister(Register(userName, email, pwd)) }.await()
                     if (result.isSuccess) {
+
                         // in on success method we are hiding our progress bar and opening a login activity.
                         this@RegisterActivity.runOnUiThread(java.lang.Runnable {
                             loadingPB.visibility = View.GONE

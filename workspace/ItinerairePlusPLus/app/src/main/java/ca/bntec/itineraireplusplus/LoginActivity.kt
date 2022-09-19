@@ -61,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
             MainScope().launch(Dispatchers.IO) {
                 val result = async { userManager.userLogin(Login(email, password)) }.await()
                 if (result.isSuccess) {
-
+                    async { userManager.userGetCurrent() }.await()
                     this@LoginActivity.runOnUiThread(java.lang.Runnable {
                         showMessage("Login Successful..")
                         loadingPB.visibility = View.GONE

@@ -11,7 +11,7 @@ import kotlinx.parcelize.RawValue
 class FsUser(
     override var id: String = "",
     override var name: String = "",
-    override var address: @RawValue IAddress = FsAddress(),
+    override var address: @RawValue IAddress=FsAddress(),
     override var email: String = "",
     override var role_id: Int = 0,
     override var destinations: @RawValue ArrayList<IDestination>? = null

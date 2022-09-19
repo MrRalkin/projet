@@ -14,6 +14,7 @@ interface IUserManager {
     suspend fun userUpdate(user:IUser): ActionResult
     suspend fun userUpdateCurrent(user:IUser): ActionResult
     suspend fun userDelete(user:IUser):ActionResult
+    suspend fun userIsAuthenticated():Boolean
 
     suspend fun rolesGet():ArrayList<IRole>
     suspend fun roleGetByName(name:String):IRole?

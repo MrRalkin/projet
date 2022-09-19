@@ -1,11 +1,11 @@
-package dbfirestore
+package classes
 
 import android.os.Parcelable
 import interfaces.user.IAddress
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class FsAddress(
+class Address(
     override var address: String = "",
     override var city: String = "",
     override var state: String = "",

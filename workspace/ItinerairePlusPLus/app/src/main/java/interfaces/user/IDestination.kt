@@ -1,46 +1,49 @@
 package interfaces.user
 
-interface ICoord {
-    var longitude: String
-    var latitude: String
-}
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-interface IAddress {
-    var address: String
-    var city: String
-    var state: String
-    var zip: String
-    var country: String
-}
+abstract class ICoord(
+    open var longitude: String = "",
+    open var latitude: String = ""
+)
 
-interface IPoint {
-    var name: String
-    var coord: ICoord
-    var address: IAddress
-}
+abstract class IAddress(
+    open var address: String = "",
+    open var city: String = "",
+    open var state: String = "",
+    open var zip: String = "",
+    open var country: String = "",
+)
+
+abstract class IPoint(
+    open var name: String = "",
+    open var coord: ICoord? = null,
+    open var address: IAddress? = null
+)
 
 
-interface IActivity {
-    var activity: Int
-    var name: String
-    var time: Int
-}
+abstract class IActivity(
+    open var activity: Int = 0,
+    open var name: String = "",
+    open var time: Int = 0
+)
 
-interface IStep {
-    var step: Int
-    var start: IPoint
-    var end: IPoint
-    var trip_time: Int
-    var activities: ArrayList<IActivity>
-}
+abstract class IStep(
+    open var step: Int = 0,
+    open var start: IPoint?=null,
+    open var end: IPoint?=null,
+    open var trip_time: Int = 0,
+    open var activities: ArrayList<IActivity>? = null
+)
 
-interface IDestination {
-    var name: String
-    var coord: ICoord
-    var address: IAddress
-    var image: String
-    var trip_time: Int
-    var steps: ArrayList<IStep>
-}
+abstract class IDestination(
+    open var name: String = "",
+    open var coord: ICoord?=null,
+    open var address: IAddress?=null,
+    open var image: String = "",
+    open var trip_time: Int = 0,
+    open var steps: ArrayList<IStep>? = null
+)
 
 

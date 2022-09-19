@@ -27,6 +27,7 @@ object FsContract {
 
     class TbAddress : BaseColumns {
         companion object {
+            val TB_NAME = "address"
             val FD_ADDRESS = "address"
             val FD_CITY = "city"
             val FD_STATE = "state"
