@@ -148,6 +148,11 @@ class MainActivity : AppCompatActivity() {
         // adding a click listener for option selected on below line.
         val id = item.itemId
         return when (id) {
+            R.id.idSettings->{
+                showSettings()
+                true
+            }
+
             R.id.idLogOut -> {
                 // displaying a toast message on user logged out inside on click.
                 Toast.makeText(applicationContext, "User Logged Out", Toast.LENGTH_LONG).show()
@@ -162,6 +167,11 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun showSettings(){
+        val i = Intent(this@MainActivity, SettingsActivity::class.java)
+        startActivity(i)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

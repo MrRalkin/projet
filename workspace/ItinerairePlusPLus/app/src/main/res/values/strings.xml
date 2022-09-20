@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ItinerairePlusPLus</string>
+    <string name="setting_user_profile_btn_view">View profile</string>
+    <string name="setting_user_profile_btn_edit">Edit profile</string>
+    <string name="setting_user_setting_btn_edit">Edit settings</string>
+
 </resources>

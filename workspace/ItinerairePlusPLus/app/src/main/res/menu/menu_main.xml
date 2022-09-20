@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/idSettings"
+        android:icon="@drawable/ic_baseline_settings"
+        android:title="Setting" />
+    <item
         android:id="@+id/idLogOut"
         android:icon="@drawable/ic_logout"
         android:title="Log Out" />

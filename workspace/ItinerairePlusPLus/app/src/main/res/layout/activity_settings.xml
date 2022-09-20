@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/idBtnShowUserInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/setting_user_profile_btn_view"
+        android:textAlignment="textStart" />
+
+    <LinearLayout
+        android:id="@+id/setting_profile_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/setting_profile_info_name"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Name" />
+
+        <TextView
+            android:id="@+id/setting_profile_info_address"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="Address" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="@string/setting_user_profile_btn_edit" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/idBtnShowSettingInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/setting_user_profile_btn_view"
+        android:textAlignment="textStart" />
+
+    <LinearLayout
+        android:id="@+id/setting_settings_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:padding="10dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+          <TextView
+              android:layout_width="200dp"
+              android:layout_height="wrap_content"
+              android:text="Vehicules"
+                />
+            <Button
+                android:id="@+id/setting_vehicle_btn_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add new"/>
+        </LinearLayout>
+      <ListView
+          android:id="@+id/setting_vehicles_listview"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Energies"
+                />
+            <Button
+                android:id="@+id/setting_energy_btn_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add new"/>
+        </LinearLayout>
+        <ListView
+            android:id="@+id/setting_energies_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Vehicules"
+                />
+            <Button
+                android:id="@+id/setting_activity_btn_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add new"/>
+        </LinearLayout>
+        <ListView
+            android:id="@+id/setting_activities_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>
