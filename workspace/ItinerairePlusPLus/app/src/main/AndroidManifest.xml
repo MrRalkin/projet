@@ -38,7 +38,8 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".DestinationsActivity" />
+            android:name=".DestinationsActivity"
+            android:parentActivityName=".MainActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
