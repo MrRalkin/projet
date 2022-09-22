@@ -373,8 +373,6 @@
 for (u of t) {
 	console.log("*** ****************************************")
 	console.log("*** -> " + u.UID)
-	console.log("--- -> my_settings")
-	for (v of u.my_settings.vehicles) {
 	console.log("--- -> general_settings")
 	for (v of u.general_settings.vehicles) {
 		console.log("--- -> vehicles")
