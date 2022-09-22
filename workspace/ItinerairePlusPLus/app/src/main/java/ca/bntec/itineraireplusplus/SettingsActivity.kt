@@ -39,7 +39,7 @@ class SettingsActivity : AppCompatActivity() {
     lateinit var btnVehicleAdd: Button
     lateinit var btnActivityAdd: Button
     lateinit var btnEnergyAdd: Button
-
+    lateinit var btnEditUser: Button
 
     lateinit var toast: Toast
     var isDataChanged = false
@@ -76,15 +76,20 @@ class SettingsActivity : AppCompatActivity() {
 
         btnVehicleAdd = findViewById(R.id.setting_vehicle_btn_add)
         btnVehicleAdd.setOnClickListener { view ->
-            vehicleAddEdit(Vehicle(),-1)
+            vehicleAddEdit(Vehicle(), -1)
         }
         btnActivityAdd = findViewById(R.id.setting_activity_btn_add)
         btnActivityAdd.setOnClickListener { view ->
-            activityAddEdit(Activity(),-1)
+            activityAddEdit(Activity(), -1)
         }
         btnEnergyAdd = findViewById(R.id.setting_energy_btn_add)
         btnEnergyAdd.setOnClickListener { view ->
-            energyAddEdit(Energy(),-1)
+            energyAddEdit(Energy(), -1)
+        }
+
+        btnEditUser = findViewById(R.id.settings_user_edit)
+        btnEditUser.setOnClickListener { view ->
+            userEdit()
         }
 
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT)
@@ -105,7 +110,7 @@ class SettingsActivity : AppCompatActivity() {
             } else {
                 showMessage(result.errorMessage)
             }
-            isDataChanged=false
+            isDataChanged = false
             getUserData()
         }
     }
@@ -179,6 +184,53 @@ class SettingsActivity : AppCompatActivity() {
                 AdapterSettingsActivities(context, R.layout.adapter_settings_activities, items)
         })
     }
+
+    fun userEdit() {
+
+        val dialog = Dialog(context)
+        dialog.setContentView(R.layout.settings_edit_user_info)
+        val btnCancel = dialog.findViewById<Button>(R.id.btnAnnuler)
+        val btnOk = dialog.findViewById<Button>(R.id.btnConfirmer)
+        val dialogTitle = dialog.findViewById<TextView>(R.id.txt_setting_user_title)
+
+        val name = dialog.findViewById<EditText>(R.id.setting_edit_user_name)
+        val address = dialog.findViewById<EditText>(R.id.setting_edit_user_address)
+        val city = dialog.findViewById<EditText>(R.id.setting_edit_user_city)
+        val state = dialog.findViewById<EditText>(R.id.setting_edit_user_state)
+        val zip = dialog.findViewById<EditText>(R.id.setting_edit_user_zip)
+        val country = dialog.findViewById<EditText>(R.id.setting_edit_user_country)
+
+        name.setText(user.name)
+        address.setText(user.address.address)
+        city.setText(user.address.city)
+        state.setText(user.address.state)
+        zip.setText(user.address.zip)
+        country.setText(user.address.country)
+
+        dialogTitle.setText("Ajouter un vehucle")
+        btnCancel.setOnClickListener { dialog.dismiss() }
+        btnOk.setOnClickListener(View.OnClickListener {
+            if (name.text.toString().isEmpty()) {
+                name.error = "Rentre le nome"
+                return@OnClickListener
+            } else {
+                name.error = null
+            }
+
+            user.name = name.text.toString()
+            user.address.address = address.text.toString()
+            user.address.city = city.text.toString()
+            user.address.state = state.text.toString()
+            user.address.zip = zip.text.toString()
+            user.address.country = country.text.toString()
+            isDataChanged = true
+            showData(user)
+            dialog.dismiss()
+        })
+
+        dialog.show()
+    }
+
 
     fun vehicleAddEdit(vehicle: IVehicle, idx: Int) {
         var item: IVehicle = vehicle
