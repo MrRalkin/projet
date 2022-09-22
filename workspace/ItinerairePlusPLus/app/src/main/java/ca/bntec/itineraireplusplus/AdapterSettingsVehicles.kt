@@ -25,15 +25,15 @@ class AdapterSettingsVehicles(var mCtx: Context, var resource:Int, var items:Arr
             view.setBackgroundColor(Color.rgb(240, 240, 240))
         }
         val artiste = items[position]
-        val aId=view.findViewById<TextView>(R.id.art_id)
-        val aNom=view.findViewById<TextView>(R.id.art_nom)
-        val aPrenom=view.findViewById<TextView>(R.id.art_prenom)
-        val aAnnee=view.findViewById<TextView>(R.id.art_annee)
+//        val aId=view.findViewById<TextView>(R.id.art_id)
+//        val aNom=view.findViewById<TextView>(R.id.art_nom)
+//        val aPrenom=view.findViewById<TextView>(R.id.art_prenom)
+//        val aAnnee=view.findViewById<TextView>(R.id.art_annee)
 
-        aId.text="ID: ${artiste.id.toString()}"
-        aNom.text="Nom: ${artiste.nom}"
-        aPrenom.text="Prenom: ${artiste.prenom}"
-        aAnnee.text="Annee: ${artiste.annee_naissance}"
+//        aId.text="ID: ${artiste.id.toString()}"
+//        aNom.text="Nom: ${artiste.nom}"
+//        aPrenom.text="Prenom: ${artiste.prenom}"
+//        aAnnee.text="Annee: ${artiste.annee_naissance}"
 
         return view
     }

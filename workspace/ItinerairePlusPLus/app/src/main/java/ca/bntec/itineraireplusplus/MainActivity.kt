@@ -31,7 +31,8 @@ class MainActivity : AppCompatActivity() {
                 user = db.userGetCurrent()!!
                 this@MainActivity.runOnUiThread(java.lang.Runnable {
                     if (user != null) {
-                        txt.text = "Hello ${user.settings.vehicles.get(0).type}"
+                        txt.text = "Hello ${user.settings.activities.get(0).name}"
+//                        txt.text = "Hello ${user.settings.vehicles.get(0).type}"
                     }
                 })
             } else {
@@ -65,17 +66,38 @@ class MainActivity : AppCompatActivity() {
 
     fun setTestData() {
         user.address = Address("829 rue paris", "Paris", "Qc", "J4J1A5", "Canada")
+
+        /**
+         * destinations
+         * */
         var destination: IDestination = Destination()
         destination.name = "First destination"
         destination.address = Address("", "Ottawa", "On", "", "Canada")//
         destination.coord = Coord("45.2487862", "-76.3606792")
-        destination.trip_time = 2400
+        destination.trip_time = 240
 
+        var destination2: IDestination = Destination()
+        destination2.name = "Deuxième destination"
+        destination2.address = Address("", "Toronto", "On", "", "Canada")//
+        destination2.coord = Coord("43.2487862", "-76.3606792")
+        destination2.trip_time = 360
 
+        /**
+         * activities
+         * */
         var act = ArrayList<IActivity>()
         act.add(Activity(1, "Manger", 120))
-        act.add(Activity(2, "Back home", 2400))
+        act.add(Activity(2, "Dormir", 360))
 
+        var act2 = ArrayList<IActivity>()
+        act2.add(Activity(1, "Manger", 120))
+        act2.add(Activity(2, "Touristique", 240))
+        act2.add(Activity(3, "Back home", 2400))
+
+
+        /**
+         * steps
+         * */
         var step: Step = Step(
             1,
             Point(
@@ -91,12 +113,33 @@ class MainActivity : AppCompatActivity() {
             trip_time = 2400,
             activities = act
         )
+
+        var step2: Step = Step(1,
+            Point("Montreal",
+                Coord("-12.000909", "-12.000909"),
+                Address("", "Montreal", "Qc", "", "Canada")),
+            Point("Toronto",
+                Coord("-12.000909", "-12.000909"),
+                Address("", "Toronto", "On", "", "Canada")),
+            trip_time = 2400,
+            activities = act2
+        )
+
         var steps = ArrayList<IStep>()
         steps.add(step)
+        steps.add(step)
+        steps.add(step2)
+        var steps2 = ArrayList<IStep>()
+        steps2.add(step2)
 
         destination.steps = steps
+        destination2.steps = steps2
+
+
         var destanations = ArrayList<IDestination>()
         destanations.add(destination)
+        destanations.add(destination2)
+        destanations.add(destination2)
         user.destinations = destanations
 
         user.settings.energies.add(user.settings.energies.get(0))
@@ -153,6 +196,11 @@ class MainActivity : AppCompatActivity() {
                 true
             }
 
+            R.id.idDestinations->{
+                showDestinations()
+                true
+            }
+
             R.id.idLogOut -> {
                 // displaying a toast message on user logged out inside on click.
                 Toast.makeText(applicationContext, "User Logged Out", Toast.LENGTH_LONG).show()
@@ -171,6 +219,11 @@ class MainActivity : AppCompatActivity() {
 
     fun showSettings(){
         val i = Intent(this@MainActivity, SettingsActivity::class.java)
+        startActivity(i)
+    }
+
+    fun showDestinations(){
+        val i = Intent(this@MainActivity, DestinationsActivity::class.java)
         startActivity(i)
     }
 
