@@ -3,7 +3,11 @@
     <item
         android:id="@+id/idSettings"
         android:icon="@drawable/ic_baseline_settings"
-        android:title="Setting" />
+        android:title="Settings" />
+    <item
+        android:id="@+id/idDestinations"
+        android:icon="@drawable/ic_baseline_settings"
+        android:title="Destinations" />
     <item
         android:id="@+id/idLogOut"
         android:icon="@drawable/ic_logout"

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/ll_steps_section"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_step_name"
+            android:layout_width="321dp"
+            android:layout_height="wrap_content"
+            android:text="NameStep" />
+
+        <Button
+            android:id="@+id/btn_step_to_detail"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:backgroundTint="@color/black"
+            android:layout_gravity="right"
+            android:text="+" />
+
+    </LinearLayout>
+</LinearLayout>

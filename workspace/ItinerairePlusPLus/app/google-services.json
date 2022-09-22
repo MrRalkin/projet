@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "491412897255",
-    "project_id": "itineraireplusplus",
-    "storage_bucket": "itineraireplusplus.appspot.com"
+    "project_number": "611242522124",
+    "project_id": "itineraireplusplus-5a105",
+    "storage_bucket": "itineraireplusplus-5a105.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:491412897255:android:9b4bd06974eb7c1ecc1142",
+        "mobilesdk_app_id": "1:611242522124:android:263b606e3bd0ac0e546029",
         "android_client_info": {
           "package_name": "ca.bntec.itineraireplusplus"
         }
       },
       "oauth_client": [
         {
-          "client_id": "491412897255-ngql7dvkpasftgs0rl6vi9n690bg7q70.apps.googleusercontent.com",
+          "client_id": "611242522124-vpb2d2merno2gqun7j92dl5b078ijvhp.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCDujryn-llyPT6DOkXr8AjR2BxULOkufY"
+          "current_key": "AIzaSyBj58A741Nm-NgqgxP1kr5Poz8g80kOOmo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "491412897255-ngql7dvkpasftgs0rl6vi9n690bg7q70.apps.googleusercontent.com",
+              "client_id": "611242522124-vpb2d2merno2gqun7j92dl5b078ijvhp.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
