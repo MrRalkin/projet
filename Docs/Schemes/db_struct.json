@@ -111,7 +111,6 @@
 		"zip" : "J4J 3K5",
 		"country" : "France",
 	},
-	"my_settings" : {
 		"vehicles" : [{
 			"type" : "Auto",
 			"details" : [{ "energy" : "essence", "distance" : "600", "mesure" : "km", "capacity" : "55", "unit": "litre" }],
@@ -214,7 +213,6 @@
 		"zip" : "J4J 3K5",
 		"country" : "France",
 	},
-	"my_settings" : {
 		"vehicles" : [{
 			"type" : "Auto",
 			"details" : [{ "energy" : "essence", "distance" : "600", "mesure" : "km", "capacity" : "55", "unit": "litre" }],
@@ -383,7 +381,6 @@ for (u of t) {
 	}
 
 	console.log("--- -> activities")
-	for (a of u.my_settings.activities) {
 		console.log("--- -> " + a.activity)
 		for (ti of a.time) {
 			console.log("--- ---> " + ti)
