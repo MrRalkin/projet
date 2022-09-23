@@ -1,4 +1,4 @@
-package classes
+package classes.auth
 
 import interfaces.auth.IRegister
 

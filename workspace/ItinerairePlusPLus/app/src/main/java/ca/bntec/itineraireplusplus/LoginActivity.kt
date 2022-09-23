@@ -10,9 +10,8 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import classes.AppGlobal
-import classes.Login
+import classes.auth.Login
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.async

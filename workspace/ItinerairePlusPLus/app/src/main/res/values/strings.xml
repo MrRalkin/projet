@@ -3,5 +3,6 @@
     <string name="setting_user_profile_btn_view">View profile</string>
     <string name="setting_user_profile_btn_edit">Edit profile</string>
     <string name="setting_user_setting_btn_edit">Edit settings</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>

@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import classes.*
+import classes.settings.*
 import interfaces.user.IActivity
 import interfaces.user.IDestination
 import interfaces.user.IStep
@@ -117,10 +118,12 @@ class MainActivity : AppCompatActivity() {
         var step2: Step = Step(1,
             Point("Montreal",
                 Coord("-12.000909", "-12.000909"),
-                Address("", "Montreal", "Qc", "", "Canada")),
+                Address("", "Montreal", "Qc", "", "Canada")
+            ),
             Point("Toronto",
                 Coord("-12.000909", "-12.000909"),
-                Address("", "Toronto", "On", "", "Canada")),
+                Address("", "Toronto", "On", "", "Canada")
+            ),
             trip_time = 2400,
             activities = act2
         )
@@ -200,6 +203,10 @@ class MainActivity : AppCompatActivity() {
                 showDestinations()
                 true
             }
+            R.id.idMap->{
+                showMap()
+                true
+            }
 
             R.id.idLogOut -> {
                 // displaying a toast message on user logged out inside on click.
@@ -217,6 +224,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun showMap(){
+        val i = Intent(this@MainActivity, MapsActivity::class.java)
+        startActivity(i)
+    }
     fun showSettings(){
         val i = Intent(this@MainActivity, SettingsActivity::class.java)
         startActivity(i)

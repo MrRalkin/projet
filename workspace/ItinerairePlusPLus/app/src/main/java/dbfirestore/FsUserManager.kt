@@ -1,8 +1,8 @@
 package dbfirestore
 
 import classes.ActionResult
-import classes.Activity
-import classes.Destination
+import classes.settings.Activity
+import classes.settings.Destination
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot

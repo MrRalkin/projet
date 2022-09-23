@@ -1,13 +1,14 @@
-package ca.bntec.itineraireplusplus
+package ca.bntec.itineraireplusplus.adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
+import ca.bntec.itineraireplusplus.R
+import ca.bntec.itineraireplusplus.SettingsActivity
 import interfaces.user.IEnergy
 
 class AdapterSettingsEnergies(var mCtx: Context, var resource: Int, var items: ArrayList<IEnergy>) :

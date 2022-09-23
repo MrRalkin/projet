@@ -1,4 +1,4 @@
-package classes
+package classes.settings
 
 import android.os.Parcelable
 import interfaces.user.IAddress

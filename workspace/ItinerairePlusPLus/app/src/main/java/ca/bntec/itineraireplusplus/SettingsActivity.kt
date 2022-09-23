@@ -7,10 +7,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
-import classes.Activity
+import ca.bntec.itineraireplusplus.adapter.AdapterSettingsActivities
+import ca.bntec.itineraireplusplus.adapter.AdapterSettingsEnergies
+import ca.bntec.itineraireplusplus.adapter.AdapterSettingsVehicles
+import classes.settings.Activity
 import classes.AppGlobal
-import classes.Energy
-import classes.Vehicle
+import classes.settings.Energy
+import classes.settings.Vehicle
 import interfaces.user.IActivity
 import interfaces.user.IEnergy
 import interfaces.user.IUser
