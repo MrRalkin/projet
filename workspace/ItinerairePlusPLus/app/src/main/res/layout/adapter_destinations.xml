@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical">
 
     <LinearLayout
@@ -15,16 +13,23 @@
 
         <TextView
             android:id="@+id/tv_destination_name"
-            android:layout_width="331dp"
+            android:layout_width="345dp"
             android:layout_height="wrap_content"
             android:text="Name" />
 
         <Button
             android:id="@+id/btn_destination_to_steps"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="right"
-            android:text="+" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="4dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:drawableRight="@drawable/baseline_expand_more_24"
+            android:drawableTint="@color/white"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"  />
 
     </LinearLayout>
 
@@ -35,10 +40,9 @@
         android:text="Temps du voyage" />
 
 
-        <ListView
-            android:id="@+id/lv_steps"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible" />
-
+    <ListView
+        android:id="@+id/lv_steps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 </LinearLayout>

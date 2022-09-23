@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import classes.Activity
 import classes.AppGlobal
 import classes.Energy
 import classes.Vehicle
+import com.google.android.material.snackbar.Snackbar
 import interfaces.user.IActivity
 import interfaces.user.IEnergy
 import interfaces.user.IUser
@@ -37,11 +39,13 @@ class SettingsActivity : AppCompatActivity() {
     lateinit var btnSaveChanges: Button
     lateinit var btnCancelChanges: Button
     lateinit var btnVehicleAdd: Button
+    lateinit var btnVehiclesMoreLess:Button
     lateinit var btnActivityAdd: Button
+    lateinit var btnActivityMoreLess: Button
     lateinit var btnEnergyAdd: Button
+    lateinit var btnEnergyMoreLess: Button
     lateinit var btnEditUser: Button
 
-    lateinit var toast: Toast
     var isDataChanged = false
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -78,13 +82,29 @@ class SettingsActivity : AppCompatActivity() {
         btnVehicleAdd.setOnClickListener { view ->
             vehicleAddEdit(Vehicle(), -1)
         }
+        listViewVehicles = findViewById(R.id.setting_vehicles_listview)
+        btnVehiclesMoreLess = findViewById(R.id.setting_vehicle_btn_more_less)
+        btnVehiclesMoreLess.setOnClickListener { view ->
+            setListViewVisibilityAndMoreLessButton(listViewVehicles, btnVehiclesMoreLess)
+        }
+
         btnActivityAdd = findViewById(R.id.setting_activity_btn_add)
         btnActivityAdd.setOnClickListener { view ->
             activityAddEdit(Activity(), -1)
         }
+        listViewActivities = findViewById(R.id.setting_activities_listview)
+        btnActivityMoreLess = findViewById(R.id.setting_activity_btn_more_less)
+        btnActivityMoreLess.setOnClickListener { view ->
+            setListViewVisibilityAndMoreLessButton(listViewActivities, btnActivityMoreLess)
+        }
         btnEnergyAdd = findViewById(R.id.setting_energy_btn_add)
         btnEnergyAdd.setOnClickListener { view ->
             energyAddEdit(Energy(), -1)
+        }
+        listViewEnergies = findViewById(R.id.setting_energies_listview)
+        btnEnergyMoreLess = findViewById(R.id.setting_energy_btn_more_less)
+        btnEnergyMoreLess.setOnClickListener { view ->
+            setListViewVisibilityAndMoreLessButton(listViewEnergies, btnEnergyMoreLess)
         }
 
         btnEditUser = findViewById(R.id.settings_user_edit)
@@ -92,14 +112,17 @@ class SettingsActivity : AppCompatActivity() {
             userEdit()
         }
 
-        toast = Toast.makeText(this, "", Toast.LENGTH_SHORT)
-
-        listViewVehicles = findViewById<ListView>(R.id.setting_vehicles_listview)
-        listViewActivities = findViewById<ListView>(R.id.setting_activities_listview)
-        listViewEnergies = findViewById<ListView>(R.id.setting_energies_listview)
-
         getUserData()
+    }
 
+    private fun setListViewVisibilityAndMoreLessButton(lv : ListView, btn : Button) {
+        if (lv.isVisible) {
+            btn.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.baseline_expand_more_24,0)
+            lv.isVisible = false
+        } else {
+            btn.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.baseline_expand_less_24,0)
+            lv.isVisible = true
+        }
     }
 
     fun setUserData() {
@@ -128,29 +151,18 @@ class SettingsActivity : AppCompatActivity() {
         this@SettingsActivity.runOnUiThread(java.lang.Runnable {
 
             txtName.text = user.name
-            txtAddress.text = """
-                    Address: ${user.address.address}
-                    City:${user.address.city}, State:${user.address.state}
-                    Country:${user.address.zip}, Zip:${user.address.state}
+            val txtMessage = """
+                    Adresse: ${user.address.address}
+                    Ville:${user.address.city}, (${user.address.state})
+                    Pays:${user.address.country}, Zip:${user.address.zip}
                 """.trimIndent()
+            txtAddress.text = txtMessage
 
-            var vehicles: String = ""
-            for (item in user.settings.vehicles) {
-                vehicles += "Type:${item.type}, Energy:${item.energy}, Distance:${item.distance},\n Mesure: ${item.mesure}, Capacity:${item.capacity}, Unit:${item.unit}\n"
-            }
-            var energies: String = ""
-            for (item in user.settings.energies) {
-                energies += "Type:${item.type}, Price:${item.price}, Unit:${item.unit}\n"
-            }
-            var activities: String = ""
-            for (item in user.settings.activities) {
-                activities += "Name:${item.name}, Time:${item.time}\n"
-            }
             listVehiclesShow(user.settings.vehicles)
             listEnergiesShow(user.settings.energies)
             listActivitiesShow(user.settings.activities)
-            setSaveButtons()
 
+            setSaveButtons()
         })
     }
 
@@ -207,11 +219,11 @@ class SettingsActivity : AppCompatActivity() {
         zip.setText(user.address.zip)
         country.setText(user.address.country)
 
-        dialogTitle.setText("Ajouter un vehucle")
+        dialogTitle.setText("Modification de l'utilisateur")
         btnCancel.setOnClickListener { dialog.dismiss() }
         btnOk.setOnClickListener(View.OnClickListener {
             if (name.text.toString().isEmpty()) {
-                name.error = "Rentre le nome"
+                name.error = "Entrer le nom"
                 return@OnClickListener
             } else {
                 name.error = null
@@ -231,9 +243,8 @@ class SettingsActivity : AppCompatActivity() {
         dialog.show()
     }
 
-
     fun vehicleAddEdit(vehicle: IVehicle, idx: Int) {
-        var item: IVehicle = vehicle
+        val item: IVehicle = vehicle
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.settings_add_edit_vehicle)
         val btnCancel = dialog.findViewById<Button>(R.id.btnAnnuler)
@@ -254,41 +265,41 @@ class SettingsActivity : AppCompatActivity() {
         capacity.setText(item.capacity.toString())
         unit.setText(item.unit)
 
-        dialogTitle.setText("Ajouter un vehucle")
+        dialogTitle.text = "Ajouter un véhicule"
         btnCancel.setOnClickListener { dialog.dismiss() }
         btnOk.setOnClickListener(View.OnClickListener {
             if (type.text.toString().isEmpty()) {
-                type.error = "Rentre le type"
+                type.error = "Entrer le type"
                 return@OnClickListener
             } else {
                 type.error = null
             }
             if (energy.text.toString().isEmpty()) {
-                energy.error = "Rentre l'energy"
+                energy.error = "Entrer l'énergie"
                 return@OnClickListener
             } else {
                 energy.error = null
             }
             if (distance.text.toString().isEmpty()) {
-                distance.error = "Rentre la distance"
+                distance.error = "Entrer la distance"
                 return@OnClickListener
             } else {
                 distance.error = null
             }
             if (mesure.text.toString().isEmpty()) {
-                mesure.error = "Rentre le mesure"
+                mesure.error = "Entrer la mesure"
                 return@OnClickListener
             } else {
                 mesure.error = null
             }
             if (capacity.text.toString().isEmpty()) {
-                capacity.error = "Rentre la capacite"
+                capacity.error = "Entrer la capacité"
                 return@OnClickListener
             } else {
                 capacity.error = null
             }
             if (unit.text.toString().isEmpty()) {
-                unit.error = "Rentre l'unit'"
+                unit.error = "Entrer l'unité"
                 return@OnClickListener
             } else {
                 unit.error = null
@@ -316,7 +327,7 @@ class SettingsActivity : AppCompatActivity() {
     fun vehicleDelete(vehicle: IVehicle) {
 
         if (user.settings.vehicles.count() <= 1) {
-            Toast.makeText(context, "Can't delete last record", Toast.LENGTH_SHORT)
+            Snackbar.make(context, viewUser, "Can't delete last record", Snackbar.LENGTH_SHORT).show()
             return
         }
         val dialog = Dialog(context)
@@ -324,25 +335,19 @@ class SettingsActivity : AppCompatActivity() {
         val btnCancel = dialog.findViewById<Button>(R.id.btnCancel)
         val btnOk = dialog.findViewById<Button>(R.id.btnOk)
         val dialogTitle = dialog.findViewById<TextView>(R.id.dialogTitle)
-        val propertyName = dialog.findViewById<TextView>(R.id.propertyName)
         var propertyValue = dialog.findViewById<EditText>(R.id.propertyValue)
 
-        dialogTitle.setText("Supprimer le vehucle")
-        propertyName.setText("Name")
+        dialogTitle.setText("Supprimer le vehicule")
         propertyValue.setText(vehicle.type)
         propertyValue.isEnabled = false
         propertyValue.setTextColor(ContextCompat.getColor(context, R.color.black))
         btnCancel.setOnClickListener { dialog.dismiss() }
         btnOk.setOnClickListener(View.OnClickListener {
-
-            dialog.dismiss()
-            title = "Delete confirm"
             user.settings.vehicles.remove(vehicle)
+            isDataChanged = true
             showData(user)
             dialog.dismiss()
         })
-        isDataChanged = true
-        showData(user)
         dialog.show()
     }
 
@@ -362,23 +367,23 @@ class SettingsActivity : AppCompatActivity() {
         price.setText(item.price.toString())
         unit.setText(item.unit)
 
-        dialogTitle.setText("Ajouter un vehucle")
+        dialogTitle.setText("Ajouter l'énergie")
         btnCancel.setOnClickListener { dialog.dismiss() }
         btnOk.setOnClickListener(View.OnClickListener {
             if (type.text.toString().isEmpty()) {
-                type.error = "Rentre le type"
+                type.error = "Entrer le type"
                 return@OnClickListener
             } else {
                 type.error = null
             }
             if (price.text.toString().isEmpty()) {
-                price.error = "Rentre le price"
+                price.error = "Entrer le prix"
                 return@OnClickListener
             } else {
                 price.error = null
             }
             if (unit.text.toString().isEmpty()) {
-                unit.error = "Rentre l'unit'"
+                unit.error = "Entrer l'unité"
                 return@OnClickListener
             } else {
                 unit.error = null
@@ -403,7 +408,7 @@ class SettingsActivity : AppCompatActivity() {
 
     fun energyDelete(energy: IEnergy) {
         if (user.settings.energies.count() <= 1) {
-            Toast.makeText(context, "Can't delete last record", Toast.LENGTH_SHORT)
+            Snackbar.make(context, viewUser, "Can't delete last record", Snackbar.LENGTH_SHORT).show()
             return
         }
         val dialog = Dialog(context)
@@ -411,18 +416,14 @@ class SettingsActivity : AppCompatActivity() {
         val btnCancel = dialog.findViewById<Button>(R.id.btnCancel)
         val btnOk = dialog.findViewById<Button>(R.id.btnOk)
         val dialogTitle = dialog.findViewById<TextView>(R.id.dialogTitle)
-        val propertyName = dialog.findViewById<TextView>(R.id.propertyName)
         val propertyValue = dialog.findViewById<EditText>(R.id.propertyValue)
-        dialogTitle.setText("Supprimer le vehucle")
-        propertyName.setText("Name")
+        dialogTitle.setText("Supprimer l'énergie")
         propertyValue.setText(energy.type)
         propertyValue.isEnabled = false
         propertyValue.setTextColor(ContextCompat.getColor(context, R.color.black))
         btnCancel.setOnClickListener { dialog.dismiss() }
         btnOk.setOnClickListener(View.OnClickListener {
 
-            dialog.dismiss()
-            title = "Delete confirm"
             user.settings.energies.remove(energy)
             isDataChanged = true
             showData(user)
@@ -446,17 +447,17 @@ class SettingsActivity : AppCompatActivity() {
         name.setText(item.name)
         time.setText(item.time.toString())
 
-        dialogTitle.setText("Ajouter un vehucle")
+        dialogTitle.setText("Ajouter une activité")
         btnCancel.setOnClickListener { dialog.dismiss() }
         btnOk.setOnClickListener(View.OnClickListener {
             if (name.text.toString().isEmpty()) {
-                name.error = "Rentre le name"
+                name.error = "Entrer le nom"
                 return@OnClickListener
             } else {
                 name.error = null
             }
             if (time.text.toString().isEmpty()) {
-                time.error = "Rentre le time"
+                time.error = "Entrer le temps"
                 return@OnClickListener
             } else {
                 time.error = null
@@ -479,48 +480,58 @@ class SettingsActivity : AppCompatActivity() {
         dialog.show()
     }
 
+//    private fun askedToDeleteItem(titre : String, texte :String) {
+//        val dialog = Dialog(context)
+//        dialog.setContentView(R.layout.dialog_confirm_layout)
+//        val btnCancel = dialog.findViewById<Button>(R.id.btnCancel)
+//        val btnOk = dialog.findViewById<Button>(R.id.btnOk)
+//        val dialogTitle = dialog.findViewById<TextView>(R.id.dialogTitle)
+//        val propertyValue = dialog.findViewById<EditText>(R.id.propertyValue)
+//
+//        dialogTitle.setText(titre)
+//        propertyValue.setText(texte)
+//
+//        propertyValue.isEnabled = false
+//        propertyValue.setTextColor(ContextCompat.getColor(context, R.color.black))
+//        btnCancel.setOnClickListener { dialog.dismiss() }
+//        dialog.show()
+//    }
+
     fun activityDelete(activity: IActivity) {
         if (user.settings.activities.count() <= 1) {
-            Toast.makeText(context, "Can't delete last record", Toast.LENGTH_SHORT)
+            Snackbar.make(context, viewUser, "Can't delete last record", Snackbar.LENGTH_SHORT).show()
             return
         }
+
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.dialog_confirm_layout)
         val btnCancel = dialog.findViewById<Button>(R.id.btnCancel)
         val btnOk = dialog.findViewById<Button>(R.id.btnOk)
         val dialogTitle = dialog.findViewById<TextView>(R.id.dialogTitle)
-        val propertyName = dialog.findViewById<TextView>(R.id.propertyName)
         val propertyValue = dialog.findViewById<EditText>(R.id.propertyValue)
-        dialogTitle.setText("Supprimer le vehucle")
-        propertyName.setText("Name")
+
+        dialogTitle.text = "Supprimer une activité"
         propertyValue.setText(activity.name)
+
         propertyValue.isEnabled = false
         propertyValue.setTextColor(ContextCompat.getColor(context, R.color.black))
         btnCancel.setOnClickListener { dialog.dismiss() }
         btnOk.setOnClickListener(View.OnClickListener {
-            dialog.dismiss()
-            title = "Delete confirm"
             user.settings.activities.remove(activity)
             dialog.dismiss()
+            isDataChanged = true
+            showData(user)
         })
-        isDataChanged = true
-        showData(user)
         dialog.show()
     }
 
     fun toggleVisible(view: View) {
-        if (view.visibility === View.VISIBLE) {
-            view.visibility = View.GONE
-        } else {
-            view.visibility = View.VISIBLE
-        }
+        view.isVisible = !view.isVisible
     }
 
     fun showMessage(message: String) {
         this@SettingsActivity.runOnUiThread(java.lang.Runnable {
-            toast.setText(message)
-            toast.show()
+            Snackbar.make(context, viewUser, message, Snackbar.LENGTH_SHORT).show()
         })
     }
-
 }

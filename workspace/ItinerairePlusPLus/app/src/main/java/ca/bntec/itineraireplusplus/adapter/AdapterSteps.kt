@@ -1,6 +1,7 @@
 package ca.bntec.itineraireplusplus.adapter
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import ca.bntec.itineraireplusplus.R
 import interfaces.user.IStep
 
 class AdapterSteps(
-    ctx: DestinationsActivity,
+    var ctx: DestinationsActivity,
     var steps: ArrayList<IStep>?
 ) : BaseAdapter() {
 
@@ -30,7 +31,7 @@ class AdapterSteps(
         return p0.toLong()
     }
 
-    @SuppressLint("ViewHolder", "SetTextI18n")
+    @SuppressLint("ViewHolder", "SetTextI18n", "PrivateResource")
     override fun getView(pos: Int, view: View?, parent : ViewGroup?): View {
 
         val returnView = inf?.inflate(R.layout.adapter_step, parent, false)
@@ -38,7 +39,7 @@ class AdapterSteps(
         val tv_step_name = returnView?.findViewById<TextView>(R.id.tv_step_name)
 
         tv_step_name?.text = "${steps?.get(pos)?.step.toString()}:${steps?.get(pos)?.start?.name} --> ${steps?.get(pos)?.end?.name}"
-
+        returnView?.setBackgroundColor(Color.WHITE)
         return returnView!!
     }
 }
