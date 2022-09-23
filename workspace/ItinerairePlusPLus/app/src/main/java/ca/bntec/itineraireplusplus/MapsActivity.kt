@@ -1,20 +1,21 @@
 package ca.bntec.itineraireplusplus
 
 import android.app.ProgressDialog
+import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-
+import androidx.appcompat.app.AppCompatActivity
+import ca.bntec.itineraireplusplus.databinding.ActivityMapsBinding
+import classes.map.MapData
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import ca.bntec.itineraireplusplus.databinding.ActivityMapsBinding
-import classes.map.MapData
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.PolylineOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -27,13 +28,15 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 
+
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     lateinit var mapFragment: SupportMapFragment
     lateinit var progressDialog: ProgressDialog
     var origin = LatLng(45.5419056, -73.4924797)
-    var dest = LatLng(45.4779697, -75.5184535)
-
+    var dest = LatLng(25.8102247,-80.2101818)
+    //var dest = LatLng(45.4779697, -75.5184535)
+    lateinit var context: Context
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
 
@@ -47,6 +50,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        context = this
         drawPolylines()
     }
 
@@ -79,9 +83,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val sensor = "sensor=false"
         val mode = "mode=driving"
 
+        val app = context.packageManager.getApplicationInfo(
+            context.packageName,
+            PackageManager.GET_META_DATA
+        )
+        val bundle = app.metaData
+
+
+        var metaKey= bundle.getString("com.google.android.geo.API_KEY")
+
+        val key ="key=$metaKey"
+           // "key=AIzaSyBP4KpmtFwjJ4LkdJQzUWlVpeyH3V6cDnM"
         // Building the parameters to the web service
         val parameters =
-            "$str_origin&$str_dest&$sensor&$mode&key=AIzaSyBP4KpmtFwjJ4LkdJQzUWlVpeyH3V6cDnM"
+            "$str_origin&$str_dest&$sensor&$mode&$key"
+        //"$str_origin&$str_dest&$sensor&$mode&key=AIzaSyBP4KpmtFwjJ4LkdJQzUWlVpeyH3V6cDnM"
 
         // Output format
         val output = "json"
@@ -118,7 +134,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             routes = parser.parse(jObject)
 
             Log.d("result", routes.toString())
-            var points= ArrayList<LatLng>()
+            var points = ArrayList<LatLng>()
             var lineOptions: PolylineOptions? = null
 
             for (i in routes.indices) {

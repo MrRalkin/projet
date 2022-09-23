@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import ca.bntec.itineraireplusplus.adapter.AdapterSettingsActivities
 import ca.bntec.itineraireplusplus.adapter.AdapterSettingsEnergies
 import ca.bntec.itineraireplusplus.adapter.AdapterSettingsVehicles
@@ -14,6 +15,7 @@ import classes.settings.Activity
 import classes.AppGlobal
 import classes.settings.Energy
 import classes.settings.Vehicle
+import com.google.android.material.snackbar.Snackbar
 import interfaces.user.IActivity
 import interfaces.user.IEnergy
 import interfaces.user.IUser
