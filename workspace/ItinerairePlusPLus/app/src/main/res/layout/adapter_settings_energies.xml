@@ -12,7 +12,8 @@
 
         <TextView
             android:id="@+id/setting_energy_ln"
-            android:layout_width="200dp"
+            android:paddingLeft="8dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"/>
         <Button
             android:id="@+id/setting_energy_btn_edit"

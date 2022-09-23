@@ -14,7 +14,7 @@
             android:id="@+id/idBtnShowUserInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/setting_user_profile_btn_view"
+            android:text="Profile Utilisateur"
             android:textAlignment="textStart" />
 
         <LinearLayout
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:text="@string/setting_user_profile_btn_edit" />
+                android:text="Modifier" />
 
         </LinearLayout>
 
@@ -50,7 +50,7 @@
             android:id="@+id/idBtnShowSettingInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/setting_user_profile_btn_view"
+            android:text="Configuration"
             android:textAlignment="textStart" />
 
         <LinearLayout
@@ -58,17 +58,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp"
-            android:visibility="gone">
+            android:padding="4dp"
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:background="@color/purple_200"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
                     android:text="Vehicules" />
 
                 <Button
@@ -85,21 +89,39 @@
                     app:iconPadding="0dp"
                     android:paddingStart="2dp"
                     android:paddingEnd="2dp"  />
+                <Button
+                    android:id="@+id/setting_vehicle_btn_more_less"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:insetLeft="0dp"
+                    android:insetTop="0dp"
+                    android:insetRight="0dp"
+                    android:insetBottom="0dp"
+                    android:drawableRight="@drawable/baseline_expand_more_24"
+                    android:drawableTint="@color/white"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"  />
             </LinearLayout>
 
             <ListView
                 android:id="@+id/setting_vehicles_listview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:background="@color/purple_200"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
                     android:text="Energies" />
 
                 <Button
@@ -116,21 +138,39 @@
                     app:iconPadding="0dp"
                     android:paddingStart="2dp"
                     android:paddingEnd="2dp"  />
+                <Button
+                    android:id="@+id/setting_energy_btn_more_less"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:insetLeft="0dp"
+                    android:insetTop="0dp"
+                    android:insetRight="0dp"
+                    android:insetBottom="0dp"
+                    android:drawableRight="@drawable/baseline_expand_more_24"
+                    android:drawableTint="@color/white"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"  />
             </LinearLayout>
 
             <ListView
                 android:id="@+id/setting_energies_listview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:background="@color/purple_200"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
                     android:text="Activities" />
 
                 <Button
@@ -147,12 +187,26 @@
                     app:iconPadding="0dp"
                     android:paddingStart="2dp"
                     android:paddingEnd="2dp"  />
+                <Button
+                    android:id="@+id/setting_activity_btn_more_less"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:insetLeft="0dp"
+                    android:insetTop="0dp"
+                    android:insetRight="0dp"
+                    android:insetBottom="0dp"
+                    android:drawableRight="@drawable/baseline_expand_more_24"
+                    android:drawableTint="@color/white"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"  />
             </LinearLayout>
 
             <ListView
                 android:id="@+id/setting_activities_listview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
         </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -162,14 +216,20 @@
             android:id="@+id/setting_btn_cancel_changes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Revert"/>
+            android:layout_weight="2"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="4dp"
+            android:text="Renverser"
+            android:visibility="gone"/>
         <Button
             android:id="@+id/setting_btn_save_changes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Save"/>
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="12dp"
+            android:text="Sauvegarder"
+            android:visibility="gone"/>
 
     </LinearLayout>
 </LinearLayout>

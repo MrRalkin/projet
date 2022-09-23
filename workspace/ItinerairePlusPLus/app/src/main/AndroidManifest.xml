@@ -58,7 +58,11 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
-        <activity android:name=".DestinationsActivity" />
+        
+        <activity
+            android:name=".DestinationsActivity"
+            android:parentActivityName=".MainActivity"/>
+
     </application>
 
 </manifest>

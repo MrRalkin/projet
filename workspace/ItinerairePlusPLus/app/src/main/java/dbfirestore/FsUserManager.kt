@@ -516,16 +516,16 @@ class FsUserManager : IUserManager {
         val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
         private var roles = ArrayList<IRole>()
         private var curUser: IUser? = null
-        private val MESSAGE_USER_REGISTERED = "User created"
-        private val MESSAGE_USER_SIGNIN = "User signedin"
-        private val MESSAGE_USER_SIGNOUT = "User logged out"
-        private val MESSAGE_USER_LOGIN_ERROR = "Can't login"
-        private val MESSAGE_USER_UPDATED = "user updated"
-        private val MESSAGE_USER_DELETED = "user deleted"
-        private val MESSAGE_ROLE_CREATED = "role created"
-        private val MESSAGE_ROLE_DELETED = "role deleted"
-        private val MESSAGE_ROLE_UPDATED = "role updated"
-        private val MESSAGE_ROLE_ASSIGNED = "role assigned"
-        private val MESSAGE_RESET_SETTING_SUCCESS = "setting updated to default"
+        private val MESSAGE_USER_REGISTERED = "L'utilisateur a été créé."
+        private val MESSAGE_USER_SIGNIN = "L'utilisateur est connecté."
+        private val MESSAGE_USER_SIGNOUT = "L'utilisateur est déconnecté."
+        private val MESSAGE_USER_LOGIN_ERROR = "Connexion impossible"
+        private val MESSAGE_USER_UPDATED = "L'utilisateur a été mis-à-jour."
+        private val MESSAGE_USER_DELETED = "L'utilisateur a été supprimé."
+        private val MESSAGE_ROLE_CREATED = "Le rôle a été créé."
+        private val MESSAGE_ROLE_DELETED = "Le rôle a été supprimé."
+        private val MESSAGE_ROLE_UPDATED = "Le rôle a été mis-à-jour."
+        private val MESSAGE_ROLE_ASSIGNED = "Le rôle a été assigné."
+        private val MESSAGE_RESET_SETTING_SUCCESS = "Configuration par défaut mis-à-jour."
     }
 }

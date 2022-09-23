@@ -21,14 +21,35 @@
         <entry key="..\:/College/AEC Mobiles/420-325-AH APPLICATIONS NATIVES SOUS ANDROID 2/Final Project/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/settings_add_edit_vehicle.xml" value="0.19444444444444445" />
         <entry key="..\:/College/AEC Mobiles/420-325-AH APPLICATIONS NATIVES SOUS ANDROID 2/Final Project/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/settings_edit_user_info.xml" value="0.3769230769230769" />
         <entry key="..\:/College/AEC Mobiles/420-325-AH APPLICATIONS NATIVES SOUS ANDROID 2/Final Project/projet/workspace/ItinerairePlusPLus/app/src/main/res/menu/menu_main.xml" value="0.5203125" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/drawable-v24/button_back.xml" value="0.224" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/drawable-v24/ic_add.xml" value="0.224" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.224" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.224" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/drawable-v24/ic_logout.xml" value="0.224" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/drawable-v24/progress_back.xml" value="0.224" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/drawable-v24/round_drawable.xml" value="0.224" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/drawable/baseline_expand_less_24.xml" value="0.224" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/drawable/baseline_expand_more_24.xml" value="0.224" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/drawable/ic_add.xml" value="0.224" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/drawable/ic_baseline_settings.xml" value="0.224" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/drawable/ic_delete.xml" value="0.224" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/drawable/ic_edit.xml" value="0.224" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/drawable/ic_launcher_background.xml" value="0.224" />
         <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/activity_destinations.xml" value="0.20153985507246377" />
         <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/activity_login.xml" value="0.24456521739130435" />
         <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/activity_main.xml" value="0.3625" />
         <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/activity_register.xml" value="0.213768115942029" />
         <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/activity_settings.xml" value="0.3625" />
         <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/adapter_destinations.xml" value="0.3484375" />
-        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/adapter_settings_vehicles.xml" value="0.13854166666666667" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/adapter_settings_activities.xml" value="0.2171875" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/adapter_settings_energies.xml" value="0.2171875" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/adapter_settings_vehicles.xml" value="0.21" />
         <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/adapter_step.xml" value="0.33" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/dialog_confirm_layout.xml" value="0.2171875" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/settings_add_edit_activity.xml" value="0.2171875" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/settings_add_edit_energy.xml" value="0.2171875" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/settings_add_edit_vehicle.xml" value="0.2171875" />
+        <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/layout/settings_edit_user_info.xml" value="0.2171875" />
         <entry key="..\:/projet/workspace/ItinerairePlusPLus/app/src/main/res/menu/menu_main.xml" value="0.3625" />
       </map>
     </option>
