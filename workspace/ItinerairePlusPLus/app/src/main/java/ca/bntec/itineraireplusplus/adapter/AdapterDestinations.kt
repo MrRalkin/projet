@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import ca.bntec.itineraireplusplus.DestinationsActivity
 import ca.bntec.itineraireplusplus.R
+import ca.bntec.itineraireplusplus.tools.Tools
 import interfaces.user.IDestination
 
 class AdapterDestinations(
@@ -46,6 +47,7 @@ class AdapterDestinations(
         var btnDestinationToSteps = returnView?.findViewById<Button>(R.id.btn_destination_to_steps)!!
         btnDestinationToSteps.setOnClickListener {
             toggleVisible(lvSteps, btnDestinationToSteps)
+            tvDestinationTime?.isVisible = tvDestinationTime?.isVisible != true
         }
 
         val adapterSteps = AdapterSteps(ctx, destinations?.get(pos)?.steps)
@@ -60,9 +62,10 @@ class AdapterDestinations(
         lp?.height = this.destinations?.get(pos)?.steps!!.size * ada.measuredHeight
         lvSteps?.layoutParams = lp
 
+
         tvDestinationName?.text = destinations?.get(pos)?.name
-        tvDestinationTime?.text = "Date: 2022-mm-jj - Temps du voyage :" + destinations?.get(pos)?.trip_time.toString()
-        returnView.setBackgroundColor(Color.LTGRAY)
+        tvDestinationTime?.text = "Estimation : ${Tools.convertSecondsToTime(destinations?.get(pos)?.trip_time!!, Tools.FMT_HM_LONG)}"
+
         return returnView
     }
 

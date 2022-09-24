@@ -10,13 +10,12 @@
         android:id="@+id/ll_steps_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="5dp"
         android:visibility="visible">
 
         <TextView
             android:id="@+id/tv_step_name"
-            android:layout_width="335dp"
+            android:layout_width="325dp"
             android:layout_height="wrap_content"
             android:text="NameStep" />
 
@@ -29,21 +28,11 @@
             android:insetTop="0dp"
             android:insetRight="0dp"
             android:insetBottom="0dp"
-            app:icon="@drawable/ic_add"
+            app:icon="@drawable/baseline_details_24"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="@color/purple_200"
             android:paddingStart="2dp"
             android:paddingEnd="2dp"  />
-
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_step_name1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="NameStep"
-        android:layout_marginBottom="4dp"        />
-
-
 </LinearLayout>

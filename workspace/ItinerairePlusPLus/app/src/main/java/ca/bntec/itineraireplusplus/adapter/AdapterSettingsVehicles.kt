@@ -30,7 +30,7 @@ class AdapterSettingsVehicles(
         val btnEdit = view.findViewById<Button>(R.id.setting_vehicle_btn_edit)
         val btnDel = view.findViewById<Button>(R.id.setting_vehicle_btn_delete)
 
-        txt.text = "${data.type}, ${data.energy}, ${data.capacity}, ${data.distance}${data.mesure}"
+        txt.text = "${data.type} : (${data.energy}) ${data.capacity} ${data.unit} pour ${data.distance} ${data.mesure}"
 
         btnEdit.setOnClickListener { view ->
             if (context is SettingsActivity) {

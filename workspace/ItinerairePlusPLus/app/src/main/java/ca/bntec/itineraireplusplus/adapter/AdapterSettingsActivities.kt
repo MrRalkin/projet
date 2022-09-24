@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import ca.bntec.itineraireplusplus.R
 import ca.bntec.itineraireplusplus.SettingsActivity
+import ca.bntec.itineraireplusplus.tools.Tools
 import interfaces.user.IActivity
 
 
@@ -31,7 +32,7 @@ class AdapterSettingsActivities(
         val btnEdit = view.findViewById<Button>(R.id.setting_activity_btn_edit)
         val btnDel = view.findViewById<Button>(R.id.setting_activity_btn_delete)
 
-        txt.text = "${data.name}, ${data.time}"
+        txt.text = "${data.name} : ${Tools.convertSecondsToTime(data.time, Tools.FMT_HM_LONG)}"
 
         btnEdit.setOnClickListener { view ->
             if (context is SettingsActivity) {
