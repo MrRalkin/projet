@@ -14,12 +14,26 @@
 
         <TextView
             android:id="@+id/tv_destination_name"
-            android:layout_width="335dp"
+            android:layout_width="305dp"
             android:layout_height="wrap_content"
             android:paddingStart="8dp"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:text="Name" />
+
+        <Button
+            android:id="@+id/btn_estimation"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="4dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:text="E"
+            android:drawableTint="@color/white"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"  />
 
         <Button
             android:id="@+id/btn_destination_to_steps"

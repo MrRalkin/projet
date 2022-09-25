@@ -3,11 +3,11 @@ package ca.bntec.itineraireplusplus.tools
 class Tools {
 
     companion object {
-        private const val SECONDS = 60
-        private const val MINUTES = 60
-        private const val HOUR = (SECONDS * MINUTES)
-        private const val DAY = (24 * HOUR)
-        private const val WEEK = (7 * DAY)
+        const val SECONDS = 60
+        const val MINUTES = 60
+        const val HOUR = (SECONDS * MINUTES)
+        const val DAY = (24 * HOUR)
+        const val WEEK = (7 * DAY)
 
         const val FMT_OTHER = 0
         const val FMT_HMS_SHORT = 1

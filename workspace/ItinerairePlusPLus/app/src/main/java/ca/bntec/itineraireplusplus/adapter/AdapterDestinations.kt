@@ -1,9 +1,9 @@
 package ca.bntec.itineraireplusplus.adapter
 
 import android.annotation.SuppressLint
-import android.graphics.Color
+import android.app.ActionBar
+import android.app.Dialog
 import android.view.LayoutInflater
-import android.view.PointerIcon
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -15,6 +15,7 @@ import ca.bntec.itineraireplusplus.DestinationsActivity
 import ca.bntec.itineraireplusplus.R
 import ca.bntec.itineraireplusplus.tools.Tools
 import interfaces.user.IDestination
+import interfaces.user.IStep
 
 class AdapterDestinations(
     var ctx: DestinationsActivity,
@@ -50,6 +51,11 @@ class AdapterDestinations(
             tvDestinationTime?.isVisible = tvDestinationTime?.isVisible != true
         }
 
+        var btnEstimation = returnView?.findViewById<Button>(R.id.btn_estimation)!!
+        btnEstimation.setOnClickListener {
+            displayEstimation(destinations?.get(pos))
+        }
+
         val adapterSteps = AdapterSteps(ctx, destinations?.get(pos)?.steps)
         lvSteps?.adapter = adapterSteps
         var ada = adapterSteps.getView(0, null, lvSteps)
@@ -78,4 +84,31 @@ class AdapterDestinations(
             view?.isVisible = true
         }
     }
+
+    private fun displayEstimation(destination : IDestination?) {
+
+        val dialog = Dialog(ctx)
+        dialog.setContentView(R.layout.dialog_estimation_layout)
+        val dialogTitle = dialog.findViewById<TextView>(R.id.estimation_title)
+        val btnOk = dialog.findViewById<Button>(R.id.btnOk)
+
+        val estimationStartDeplacementValue = dialog.findViewById<TextView>(R.id.estimation_deplacement_value)
+        val estimationArretValue = dialog.findViewById<TextView>(R.id.estimation_arret_value)
+        val estimationTotalValue = dialog.findViewById<TextView>(R.id.estimation_total_value)
+        val estimationCoutValue = dialog.findViewById<TextView>(R.id.estimation_cout_value)
+
+
+        dialogTitle.text = "Estimation ${destination?.name}"
+
+        estimationStartDeplacementValue.text = Tools.convertSecondsToTime(6 * Tools.HOUR + 34 * Tools.MINUTES, Tools.FMT_HM_LONG)
+        estimationArretValue.text = Tools.convertSecondsToTime(2 * Tools.HOUR + 10 * Tools.MINUTES, Tools.FMT_HM_LONG)
+        estimationTotalValue.text = Tools.convertSecondsToTime(8 * Tools.HOUR + 44 * Tools.MINUTES, Tools.FMT_HM_LONG)
+        estimationCoutValue.text = String.format("%.2f $", 739.56)
+
+        btnOk.setOnClickListener(View.OnClickListener {
+            dialog.dismiss()
+        })
+        dialog.show()
+    }
+
 }

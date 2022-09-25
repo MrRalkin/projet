@@ -1,5 +1,6 @@
 package ca.bntec.itineraireplusplus.data
 
+import ca.bntec.itineraireplusplus.tools.Tools
 import ca.bntec.itineraireplusplus.tools.Tools.Companion.convertSecondsToTime
 import classes.*
 import classes.settings.*
@@ -33,16 +34,16 @@ class TestData {
          * */
         val activities1 = ArrayList<IActivity>()
 
-        activities1.add(addActivity(1, "Manger", 120))
+        activities1.add(addActivity(1, "Manger", 2 * Tools.HOUR))
 
         val activties2 = ArrayList<IActivity>()
-        activties2.add(addActivity(1, "Manger", 120))
-        activties2.add(addActivity(2, "Essence", 30))
+        activties2.add(addActivity(1, "Manger", 2 * Tools.HOUR))
+        activties2.add(addActivity(2, "Essence", Tools.HOUR / 2))
 
         val activties3 = ArrayList<IActivity>()
-        activties3.add(addActivity(1, "Manger", 120))
-        activties3.add(addActivity(2, "Essence", 30))
-        activties3.add(addActivity(3, "Dormir", 480))
+        activties3.add(addActivity(1, "Manger", 2 * Tools.HOUR))
+        activties3.add(addActivity(2, "Essence", Tools.HOUR / 2))
+        activties3.add(addActivity(3, "Dormir", 6 * Tools.HOUR))
 
         /**
          * vehicles
@@ -75,7 +76,7 @@ class TestData {
                 addCoord("-12.000909", "-12.000909"),
                 addAddress("", "Ottawa", "On", "", "Canada")
             ),
-            750,
+            1 * Tools.HOUR + 34 * Tools.MINUTES,
             activities1
         ))
 
@@ -88,7 +89,7 @@ class TestData {
                 addCoord("-12.000909", "-12.000909"),
                 addAddress("", "Toronto", "On", "", "Canada")
             ),
-            120,
+            45 * Tools.MINUTES,
             activties2
         ))
 
@@ -96,7 +97,7 @@ class TestData {
          * destinations
          * */
         destinations.add(
-            addDestinations("First destination", "", 7350,
+            addDestinations("First destination", "", 2 * Tools.HOUR + 57 * Tools.MINUTES,
                 addAddress("123 la rue", "Ottawa", "On", "", "Canada"),
                 addCoord("43.2487862", "-76.3606792"),
                 steps,
@@ -104,7 +105,7 @@ class TestData {
         ))
 
         destinations.add(
-            addDestinations("Deuxième destination", "", 3660,
+            addDestinations("Deuxième destination", "", 1 * Tools.HOUR + 9 * Tools.MINUTES,
                 addAddress("456 the street", "Toronto", "On", "", "Canada"),
                 addCoord("45.2487862", "-76.3606792"),
                 steps,
@@ -112,7 +113,7 @@ class TestData {
             ))
 
         destinations.add(
-            addDestinations("Troisième destination", "", 240,
+            addDestinations("Troisième destination", "", 5 * Tools.HOUR + 21 * Tools.MINUTES,
                 addAddress("456 the street", "Toronto", "On", "", "Canada"),
                 addCoord("45.2487862", "-76.3606792"),
                 steps,
@@ -120,7 +121,7 @@ class TestData {
             ))
 
         destinations.add(
-            addDestinations("Quatrième destination", "", 240,
+            addDestinations("Quatrième destination", "", 2 * Tools.HOUR + 12 * Tools.MINUTES,
                 addAddress("456 the street", "Toronto", "On", "", "Canada"),
                 addCoord("45.2487862", "-76.3606792"),
                 steps,
@@ -128,7 +129,7 @@ class TestData {
             ))
 
         destinations.add(
-            addDestinations("Cinquième destination", "", 240,
+            addDestinations("Cinquième destination", "", 4 * Tools.HOUR,
                 addAddress("456 the street", "Toronto", "On", "", "Canada"),
                 addCoord("45.2487862", "-76.3606792"),
                 steps,
@@ -151,10 +152,10 @@ class TestData {
 
 
         val activitiesSettings = ArrayList<IActivity>()
-        activitiesSettings.add(addActivity(1, "Manger", 120))
-        activitiesSettings.add(addActivity(2, "Essence", 30))
-        activitiesSettings.add(addActivity(3, "Recharge", 60))
-        activitiesSettings.add(addActivity(4, "Dormir", 480))
+        activitiesSettings.add(addActivity(1, "Manger", 2 * Tools.HOUR))
+        activitiesSettings.add(addActivity(2, "Essence", Tools.HOUR / 2))
+        activitiesSettings.add(addActivity(3, "Recharge", 1 * Tools.HOUR))
+        activitiesSettings.add(addActivity(4, "Dormir", 8 * Tools.HOUR))
         user.settings.activities = activitiesSettings
 
         val vehiclesSettings = ArrayList<IVehicle>()
