@@ -51,53 +51,36 @@ class Tools {
             val s = seconds
 
 //            stringFormatted = String.format("%d semaine(s) %d jour(s) %d heure(s) %d minute(s) %d seconde(s)", w, j , h , m , s);
-            val otherFormat =
-                if (w > 0) String.format("%ds %dj %02d:%02d:%02d", w, d, h, m, s)
-                else if (d > 0) String.format("%dj %02d:%02d:%02d", d, h, m, s)
-                else String.format("%02d:%02d:%02d", h, m, s)
+
+            val sh = if(h > 1) "s" else ""
+            val sm = if(m > 1) "s" else ""
+            val ss = if(s > 1) "s" else ""
 
             stringFormatted =
                 when (type) {
                     FMT_HMS_SHORT -> String.format("%02d:%02d%02d", h, m, s)
                     FMT_HMS_LONG ->
-                        if (h > 0)
-                            String.format("%d heure%s %d minute%s %d seconde%s", h, if(h > 1) "s" else "", m, if(m > 1) "s" else "", s, if(s > 1) "s" else "")
-                        else if (m > 0)
-                            String.format("%d minute%s %d seconde%s", m, if(m > 1) "s" else "", s, if(s > 1) "s" else "")
-                        else
-                            String.format("%d seconde%s", s, if(s > 1) "s" else "")
+                        if (s > 0 && h > 0) String.format("%d heure%s %d minute%s %d seconde%s", h, sh, m, sm, s, ss)
+                        else if (s > 0 && m > 0) String.format("%d minute%s %d seconde%s", m, sm, s, ss)
+                        else if (s > 0) String.format("%d seconde%s", s, ss)
+                        else if (m > 0) String.format("%d minute%s", m, sm)
+                        else String.format("%d heure%s", h, sh)
                     FMT_HM_SHORT -> String.format("%02d:%02d", h, m)
                     FMT_HM_LONG ->
-                        if (h > 0) String.format("%d heure%s %d minute%s", h, if(h > 1) "s" else "", m, if(m > 1) "s" else "")
-                        else String.format("%d minute%s", m, if(m > 1) "s" else "")
-                    FMT_OTHER -> otherFormat
-                    else -> otherFormat
+                        if (m > 0 && h > 0) String.format("%d heure%s %d minute%s", h, sh, m, sm)
+                        else if (h > 0) String.format("%d heure%s", h, sh)
+                        else String.format("%d minute%s", m, sm)
+                    FMT_OTHER -> otherFormat(w, d, h, m, s)
+                    else -> otherFormat(w, d, h, m, s)
                 }
 
-            if (s > 0)
-                if (m > 0)
-                    if (h > 0)
-                        String.format("%d heure%s %d minute%s %d seconde%s", h, if(h > 1) "s" else "", m, if(m > 1) "s" else "", s, if(s > 1) "s" else "")
-                    else
-                        String.format("%d minute%s %d seconde%s", h, if(h > 1) "s" else "", m, if(m > 1) "s" else "", s, if(s > 1) "s" else "")
-                else
-                    if (h > 0)
-                        String.format("%d heure%s %d minute%s %d seconde%s", h, if(h > 1) "s" else "", m, if(m > 1) "s" else "", s, if(s > 1) "s" else "")
-                    else
-                        String.format("%d seconde%s", h, if(h > 1) "s" else "", m, if(m > 1) "s" else "", s, if(s > 1) "s" else "")
-            else if (m > 0)
-                    if (h > 0)
-                        String.format("%d heure%s %d minute%s", m, if(m > 1) "s" else "", s, if(s > 1) "s" else "")
-                    else
-                        String.format("%d minute%s", m, if(m > 1) "s" else "", s, if(s > 1) "s" else "")
-                else
-                    if (h > 0)
-                        String.format("%d heure%s", m, if(m > 1) "s" else "", s, if(s > 1) "s" else "")
-                    else
-                        String.format("n/a", m, if(m > 1) "s" else "", s, if(s > 1) "s" else "")
-
-
             return stringFormatted
+        }
+        private fun otherFormat(w: Int, d: Int, h: Int, m: Int, s: Int): String {
+
+            return if (w > 0) String.format("%ds %dj %02d:%02d:%02d", w, d, h, m, s)
+            else if (d > 0) String.format("%dj %02d:%02d:%02d", d, h, m, s)
+            else String.format("%02d:%02d:%02d", h, m, s)
         }
     }
 }
