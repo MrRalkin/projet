@@ -2,30 +2,35 @@
 	"predefined_destinations" : [
 	{
 		"name" : "Orlando",
+		"description" : "[ville] fha sldkfh alsdfg alsd",
 		"coord" : {"longitude" : "-23.123487", "latitude" : "-12.000909"},
 		"adresse" : { "no_civic" : "123", "street" : "rue paris", "city" : "Paris", "state" : "oups", "zip" : "J4J 3K5", "country" : "France", },
 		"image" : "image_tour_eiffel.jpg",
 	},
 	{
-		"name" : "Montréal",
+		"name" : "Niagara Falls",
+		"description" : "[touristique]  sdkjfhalskdfh alskdjf halsdkfh alskdf alsdkfh asdklf",
 		"coord" : {"longitude" : "-23.123487", "latitude" : "-12.000909"},
 		"adresse" : { "no_civic" : "123", "street" : "rue paris", "city" : "Paris", "state" : "oups", "zip" : "J4J 3K5", "country" : "France", },
 		"image" : "image_tour_eiffel.jpg",
 	},
 	{
-		"name" : "Québec",
+		"name" : "Tour du CN",
+		"description" : "[touristique]  sdkjfhalskdfh alskdjf halsdkfh alskdf alsdkfh asdklf",
 		"coord" : {"longitude" : "-23.123487", "latitude" : "-12.000909"},
 		"adresse" : { "no_civic" : "123", "street" : "rue paris", "city" : "Paris", "state" : "oups", "zip" : "J4J 3K5", "country" : "France", },
 		"image" : "image_tour_eiffel.jpg",
 	},
 	{
 		"name" : "San Francisco",
+		"description" : "[touristique]  sdkjfhalskdfh alskdjf halsdkfh alskdf alsdkfh asdklf",
 		"coord" : {"longitude" : "-23.123487", "latitude" : "-12.000909"},
 		"adresse" : { "no_civic" : "123", "street" : "rue paris", "city" : "Paris", "state" : "oups", "zip" : "J4J 3K5", "country" : "France", },
 		"image" : "image_tour_eiffel.jpg",
 	},
 	{
 		"name" : "Texas",
+		"description" : "[touristique]  sdkjfhalskdfh alskdjf halsdkfh alskdf alsdkfh asdklf",
 		"coord" : {"longitude" : "-23.123487", "latitude" : "-12.000909"},
 		"adresse" : { "no_civic" : "123", "street" : "rue paris", "city" : "Paris", "state" : "oups", "zip" : "J4J 3K5", "country" : "France", },
 		"image" : "image_tour_eiffel.jpg",
