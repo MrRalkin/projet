@@ -35,8 +35,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     lateinit var mapFragment: SupportMapFragment
     lateinit var progressDialog: ProgressDialog
-    var origin = LatLng(45.5419056, -73.4924797)
-    var dest = LatLng(25.8102247,-80.2101818)
+//    var origin = LatLng(45.5419056, -73.4924797)
+//    var dest = LatLng(25.8102247,-80.2101818)
+    var origin = LatLng(34.1993851, -79.8373477)
+    var dest = LatLng(30.3321579,-81.6736059)
+
     //var dest = LatLng(45.4779697, -75.5184535)
     lateinit var context: Context
     private lateinit var mMap: GoogleMap
