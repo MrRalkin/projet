@@ -319,6 +319,53 @@ class FsUserManager : IUserManager {
         return result
     }
 
+
+    override suspend fun getPredefinedDestinations(): ArrayList<IPredefinedDestination> {
+        var destinations = ArrayList<IPredefinedDestination>()
+
+        try {
+            var snp: QuerySnapshot =
+                db.collection(FsContract.TbPredefinedDestination.COLLECTION_NAME).get().await()
+
+            for (item in snp.documents) {
+                if (item != null) {
+                    var dest: IPredefinedDestination = FsPredefinedDestination()
+                    dest.name = item[FsContract.TbPredefinedDestination.FD_NAME].toString()
+                    dest.description =
+                        item[FsContract.TbPredefinedDestination.FD_DESCRIPTION].toString()
+                    dest.coord =
+                        getCoord(item[FsContract.TbPredefinedDestination.FD_COORD] as HashMap<String, Any>)
+                    dest.address =
+                        getAddress(item[FsContract.TbPredefinedDestination.FD_ADDRESS] as HashMap<String, Any>)
+                    dest.image = item[FsContract.TbPredefinedDestination.FD_IMAGE].toString()
+                    destinations.add(dest)
+                }
+            }
+
+        } catch (e: Exception) {
+            println(e.message)
+        }
+        return destinations
+    }
+
+    override suspend fun setPredefinedDestinations(destinations: ArrayList<IPredefinedDestination>): ActionResult {
+        var result = ActionResult(true, MESSAGE_USER_UPDATED, "")
+        try {
+
+            for (dest in destinations) {
+                db.collection(FsContract.TbPredefinedDestination.COLLECTION_NAME)
+                    .document(dest.name).set(dest)
+            }
+        
+        } catch (e: Exception) {
+            println(e.message)
+            result.isSuccess = false
+            result.errorMessage = e.message.toString()
+        }
+        return result
+    }
+
+
     private fun getDestination(item: HashMap<String, Any>): FsDestination {
         var result = FsDestination()
         try {

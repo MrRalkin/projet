@@ -1,6 +1,9 @@
 package dbfirestore
 
 import android.provider.BaseColumns
+import interfaces.user.IAddress
+import interfaces.user.ICoord
+import kotlinx.parcelize.RawValue
 
 
 object FsContract {
@@ -14,7 +17,7 @@ object FsContract {
             val FD_ADDRESS = "address"
             val FD_DESTINATIONS = "destinations"
             val FD_ROLE = "role"
-            val FD_SETTINGS= "settings"
+            val FD_SETTINGS = "settings"
 
         }
     }
@@ -81,7 +84,7 @@ object FsContract {
             val FD_IMAGE = "image"
             val FD_TRIP_TIME = "trip_time"
             val FD_STEPS = "steps"
-            val FD_SETTINGS= "settings"
+            val FD_SETTINGS = "settings"
         }
     }
 
@@ -109,6 +112,17 @@ object FsContract {
             val FD_VEHICLES = "vehicles"
             val FD_ACTIVITIES = "activities"
             val FD_ENERGIES = "energies"
+        }
+    }
+
+    class TbPredefinedDestination : BaseColumns {
+        companion object {
+            val COLLECTION_NAME = "pred_destinations"
+            var FD_NAME = "name"
+            var FD_DESCRIPTION = "description"
+            var FD_COORD = "coord"
+            var FD_ADDRESS = "address"
+            var FD_IMAGE = "image"
         }
     }
 

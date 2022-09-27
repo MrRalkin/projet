@@ -24,5 +24,7 @@ interface IUserManager {
     suspend fun roleUpdate(role:IRole):ActionResult
     suspend fun roleAssign(user:IUser,role:IRole):ActionResult
     suspend fun resetSettingsToDefault():ActionResult
+    suspend fun getPredefinedDestinations():ArrayList<IPredefinedDestination>
+    suspend fun setPredefinedDestinations(destinations:ArrayList<IPredefinedDestination>):ActionResult
 
 }
