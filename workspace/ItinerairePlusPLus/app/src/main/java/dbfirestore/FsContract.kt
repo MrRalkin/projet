@@ -78,6 +78,7 @@ object FsContract {
 
     class TbDestination : BaseColumns {
         companion object {
+            val FD_ID="destinationId"
             val FD_NAME = "name"
             val FD_COORD = "coord"
             val FD_ADDRESS = "address"

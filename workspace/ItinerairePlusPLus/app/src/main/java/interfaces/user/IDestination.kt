@@ -1,6 +1,7 @@
 package interfaces.user
 
 import android.os.Parcelable
+import dbfirestore.FsDestination
 import kotlinx.parcelize.Parcelize
 
 abstract class ICoord(
@@ -38,6 +39,7 @@ abstract class IStep(
 )
 
 abstract class IDestination(
+    open var destinationId:String = "",
     open var name: String = "",
     open var coord: ICoord?=null,
     open var address: IAddress?=null,

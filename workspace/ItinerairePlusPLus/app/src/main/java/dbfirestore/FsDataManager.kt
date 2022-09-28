@@ -368,6 +368,7 @@ class FsDataManager : IDataManager {
     private fun getDestination(item: HashMap<String, Any>): FsDestination {
         var result = FsDestination()
         try {
+            result.destinationId=item[FsContract.TbDestination.FD_ID].toString()
             result.name = item[FsContract.TbDestination.FD_NAME].toString()
             result.address =
                 getAddress(item[FsContract.TbDestination.FD_ADDRESS] as HashMap<String, Any>)

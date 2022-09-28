@@ -12,6 +12,7 @@ import kotlinx.parcelize.RawValue
 
 @Parcelize
 class Destination(
+    override var  destinationId: String = "",
     override var name: String = "",
     override var coord: @RawValue ICoord? = FsCoord(),
     override var address:@RawValue IAddress?= FsAddress(),
