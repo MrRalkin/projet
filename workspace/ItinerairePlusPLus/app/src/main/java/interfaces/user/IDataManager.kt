@@ -4,7 +4,7 @@ import classes.ActionResult
 import interfaces.auth.ILogin
 import interfaces.auth.IRegister
 
-interface IUserManager {
+interface IDataManager {
     suspend fun userRegister(user: IRegister): ActionResult
     suspend fun userLogin(user: ILogin): ActionResult
     suspend fun userLogout(): ActionResult
@@ -26,5 +26,10 @@ interface IUserManager {
     suspend fun resetSettingsToDefault():ActionResult
     suspend fun getPredefinedDestinations():ArrayList<IPredefinedDestination>
     suspend fun setPredefinedDestinations(destinations:ArrayList<IPredefinedDestination>):ActionResult
+
+    suspend fun setMapRawData(rawData: IMapRawData):ActionResult
+    suspend fun getMapRawData(id:String):IMapRawData
+    suspend fun delMapRawData(id:String):ActionResult
+    suspend fun delExpiredRawData()
 
 }

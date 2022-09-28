@@ -118,12 +118,20 @@ object FsContract {
     class TbPredefinedDestination : BaseColumns {
         companion object {
             val COLLECTION_NAME = "pred_destinations"
-            var FD_NAME = "name"
-            var FD_DESCRIPTION = "description"
-            var FD_COORD = "coord"
-            var FD_ADDRESS = "address"
-            var FD_IMAGE = "image"
+            val FD_NAME = "name"
+            val FD_DESCRIPTION = "description"
+            val FD_COORD = "coord"
+            val FD_ADDRESS = "address"
+            val FD_IMAGE = "image"
         }
     }
 
+    class TbMapRawData : BaseColumns {
+        companion object {
+            val COLLECTION_NAME = "map_row_datas"
+            val FD_ID = "destinationId"
+            val FD_CREATED = "created"
+            val FD_RAW_DATA = "raw_data"
+        }
+    }
 }

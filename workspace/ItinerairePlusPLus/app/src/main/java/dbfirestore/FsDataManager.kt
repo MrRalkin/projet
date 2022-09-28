@@ -13,8 +13,9 @@ import interfaces.auth.ILogin
 import interfaces.auth.IRegister
 import interfaces.user.*
 import kotlinx.coroutines.tasks.await
+import java.time.LocalDate
 
-class FsUserManager : IUserManager {
+class FsDataManager : IDataManager {
     private fun dbInit() {
 
     }
@@ -319,7 +320,6 @@ class FsUserManager : IUserManager {
         return result
     }
 
-
     override suspend fun getPredefinedDestinations(): ArrayList<IPredefinedDestination> {
         var destinations = ArrayList<IPredefinedDestination>()
 
@@ -356,7 +356,7 @@ class FsUserManager : IUserManager {
                 db.collection(FsContract.TbPredefinedDestination.COLLECTION_NAME)
                     .document(dest.name).set(dest)
             }
-        
+
         } catch (e: Exception) {
             println(e.message)
             result.isSuccess = false
@@ -364,7 +364,6 @@ class FsUserManager : IUserManager {
         }
         return result
     }
-
 
     private fun getDestination(item: HashMap<String, Any>): FsDestination {
         var result = FsDestination()
@@ -507,6 +506,52 @@ class FsUserManager : IUserManager {
         return userUpdateCurrent(curUser!!)
     }
 
+    override suspend fun setMapRawData(rawData: IMapRawData): ActionResult {
+        var result = ActionResult(true, MESSAGE_SET_MAP_RAW_DATA, "")
+        try {
+            db.collection(FsContract.TbMapRawData.COLLECTION_NAME).document(rawData.destinationId)
+                .set(rawData)
+        } catch (e: Exception) {
+            println(e.message)
+            result.isSuccess = false
+            result.errorMessage = e.message.toString()
+        }
+        return result
+    }
+
+    override suspend fun getMapRawData(id: String): IMapRawData {
+        var result: IMapRawData = FsMapRawData("", 0, "")
+        try {
+            var snp: DocumentSnapshot? =
+                db.collection(FsContract.TbMapRawData.COLLECTION_NAME).document(id).get().await()
+
+            if (snp != null) {
+                result.destinationId = id
+                result.rawData = snp[FsContract.TbMapRawData.FD_RAW_DATA].toString()
+                result.created = snp[FsContract.TbMapRawData.FD_CREATED].toString().toLong()
+            }
+
+        } catch (e: Exception) {
+            println(e.message)
+        }
+        return result
+    }
+
+    override suspend fun delMapRawData(id: String): ActionResult {
+        var result = ActionResult(true, MESSAGE_DELETE_MAP_RAW_DATA, "")
+        try {
+            db.collection(FsContract.TbMapRawData.COLLECTION_NAME).document(id).delete()
+        } catch (e: Exception) {
+            println(e.message)
+            result.isSuccess = false
+            result.errorMessage = e.message.toString()
+        }
+        return result
+    }
+
+    override suspend fun delExpiredRawData() {
+        TODO("Not yet implemented")
+    }
 
     private fun getSettings(item: HashMap<String, Any>): FsSettings {
         var result = FsSettings()
@@ -574,5 +619,7 @@ class FsUserManager : IUserManager {
         private val MESSAGE_ROLE_UPDATED = "Le rôle a été mis-à-jour."
         private val MESSAGE_ROLE_ASSIGNED = "Le rôle a été assigné."
         private val MESSAGE_RESET_SETTING_SUCCESS = "Configuration par défaut mis-à-jour."
+        private val MESSAGE_SET_MAP_RAW_DATA = "Le map data a été suvgardé"
+        private val MESSAGE_DELETE_MAP_RAW_DATA = "Le map data a été supprimé"
     }
 }
