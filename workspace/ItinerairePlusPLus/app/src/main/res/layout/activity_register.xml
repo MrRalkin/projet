@@ -16,7 +16,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="140dp"
         android:layout_marginEnd="20dp"
-        android:hint="Enter User Name"
+        android:hint="@string/register_userName"
         android:padding="5dp"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/white">
@@ -43,7 +43,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:hint="Enter Email"
+        android:hint="@string/register_email"
         android:padding="5dp"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/white">
@@ -70,7 +70,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:hint="Enter Your Password"
+        android:hint="@string/register_password"
         android:padding="5dp"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/white">
@@ -98,7 +98,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:hint="Confirm Your Password"
+        android:hint="@string/register_pswConfirmation"
         android:padding="5dp"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/white">
@@ -125,7 +125,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="25dp"
         android:background="@drawable/button_back"
-        android:text="Register"
+        android:text="@string/register_btn"
         android:textAllCaps="false" />
 
     <!--text view for displaying a text on
@@ -138,7 +138,7 @@
         android:layout_marginTop="40dp"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Already a User ? Login Here"
+        android:text="@string/register_oldUser"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/white"
