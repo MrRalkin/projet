@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout_source"
+        android:id="@+id/textInputLayout_depart"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,6 +21,8 @@
         app:boxCornerRadiusTopStart="8dp"
         app:counterEnabled="true"
         app:counterMaxLength="25"
+        app:errorEnabled="true"
+        app:errorContentDescription="Enter"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp">
         <com.google.android.material.textfield.TextInputEditText
@@ -128,7 +130,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout_source">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout_depart">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

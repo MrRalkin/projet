@@ -86,7 +86,10 @@ class MainActivity : AppCompatActivity() {
                 showMap()
                 true
             }
-
+            R.id.idAddDestination->{
+                addDestinations()
+                true
+            }
             R.id.idLogOut -> {
                 // displaying a toast message on user logged out inside on click.
                 Toast.makeText(applicationContext, "User Logged Out", Toast.LENGTH_LONG).show()
@@ -116,7 +119,10 @@ class MainActivity : AppCompatActivity() {
         val i = Intent(this@MainActivity, DestinationsActivity::class.java)
         startActivity(i)
     }
-
+    fun addDestinations(){
+        val i = Intent(this@MainActivity, AddDestinationActivity::class.java)
+        startActivity(i)
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true

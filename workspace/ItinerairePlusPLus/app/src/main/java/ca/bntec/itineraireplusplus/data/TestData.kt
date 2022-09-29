@@ -192,8 +192,10 @@ class TestData {
         d.name = name
         d.image = image
         d.trip_time = trip_time
-        d.address = address
-        d.coord = coord
+        d.addressDepart = address
+        d.addressDestination = address
+        d.coordDepart = coord
+        d.coordDestination = coord
         d.steps = steps
         d.settings = settings
 

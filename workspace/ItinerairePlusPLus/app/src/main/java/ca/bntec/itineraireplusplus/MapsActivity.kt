@@ -5,12 +5,17 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import ca.bntec.itineraireplusplus.databinding.ActivityMapsBinding
+import classes.AppGlobal
 import classes.map.MapData
+import classes.settings.Address
+import classes.settings.Coord
+import classes.settings.Destination
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -19,12 +24,16 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
+import interfaces.user.IAddress
+import interfaces.user.ICoord
+import interfaces.user.IDestination
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.io.BufferedReader
+import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -35,10 +44,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     lateinit var mapFragment: SupportMapFragment
     lateinit var progressDialog: ProgressDialog
-//    var origin = LatLng(45.5419056, -73.4924797)
+    val appGlobal = AppGlobal.instance
+
+    //    var origin = LatLng(45.5419056, -73.4924797)
 //    var dest = LatLng(25.8102247,-80.2101818)
     var origin = LatLng(34.1993851, -79.8373477)
-    var dest = LatLng(30.3321579,-81.6736059)
+    var dest = LatLng(30.3321579, -81.6736059)
 
     //var dest = LatLng(45.4779697, -75.5184535)
     lateinit var context: Context
@@ -56,6 +67,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         context = this
+
+        var destination:IDestination= getDestination(appGlobal.departAddress,appGlobal.destAddress)
+        origin=LatLng(destination.coordDepart!!.latitude.toDouble(), destination.coordDepart!!.longitude.toDouble())
+        dest=LatLng(destination.coordDestination!!.latitude.toDouble(), destination.coordDestination!!.longitude.toDouble())
+
         drawPolylines()
     }
 
@@ -117,10 +133,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val bundle = app.metaData
 
 
-        var metaKey= bundle.getString("com.google.android.geo.API_KEY")
+        var metaKey = bundle.getString("com.google.android.geo.API_KEY")
 
-        val key ="key=$metaKey"
-           // "key=AIzaSyBP4KpmtFwjJ4LkdJQzUWlVpeyH3V6cDnM"
+        val key = "key=$metaKey"
+        // "key=AIzaSyBP4KpmtFwjJ4LkdJQzUWlVpeyH3V6cDnM"
         // Building the parameters to the web service
         val parameters =
             "$str_origin&$str_dest&$sensor&$mode&$key"
@@ -191,6 +207,43 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    private fun getDestination(locDep: String, locDest: String): IDestination {
+        var result: IDestination = Destination()
+        val geoCoder = Geocoder(this)
+        try {
+            val addressListDepart = geoCoder.getFromLocationName(locDep, 1)
+            val addressListDest = geoCoder.getFromLocationName(locDest, 1)
+
+            var addressDepart: IAddress = Address()
+            addressDepart.address = "${addressListDepart[0].subThoroughfare.toString()}, ${addressListDepart[0].thoroughfare.toString()}"
+            addressDepart.city = addressListDepart[0].locality.toString()
+            addressDepart.state = addressListDepart[0].adminArea.toString()
+            addressDepart.zip = addressListDepart[0].postalCode.toString()
+            addressDepart.country = addressListDepart[0].countryName.toString()
+            var addressDest: IAddress = Address()
+            addressDest.address = "${addressListDest[0].subThoroughfare.toString()}, ${addressListDest[0].thoroughfare.toString()}"
+            addressDest.city = addressListDest[0].locality.toString()
+            addressDest.state = addressListDest[0].adminArea.toString()
+            addressDest.zip = addressListDest[0].postalCode.toString()
+            addressDest.country = addressListDest[0].countryName.toString()
+
+            var coordDepart: ICoord = Coord()
+            coordDepart.latitude = addressListDepart[0].latitude.toString()
+            coordDepart.longitude = addressListDepart[0].longitude.toString()
+            var coordDest: ICoord = Coord()
+            coordDest.latitude = addressListDest[0].latitude.toString()
+            coordDest.longitude = addressListDest[0].longitude.toString()
+            result.addressDepart = addressDepart
+            result.addressDestination = addressDest
+            result.coordDepart = coordDepart
+            result.coordDestination = coordDest
+
+            //return LatLng(addressList[0].latitude, addressList[0].longitude)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return result
+    }
 
     suspend fun downloadUrl(strUrl: String): String {
         var data = ""

@@ -368,11 +368,16 @@ class FsDataManager : IDataManager {
     private fun getDestination(item: HashMap<String, Any>): FsDestination {
         var result = FsDestination()
         try {
-            result.destinationId=item[FsContract.TbDestination.FD_ID].toString()
+            result.destinationId = item[FsContract.TbDestination.FD_ID].toString()
             result.name = item[FsContract.TbDestination.FD_NAME].toString()
-            result.address =
-                getAddress(item[FsContract.TbDestination.FD_ADDRESS] as HashMap<String, Any>)
-            result.coord = getCoord(item[FsContract.TbDestination.FD_COORD] as HashMap<String, Any>)
+            result.addressDepart =
+                getAddress(item[FsContract.TbDestination.FD_COORD_DEPART] as HashMap<String, Any>)
+            result.addressDestination =
+                getAddress(item[FsContract.TbDestination.FD_COORD_DEST] as HashMap<String, Any>)
+            result.coordDepart =
+                getCoord(item[FsContract.TbDestination.FD_COORD_DEPART] as HashMap<String, Any>)
+            result.coordDestination =
+                getCoord(item[FsContract.TbDestination.FD_COORD_DEST] as HashMap<String, Any>)
             result.image = item[FsContract.TbDestination.FD_IMAGE].toString()
             result.trip_time = item[FsContract.TbDestination.FD_TRIP_TIME].toString().toInt()
             val items =

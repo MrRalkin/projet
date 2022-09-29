@@ -13,6 +13,10 @@
         android:icon="@drawable/ic_map"
         android:title="Map" />
     <item
+        android:id="@+id/idAddDestination"
+        android:icon="@drawable/ic_car"
+        android:title="Add Destination" />
+    <item
         android:id="@+id/idLogOut"
         android:icon="@drawable/ic_logout"
         android:title="Log Out" />

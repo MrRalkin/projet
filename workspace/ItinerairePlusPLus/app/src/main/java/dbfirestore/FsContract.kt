@@ -80,8 +80,10 @@ object FsContract {
         companion object {
             val FD_ID="destinationId"
             val FD_NAME = "name"
-            val FD_COORD = "coord"
-            val FD_ADDRESS = "address"
+            val FD_COORD_DEPART = "coord_depart"
+            val FD_COORD_DEST = "coord_destination"
+            val FD_ADDRESS_DEPART = "address_depart"
+            val FD_ADDRESS_DEST = "address_destination"
             val FD_IMAGE = "image"
             val FD_TRIP_TIME = "trip_time"
             val FD_STEPS = "steps"
