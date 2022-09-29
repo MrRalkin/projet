@@ -8,11 +8,13 @@
     <string name="login_password">Entrez votre mot de passe</string>
     <string name="login_btn">Entrer</string>
     <string name="login_newUser">Nouvel Utilisateur ? S\'enregistrer Ici</string>
+    <string name="btn_destinations">Destination :</string>
     <string name="register_email">Entrez votre email</string>
     <string name="register_password">Entrez votre mot de passe</string>
     <string name="register_pswConfirmation">Entrez de nouveau votre mot de passe</string>
     <string name="register_btn">S\'enregistrer</string>
     <string name="register_oldUser">Déjà un utilisateur ? Entrer Ici</string>
+    <string name="register_userName">Entrer le nom de l\'utilisateur</string>
     <string name="setting_profilBtn">Profile Utilisateur</string>
     <string name="setting_name">Nom</string>
     <string name="setting_address">Adresse</string>
