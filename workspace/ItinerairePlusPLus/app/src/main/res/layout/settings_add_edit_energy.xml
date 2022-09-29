@@ -14,7 +14,7 @@
             android:layout_height="40dp"
             android:background="@color/purple_500"
             android:padding="5dp"
-            android:text="Caption"
+            android:text="@string/settingAddEnergy_captionBtn"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="20sp"/>
@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Type :"/>
+                android:text="@string/settingAddEnergy_type"/>
             <EditText
                 android:id="@+id/setting_edit_energy_type"
                 android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Prix :"/>
+                android:text="@string/settingAddEnergy_price"/>
             <EditText
                 android:id="@+id/setting_edit_energy_price"
                 android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Unité :"/>
+                android:text="@string/settingAddEnergy_unity"/>
             <EditText
                 android:id="@+id/setting_edit_energy_unit"
                 android:layout_width="match_parent"
@@ -79,13 +79,13 @@
                 android:id="@+id/btnAnnuler"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Annuler"
+                android:text="@string/settingAddEnergy_cancelBtn"
                 android:layout_marginEnd="8dp"/>
             <Button
                 android:id="@+id/btnConfirmer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="OK"/>
+                android:text="@string/settingAddEnergy_acknowledgeBtn"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

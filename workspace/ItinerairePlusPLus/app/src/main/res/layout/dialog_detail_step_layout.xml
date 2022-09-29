@@ -16,7 +16,7 @@
             android:layout_height="40dp"
             android:background="@color/purple_500"
             android:padding="5dp"
-            android:text="Caption"
+            android:text="@string/dialogStepDtls_captionBtn"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="20sp" />
@@ -31,7 +31,7 @@
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:textAlignment="textEnd"
-                android:text="Départ : " />
+                android:text="@string/dialogStepDtls_source" />
 
             <TextView
                 android:id="@+id/detail_step_start_value"
@@ -50,7 +50,7 @@
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:textAlignment="textEnd"
-                android:text="Arrivé : " />
+                android:text="@string/dialogStepDtls_destination" />
 
             <TextView
                 android:id="@+id/detail_step_end_value"
@@ -69,7 +69,7 @@
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:textAlignment="textEnd"
-                android:text="Estimation : " />
+                android:text="@string/dialogStepDtls_estimation" />
 
             <TextView
                 android:id="@+id/detail_step_trip_time_value"
@@ -88,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="Activité(s)" />
+                android:text="@string/dialogStepDtls_activity" />
 
             <ListView
                 android:id="@+id/detail_step_activity_value"

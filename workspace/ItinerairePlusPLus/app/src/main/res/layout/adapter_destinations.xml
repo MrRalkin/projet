@@ -19,7 +19,7 @@
             android:paddingStart="8dp"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:text="Name" />
+            android:text="@string/destAdapter_name" />
 
         <Button
             android:id="@+id/btn_estimation"
@@ -56,7 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="8dp"
-        android:text="Temps du voyage"
+        android:text="@string/destAdapter_tripTime"
         android:visibility="gone"/>
 
     <ListView

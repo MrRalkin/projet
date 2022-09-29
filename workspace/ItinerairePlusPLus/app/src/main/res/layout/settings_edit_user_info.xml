@@ -13,7 +13,7 @@
             android:layout_height="40dp"
             android:background="@color/purple_500"
             android:padding="5dp"
-            android:text="Caption"
+            android:text="@string/settingUser_captionBtn"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="20sp"/>
@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Name :"/>
+                android:text="@string/settingUser_name"/>
             <EditText
                 android:id="@+id/setting_edit_user_name"
                 android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Address :"/>
+                android:text="@string/settingUser_address"/>
             <EditText
                 android:id="@+id/setting_edit_user_address"
                 android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="City :" />
+                android:text="@string/settingUser_city" />
             <EditText
                 android:id="@+id/setting_edit_user_city"
                 android:layout_width="match_parent"
@@ -77,7 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="State :"/>
+                android:text="@string/settingUser_state"/>
             <EditText
                 android:id="@+id/setting_edit_user_state"
                 android:layout_width="match_parent"
@@ -94,7 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Postal code :"/>
+                android:text="@string/settingUser_postalCode"/>
             <EditText
                 android:id="@+id/setting_edit_user_zip"
                 android:layout_width="match_parent"
@@ -111,7 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Country :"/>
+                android:text="@string/settingUser_country"/>
             <EditText
                 android:id="@+id/setting_edit_user_country"
                 android:layout_width="match_parent"
@@ -129,13 +129,13 @@
                 android:id="@+id/btnAnnuler"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Annuler"
+                android:text="@string/settingUser_cancelBtn"
                 android:layout_marginEnd="8dp"/>
             <Button
                 android:id="@+id/btnConfirmer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="OK"/>
+                android:text="@string/settingUser_acknowledgeBtn"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

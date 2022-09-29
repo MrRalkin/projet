@@ -6,15 +6,14 @@
     android:layout_height="match_parent"
     android:layout_margin="8dp"
     android:orientation="vertical"
-    android:scrollbarAlwaysDrawVerticalTrack="true"
-    >
+    android:scrollbarAlwaysDrawVerticalTrack="true">
 
 
         <Button
             android:id="@+id/idBtnShowUserInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Profile Utilisateur"
+            android:text="@string/setting_profilBtn"
             android:textAlignment="textStart" />
 
         <LinearLayout
@@ -29,20 +28,20 @@
                 android:id="@+id/setting_profile_info_name"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:text="Name" />
+                android:text="@string/setting_name" />
 
             <TextView
                 android:id="@+id/setting_profile_info_address"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:text="Address" />
+                android:text="@string/setting_address" />
 
             <Button
                 android:id="@+id/settings_user_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:text="Modifier" />
+                android:text="@string/setting_editBtn" />
 
         </LinearLayout>
 
@@ -50,7 +49,7 @@
             android:id="@+id/idBtnShowSettingInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Configuration"
+            android:text="@string/setting_configBtn"
             android:textAlignment="textStart" />
 
         <LinearLayout
@@ -73,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:text="Vehicules" />
+                    android:text="@string/setting_vehiculeBtn" />
 
                 <Button
                     android:id="@+id/setting_vehicle_btn_add"
@@ -122,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:text="Energies" />
+                    android:text="@string/setting_energyBtn" />
 
                 <Button
                     android:id="@+id/setting_energy_btn_add"
@@ -171,7 +170,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:text="Activities" />
+                    android:text="@string/setting_activityBtn" />
 
                 <Button
                     android:id="@+id/setting_activity_btn_add"
