@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Type :" />
+                android:text="@string/settingAddVehicule_type" />
             <EditText
                 android:id="@+id/setting_edit_vehicle_type"
                 android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Energie :"/>
+                android:text="@string/settingAddVehicule_energy"/>
             <EditText
                 android:id="@+id/setting_edit_vehicle_energy"
                 android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Distance :"/>
+                android:text="@string/settingAddVehicule_distance"/>
             <EditText
                 android:id="@+id/setting_edit_vehicle_distance"
                 android:layout_width="match_parent"
@@ -78,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Mesure :"/>
+                android:text="@string/settingAddVehicule_mesure"/>
             <EditText
                 android:id="@+id/setting_edit_vehicle_mesure"
                 android:layout_width="match_parent"
@@ -95,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Capacité :"/>
+                android:text="@string/settingAddVehicule_capacity"/>
             <EditText
                 android:id="@+id/setting_edit_vehicle_capacity"
                 android:layout_width="match_parent"
@@ -112,7 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Unité :"/>
+                android:text="@string/settingAddVehicule_unity"/>
             <EditText
                 android:id="@+id/setting_edit_vehicle_unit"
                 android:layout_width="match_parent"
@@ -130,13 +130,13 @@
                 android:id="@+id/btnAnnuler"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Annuler"
+                android:text="@string/settingAddVehicule_cancelBtn"
                 android:layout_marginEnd="8dp"/>
             <Button
                 android:id="@+id/btnConfirmer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="OK"/>
+                android:text="@string/settingAddVehicule_acknowledgeBtn"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
