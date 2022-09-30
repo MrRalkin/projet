@@ -9,10 +9,11 @@ import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import ca.bntec.itineraireplusplus.databinding.ActivityMapsBinding
+
 import classes.AppGlobal
 import classes.map.MapData
+import classes.map.MapRawData
 import classes.settings.Address
 import classes.settings.Coord
 import classes.settings.Destination
@@ -27,6 +28,7 @@ import com.google.android.gms.maps.model.PolylineOptions
 import interfaces.user.IAddress
 import interfaces.user.ICoord
 import interfaces.user.IDestination
+import interfaces.user.IMapRawData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.async
@@ -38,13 +40,21 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+import java.time.LocalDate
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     lateinit var mapFragment: SupportMapFragment
     lateinit var progressDialog: ProgressDialog
+    lateinit var destination: IDestination
+    lateinit var mapRawData: IMapRawData
     val appGlobal = AppGlobal.instance
+    val db = appGlobal.userManager
+    val uid: String = UUID.randomUUID().toString()
 
     //    var origin = LatLng(45.5419056, -73.4924797)
 //    var dest = LatLng(25.8102247,-80.2101818)
@@ -55,6 +65,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var context: Context
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,11 +79,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
         context = this
 
-        var destination:IDestination= getDestination(appGlobal.departAddress,appGlobal.destAddress)
-        origin=LatLng(destination.coordDepart!!.latitude.toDouble(), destination.coordDepart!!.longitude.toDouble())
-        dest=LatLng(destination.coordDestination!!.latitude.toDouble(), destination.coordDestination!!.longitude.toDouble())
+        destination = getDestination(appGlobal.departAddress, appGlobal.destAddress)
+        origin = LatLng(
+            destination.coordDepart!!.latitude.toDouble(),
+            destination.coordDepart!!.longitude.toDouble()
+        )
+        dest = LatLng(
+            destination.coordDestination!!.latitude.toDouble(),
+            destination.coordDestination!!.longitude.toDouble()
+        )
 
         drawPolylines()
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -172,6 +190,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         MainScope().launch(Dispatchers.IO) {
             data = async { downloadUrl(url) }.await()
+
+            var date= LocalDate.now()
+            var l:String = date.year.toString().padStart(4,'0')
+            l+= date.monthValue.toString().padStart(2,'0')
+            l+= date.dayOfMonth.toString().padStart(2,'0')
+
+            mapRawData = MapRawData(uid, l.toLong(), data)
+            db.setMapRawData(mapRawData)
             jObject = JSONObject(data)
             val parser = MapData()
             routes = parser.parse(jObject)
@@ -202,9 +228,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 // Drawing polyline in the Google Map for the i-th route
             this@MapsActivity.runOnUiThread(java.lang.Runnable {
                 mMap.addPolyline(lineOptions!!)
+                setActivities()
             })
             progressDialog.dismiss()
         }
+    }
+
+    private fun setActivities() {
+
     }
 
     private fun getDestination(locDep: String, locDest: String): IDestination {
@@ -214,25 +245,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val addressListDepart = geoCoder.getFromLocationName(locDep, 1)
             val addressListDest = geoCoder.getFromLocationName(locDest, 1)
 
-            var addressDepart: IAddress = Address()
-            addressDepart.address = "${addressListDepart[0].subThoroughfare.toString()}, ${addressListDepart[0].thoroughfare.toString()}"
-            addressDepart.city = addressListDepart[0].locality.toString()
-            addressDepart.state = addressListDepart[0].adminArea.toString()
-            addressDepart.zip = addressListDepart[0].postalCode.toString()
-            addressDepart.country = addressListDepart[0].countryName.toString()
-            var addressDest: IAddress = Address()
-            addressDest.address = "${addressListDest[0].subThoroughfare.toString()}, ${addressListDest[0].thoroughfare.toString()}"
-            addressDest.city = addressListDest[0].locality.toString()
-            addressDest.state = addressListDest[0].adminArea.toString()
-            addressDest.zip = addressListDest[0].postalCode.toString()
-            addressDest.country = addressListDest[0].countryName.toString()
+            var addressDepart: IAddress = getAddress(addressListDepart[0])
 
-            var coordDepart: ICoord = Coord()
-            coordDepart.latitude = addressListDepart[0].latitude.toString()
-            coordDepart.longitude = addressListDepart[0].longitude.toString()
-            var coordDest: ICoord = Coord()
-            coordDest.latitude = addressListDest[0].latitude.toString()
-            coordDest.longitude = addressListDest[0].longitude.toString()
+            var addressDest: IAddress = getAddress(addressListDest[0])
+
+
+            var coordDepart: ICoord = getCoord(addressListDepart[0])
+
+            var coordDest: ICoord = getCoord(addressListDest[0])
+
             result.addressDepart = addressDepart
             result.addressDestination = addressDest
             result.coordDepart = coordDepart
@@ -243,6 +264,52 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             e.printStackTrace()
         }
         return result
+    }
+
+    private fun getCoord(line: android.location.Address): ICoord {
+        var result: ICoord = Coord()
+        if(line.hasLatitude()){
+            result.latitude = line.latitude.toString()
+        }
+        if(line.hasLongitude()){
+            result.longitude = line.longitude.toString()
+        }
+
+        return result
+    }
+
+    private fun getAddress(line: android.location.Address): IAddress {
+        var result = Address()
+
+        if (line.subThoroughfare != null) {
+            result.address =
+                "${line.subThoroughfare.toString()}"
+        }
+        if (line.thoroughfare != null) {
+            result.address +=
+                ", ${line.thoroughfare.toString()}"
+        }
+
+        if (line.locality != null) {
+            result.city = line.locality.toString()
+        } else if (line.subLocality != null) {
+            result.city = line.subLocality.toString()
+        }
+
+        if (line.adminArea != null) {
+            result.state = line.adminArea.toString()
+        }
+
+        if (line.postalCode != null) {
+            result.zip = line.postalCode.toString()
+        }
+
+        if (line.countryName != null) {
+            result.country = line.countryName.toString()
+        }
+
+        return result
+
     }
 
     suspend fun downloadUrl(strUrl: String): String {
