@@ -1,6 +1,5 @@
 package ca.bntec.itineraireplusplus
 
-import android.Manifest
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.pm.PackageManager
@@ -31,14 +30,8 @@ import interfaces.user.ICoord
 import interfaces.user.IDestination
 import interfaces.user.IMapRawData
 import kotlinx.coroutines.*
-import org.json.JSONArray
 import org.json.JSONObject
-import java.io.BufferedReader
 import java.io.IOException
-import java.io.InputStream
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
 import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
@@ -52,6 +45,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var destination: IDestination
     lateinit var mapRawData: IMapRawData
     lateinit var mapLegData: MapLegData
+    val mapData = MapData()
     val appGlobal = AppGlobal.instance
     val db = appGlobal.userManager
     val uid: String = UUID.randomUUID().toString()
@@ -90,9 +84,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         )
         // val list: List<String> = listOf("restaurant", "hotel", "gas_station")
         //   val list: List<String> = listOf("restaurant", "hotel", "gas_station")
-        val list: List<String> = listOf("gas_station")
-        //getActivityPlaces(Coord(dest.latitude.toString(), dest.longitude.toString()), list)
-        drawPolylines()
+        //val list: List<String> = listOf("gas_station")
+       getActivityPlaces(Coord(dest.latitude.toString(), dest.longitude.toString()), "gas_station")
+       drawPolylines()
 
     }
 
@@ -192,7 +186,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         var routes = ArrayList<ArrayList<HashMap<String, String>>>()
 
         MainScope().launch(Dispatchers.IO) {
-            data = async { downloadUrl(url) }.await()
+            data = async { mapData.downloadUrl(url) }.await()
 
             var date = LocalDate.now()
             var l: String = date.year.toString().padStart(4, '0')
@@ -202,10 +196,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             mapRawData = MapRawData(uid, l.toLong(), data)
             db.setMapRawData(mapRawData)
             jObject = JSONObject(data)
-            val parser = MapData()
-            routes = parser.parse(jObject)
+
+            routes = mapData.parse(jObject)
             ///code for Nicol
-            mapLegData = parser.getMapLegData()
+            mapLegData = mapData.getMapLegData()
 
             Log.d("result", routes.toString())
             var points = ArrayList<LatLng>()
@@ -239,10 +233,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun getActivityPlaces(coord: Coord, places: List<String>) {
+    private fun getActivityPlaces(coord: Coord, type: String) {
 
         // Destination of route
-        val location = "location=" + coord.latitude + "," + coord.longitude
+//        val location = "location=" + coord.latitude + "," + coord.longitude
 
 
         val app = context.packageManager.getApplicationInfo(
@@ -250,54 +244,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             PackageManager.GET_META_DATA
         )
         val bundle = app.metaData
-
-
         var metaKey = bundle.getString("com.google.android.geo.API_KEY")
 
-        val key = "key=$metaKey"
-        val radius = "radius=5000"
-        var type = "type="
-        val output = "json"
-
-
-
-
-//        MainScope().launch(Dispatchers.IO) {
-//            val jobs:ArrayList<Job> = ArrayList<Job>()
-//            for (idx in places.indices) {
-//                type += places[idx]
-//                val parameters =
-//                    "$location&$radius&$type&$key"
-//                var link =
-//                    "https://maps.googleapis.com/maps/api/place/nearbysearch/$output?$parameters"
-//                jobs.add( async { downloadUrl(link) })
-//                jobs.awaitAll()
-//                var e=""
-//            }
-//        }
-
-        val parameters =
-            "$location&$radius&$type&$key"
-
-        var link = "https://maps.googleapis.com/maps/api/place/nearbysearch/$output?$parameters"
-
+//        val key = "key=$metaKey"
+//        val radius = "radius=5000"
+//        var type = "type=$type"
+//        val output = "json"
+//        val parameters =
+//            "$location&$radius&$type&$key"
+//
+//        var link = "https://maps.googleapis.com/maps/api/place/nearbysearch/$output?$parameters"
 
         MainScope().launch(Dispatchers.IO) {
-            var data = async { downloadUrl(link) }.await()
-            var t = JSONObject(data)
-            var places: JSONArray? = null
-            if (t["status"] != null && t["status"] == "OK") {
-                var results = t.getJSONArray("results")
-                for (idx in 0 until results.length()) {
-                    var line = results[idx] as JSONObject
-                    var f = line
-                }
-            }
-
-
+            var places = async { mapData.getActivityPlaces(coord,type,metaKey!!) }.await()
+            var t = places
         }
-
     }
+
 
     private fun setActivities() {
 
@@ -377,31 +340,5 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-    suspend fun downloadUrl(strUrl: String): String {
-        var data = ""
-        var iStream: InputStream? = null
-        var urlConnection: HttpURLConnection? = null
-        try {
-            val url = URL(strUrl)
-            urlConnection = url.openConnection() as HttpURLConnection
-            urlConnection!!.connect()
-            iStream = urlConnection!!.inputStream
-            val br = BufferedReader(InputStreamReader(iStream))
-            val sb = StringBuffer()
-            var line: String? = ""
-            while (br.readLine().also { line = it } != null) {
-                sb.append(line)
-            }
-            data = sb.toString()
-            br.close()
-            Log.d("data", data)
-        } catch (e: Exception) {
-            Log.d("Exception", e.toString())
-        } finally {
-            iStream!!.close()
-            urlConnection!!.disconnect()
-        }
-        return data!!
-    }
 
 }
