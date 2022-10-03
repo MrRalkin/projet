@@ -16,6 +16,8 @@ import classes.AppGlobal
 import classes.settings.Energy
 import classes.settings.Vehicle
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import interfaces.user.IActivity
 import interfaces.user.IEnergy
 import interfaces.user.IUser
@@ -212,7 +214,7 @@ class SettingsActivity : AppCompatActivity() {
         val address = dialog.findViewById<EditText>(R.id.setting_edit_user_address)
         val city = dialog.findViewById<EditText>(R.id.setting_edit_user_city)
         val state = dialog.findViewById<EditText>(R.id.setting_edit_user_state)
-        val zip = dialog.findViewById<EditText>(R.id.setting_edit_user_zip)
+        val zip = dialog.findViewById<EditText>(R.id.setting_edit_user_postalCode)
         val country = dialog.findViewById<EditText>(R.id.setting_edit_user_country)
 
         name.setText(user.name)
@@ -254,12 +256,12 @@ class SettingsActivity : AppCompatActivity() {
         val btnOk = dialog.findViewById<Button>(R.id.btnConfirmer)
         val dialogTitle = dialog.findViewById<TextView>(R.id.txt_setting_vehicle_title)
 
-        val type = dialog.findViewById<EditText>(R.id.setting_edit_vehicle_type)
-        val energy = dialog.findViewById<EditText>(R.id.setting_edit_vehicle_energy)
-        val distance = dialog.findViewById<EditText>(R.id.setting_edit_vehicle_distance)
-        val mesure = dialog.findViewById<EditText>(R.id.setting_edit_vehicle_mesure)
-        val capacity = dialog.findViewById<EditText>(R.id.setting_edit_vehicle_capacity)
-        val unit = dialog.findViewById<EditText>(R.id.setting_edit_vehicle_unit)
+        val type = dialog.findViewById<TextInputEditText>(R.id.setting_edit_vehicle_type)
+        val energy = dialog.findViewById<TextInputEditText>(R.id.setting_edit_vehicle_energy)
+        val distance = dialog.findViewById<TextInputEditText>(R.id.setting_edit_vehicle_distance)
+        val mesure = dialog.findViewById<TextInputEditText>(R.id.setting_edit_vehicle_mesure)
+        val capacity = dialog.findViewById<TextInputEditText>(R.id.setting_edit_vehicle_capacity)
+        val unit = dialog.findViewById<TextInputEditText>(R.id.setting_edit_vehicle_unit)
 
         type.setText(item.type)
         energy.setText(item.energy)
@@ -362,9 +364,9 @@ class SettingsActivity : AppCompatActivity() {
         val btnOk = dialog.findViewById<Button>(R.id.btnConfirmer)
         val dialogTitle = dialog.findViewById<TextView>(R.id.txt_setting_energy_title)
 
-        val type = dialog.findViewById<EditText>(R.id.setting_edit_energy_type)
-        val price = dialog.findViewById<EditText>(R.id.setting_edit_energy_price)
-        val unit = dialog.findViewById<EditText>(R.id.setting_edit_energy_unit)
+        val type = dialog.findViewById<TextInputEditText>(R.id.setting_edit_energy_type)
+        val price = dialog.findViewById<TextInputEditText>(R.id.setting_edit_energy_price)
+        val unit = dialog.findViewById<TextInputEditText>(R.id.setting_edit_energy_unit)
 
         type.setText(item.type)
         price.setText(item.price.toString())
@@ -444,8 +446,8 @@ class SettingsActivity : AppCompatActivity() {
         val btnOk = dialog.findViewById<Button>(R.id.btnConfirmer)
         val dialogTitle = dialog.findViewById<TextView>(R.id.txt_setting_activity_title)
 
-        val name = dialog.findViewById<EditText>(R.id.setting_edit_activity_name)
-        val time = dialog.findViewById<EditText>(R.id.setting_edit_activity_time)
+        val name = dialog.findViewById<TextInputEditText>(R.id.setting_edit_activity_name)
+        val time = dialog.findViewById<TextInputEditText>(R.id.setting_edit_activity_time)
 
         name.setText(item.name)
         time.setText(item.time.toString())
