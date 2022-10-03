@@ -1,11 +1,22 @@
 package classes.map
+
+import classes.settings.Coord
 import com.google.android.gms.maps.model.LatLng
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+
 class MapData {
+    companion object {
+        var mapLegData = MapLegData()
+    }
+
+    fun getMapLegData(): MapLegData {
+        return mapLegData
+    }
+
     /** Receives a JSONObject and returns a list of lists containing latitude and longitude  */
-    fun parse(jObject: JSONObject): ArrayList<ArrayList<HashMap<String, String>>>{
+    fun parse(jObject: JSONObject): ArrayList<ArrayList<HashMap<String, String>>> {
         val routes: ArrayList<ArrayList<HashMap<String, String>>> = ArrayList()
         var jRoutes: JSONArray? = null
         var jLegs: JSONArray? = null
@@ -15,9 +26,16 @@ class MapData {
             /** Traversing all routes  */
             for (i in 0 until jRoutes.length()) {
                 jLegs = (jRoutes[i] as JSONObject).getJSONArray("legs")
-                val path= ArrayList<HashMap<String, String>>()
+
+                val path = ArrayList<HashMap<String, String>>()
                 /** Traversing all legs  */
                 for (j in 0 until jLegs.length()) {
+
+                    var duration: JSONObject = (jLegs[j] as JSONObject).getJSONObject("duration")
+                    var distaance: JSONObject = (jLegs[j] as JSONObject).getJSONObject("distance")
+                    mapLegData.legDuration = duration.getInt("value")
+                    mapLegData.legDistance = distaance.getInt("value")
+
                     jSteps = (jLegs[j] as JSONObject).getJSONArray("steps")
                     /** Traversing all steps  */
                     for (k in 0 until jSteps.length()) {
@@ -28,8 +46,15 @@ class MapData {
                         /** Traversing all points  */
                         for (l in list.indices) {
                             val hm = HashMap<String, String>()
+
                             hm["lat"] = java.lang.Double.toString((list[l] as LatLng).latitude)
                             hm["lng"] = java.lang.Double.toString((list[l] as LatLng).longitude)
+                            mapLegData.legPoints.add(
+                                Coord(
+                                    hm["lat"].toString(),
+                                    hm["lng"].toString()
+                                )
+                            )
                             path.add(hm)
                         }
                     }
@@ -44,7 +69,7 @@ class MapData {
     }
 
     private fun decodePoly(encoded: String): ArrayList<LatLng> {
-        val poly=ArrayList<LatLng>()
+        val poly = ArrayList<LatLng>()
         var index = 0
         val len = encoded.length
         var lat = 0
@@ -77,4 +102,5 @@ class MapData {
         }
         return poly
     }
+
 }

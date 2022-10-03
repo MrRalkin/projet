@@ -8,5 +8,6 @@ import kotlinx.parcelize.Parcelize
 class Activity(
     override var activity: Int = 0,
     override var name: String = "",
-    override var time: Int = 0
+    override var time: Int = 0,
+    override var duration:Int=0
 ) : IActivity(), Parcelable

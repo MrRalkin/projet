@@ -28,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
+            android:text="Ottawa,on,canada"
             android:hint="Depart"
             android:maxLength="255" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -56,6 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
+            android:text="829 bellerive, longueuil"
             android:hint="Destination"
             android:maxLength="255" />
     </com.google.android.material.textfield.TextInputLayout>

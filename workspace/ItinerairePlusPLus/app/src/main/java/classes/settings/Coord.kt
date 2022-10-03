@@ -6,6 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class Coord(
-    override var longitude: String = "",
-    override var latitude: String = ""
+    override var latitude: String = "",
+    override var longitude: String = ""
 ) : ICoord(), Parcelable

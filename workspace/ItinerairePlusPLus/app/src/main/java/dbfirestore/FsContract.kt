@@ -63,6 +63,7 @@ object FsContract {
             val FD_ACTIVITY = "activity"
             val FD_NAME = "name"
             val FD_TIME = "time"
+            val FD_DURATION = "duration"
         }
     }
 
@@ -78,7 +79,7 @@ object FsContract {
 
     class TbDestination : BaseColumns {
         companion object {
-            val FD_ID="destinationId"
+            val FD_ID = "destinationId"
             val FD_NAME = "name"
             val FD_COORD_DEPART = "coord_depart"
             val FD_COORD_DEST = "coord_destination"

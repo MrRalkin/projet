@@ -27,7 +27,8 @@ abstract class IPoint(
 abstract class IActivity(
     open var activity: Int = 0,
     open var name: String = "",
-    open var time: Int = 0
+    open var time: Int = 0,
+    open var duration:Int=0
 )
 
 abstract class IStep(

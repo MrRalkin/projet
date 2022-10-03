@@ -13,6 +13,7 @@ import ca.bntec.itineraireplusplus.databinding.ActivityMapsBinding
 
 import classes.AppGlobal
 import classes.map.MapData
+import classes.map.MapLegData
 import classes.map.MapRawData
 import classes.settings.Address
 import classes.settings.Coord
@@ -29,10 +30,8 @@ import interfaces.user.IAddress
 import interfaces.user.ICoord
 import interfaces.user.IDestination
 import interfaces.user.IMapRawData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
@@ -52,6 +51,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var progressDialog: ProgressDialog
     lateinit var destination: IDestination
     lateinit var mapRawData: IMapRawData
+    lateinit var mapLegData: MapLegData
     val appGlobal = AppGlobal.instance
     val db = appGlobal.userManager
     val uid: String = UUID.randomUUID().toString()
@@ -88,7 +88,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             destination.coordDestination!!.latitude.toDouble(),
             destination.coordDestination!!.longitude.toDouble()
         )
-
+        // val list: List<String> = listOf("restaurant", "hotel", "gas_station")
+        //   val list: List<String> = listOf("restaurant", "hotel", "gas_station")
+        val list: List<String> = listOf("gas_station")
+        //getActivityPlaces(Coord(dest.latitude.toString(), dest.longitude.toString()), list)
         drawPolylines()
 
     }
@@ -191,16 +194,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         MainScope().launch(Dispatchers.IO) {
             data = async { downloadUrl(url) }.await()
 
-            var date= LocalDate.now()
-            var l:String = date.year.toString().padStart(4,'0')
-            l+= date.monthValue.toString().padStart(2,'0')
-            l+= date.dayOfMonth.toString().padStart(2,'0')
+            var date = LocalDate.now()
+            var l: String = date.year.toString().padStart(4, '0')
+            l += date.monthValue.toString().padStart(2, '0')
+            l += date.dayOfMonth.toString().padStart(2, '0')
 
             mapRawData = MapRawData(uid, l.toLong(), data)
             db.setMapRawData(mapRawData)
             jObject = JSONObject(data)
             val parser = MapData()
             routes = parser.parse(jObject)
+            ///code for Nicol
+            mapLegData = parser.getMapLegData()
 
             Log.d("result", routes.toString())
             var points = ArrayList<LatLng>()
@@ -232,6 +237,66 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             })
             progressDialog.dismiss()
         }
+    }
+
+    private fun getActivityPlaces(coord: Coord, places: List<String>) {
+
+        // Destination of route
+        val location = "location=" + coord.latitude + "," + coord.longitude
+
+
+        val app = context.packageManager.getApplicationInfo(
+            context.packageName,
+            PackageManager.GET_META_DATA
+        )
+        val bundle = app.metaData
+
+
+        var metaKey = bundle.getString("com.google.android.geo.API_KEY")
+
+        val key = "key=$metaKey"
+        val radius = "radius=5000"
+        var type = "type="
+        val output = "json"
+
+
+
+
+//        MainScope().launch(Dispatchers.IO) {
+//            val jobs:ArrayList<Job> = ArrayList<Job>()
+//            for (idx in places.indices) {
+//                type += places[idx]
+//                val parameters =
+//                    "$location&$radius&$type&$key"
+//                var link =
+//                    "https://maps.googleapis.com/maps/api/place/nearbysearch/$output?$parameters"
+//                jobs.add( async { downloadUrl(link) })
+//                jobs.awaitAll()
+//                var e=""
+//            }
+//        }
+
+        val parameters =
+            "$location&$radius&$type&$key"
+
+        var link = "https://maps.googleapis.com/maps/api/place/nearbysearch/$output?$parameters"
+
+
+        MainScope().launch(Dispatchers.IO) {
+            var data = async { downloadUrl(link) }.await()
+            var t = JSONObject(data)
+            var places: JSONArray? = null
+            if (t["status"] != null && t["status"] == "OK") {
+                var results = t.getJSONArray("results")
+                for (idx in 0 until results.length()) {
+                    var line = results[idx] as JSONObject
+                    var f = line
+                }
+            }
+
+
+        }
+
     }
 
     private fun setActivities() {
@@ -268,10 +333,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun getCoord(line: android.location.Address): ICoord {
         var result: ICoord = Coord()
-        if(line.hasLatitude()){
+        if (line.hasLatitude()) {
             result.latitude = line.latitude.toString()
         }
-        if(line.hasLongitude()){
+        if (line.hasLongitude()) {
             result.longitude = line.longitude.toString()
         }
 

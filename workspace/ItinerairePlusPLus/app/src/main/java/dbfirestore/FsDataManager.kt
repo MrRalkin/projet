@@ -437,6 +437,7 @@ class FsDataManager : IDataManager {
             result.activity = item[FsContract.TbActivity.FD_ACTIVITY].toString().toInt()
             result.name = item[FsContract.TbActivity.FD_NAME].toString()
             result.time = item[FsContract.TbActivity.FD_TIME].toString().toInt()
+            result.duration = item[FsContract.TbActivity.FD_DURATION].toString().toInt()
 
         } catch (e: Exception) {
             println(e.message)
@@ -597,11 +598,11 @@ class FsDataManager : IDataManager {
         result.vehicles.add(FsVehicle("Auto electric", "électricité", 600, "km", 100, "kWh"))
         result.vehicles.add(FsVehicle("Vélo", "nourriture", 50, "km", 2, ""))
 
-        result.activities.add(FsActivity(1, "Essence", 30))
-        result.activities.add(FsActivity(2, "Recharge", 60))
-        result.activities.add(FsActivity(3, "Dormir", 480))
-        result.activities.add(FsActivity(4, "Manger", 120))
-        result.activities.add(FsActivity(5, "Touristique", 180))
+        result.activities.add(FsActivity(1, "Essence", 14400, 900))
+        result.activities.add(FsActivity(2, "Recharge", 14400,7200))
+        result.activities.add(FsActivity(3, "Dormir", 28800, 21600))
+        result.activities.add(FsActivity(4, "Manger", 14400,3600))
+        result.activities.add(FsActivity(5, "Touristique", 14400,3600))
 
         result.energies.add(FsEnergy("essence", 1.55, "litre"))
         result.energies.add(FsEnergy("électricité", 0.147, "kWh"))
