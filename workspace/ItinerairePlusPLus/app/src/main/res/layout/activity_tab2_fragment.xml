@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F7FA"
+    tools:context=".Fragments.Tab2Fragment" >
+
+    <LinearLayout
+        android:id="@+id/checkBox_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/eatLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkboxManger"
+                android:layout_width="112dp"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:text="@string/tab2Fragment_checkbox1"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/pickTimeManger"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginLeft="5dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:text="Choisir Heure"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@color/light_blue_shade_1"/>
+
+            <TextView
+                android:id="@+id/pickDurationManger"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginLeft="12dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:text="Choisir Duree"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:visibility="visible"
+                android:background="@color/light_blue_shade_1"
+                />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:background="@color/light_blue_shade_1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/gazLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <CheckBox
+                android:id="@+id/checkboxEssence"
+                android:layout_width="112dp"
+                android:layout_height="match_parent"
+                android:checked="false"
+                android:text="@string/tab2Fragment_checkbox2"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/pickTimeEssence"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginLeft="5dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:text="Choisir Heure"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@color/light_blue_shade_1"/>
+
+            <TextView
+                android:id="@+id/pickDurationEssence"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginLeft="12dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:text="Choisir Duree"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:visibility="visible"
+                android:background="@color/light_blue_shade_1"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rechargeLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <CheckBox
+                android:id="@+id/checkboxRecharge"
+                android:layout_width="112dp"
+                android:layout_height="match_parent"
+                android:checked="false"
+                android:text="@string/tab2Fragment_checkbox3"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/pickTimeRecharge"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginLeft="5dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:text="Choisir Heure"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@color/light_blue_shade_1"/>
+
+            <TextView
+                android:id="@+id/pickDurationRecharge"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginLeft="12dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:text="Choisir Duree"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:visibility="visible"
+                android:background="@color/light_blue_shade_1"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dormirLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <CheckBox
+                android:id="@+id/checkboxDormir"
+                android:layout_width="112dp"
+                android:layout_height="match_parent"
+                android:checked="false"
+                android:text="@string/tab2Fragment_checkbox4"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/pickTimeDormir"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginLeft="5dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:text="Choisir Heure"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@color/light_blue_shade_1"/>
+
+            <TextView
+                android:id="@+id/pickDurationDormir"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginLeft="12dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:text="Choisir Duree"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:visibility="visible"
+                android:background="@color/light_blue_shade_1"
+                />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
