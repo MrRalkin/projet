@@ -73,5 +73,29 @@
     <string name="settingUser_country">Pays</string>
     <string name="settingUser_cancelBtn">Annuler</string>
     <string name="settingUser_acknowledgeBtn">Ok</string>
+    <string name="tab_1">Vehicules</string>
+    <string name="tab_2">Activitees</string>
+    <string name="tab1Fragment_radio1">Vehicule Electrique</string>
+    <string name="tab1Fragment_radio2">Vehicule A Essence</string>
+    <string name="tab2Fragment_checkbox1">Manger</string>
+    <string name="tab2Fragment_checkbox2">Essence</string>
+    <string name="tab2Fragment_checkbox3">Recharge</string>
+    <string name="tab2Fragment_checkbox4">Dormir</string>
+    <string name="tab2Fragment_startingTime">Quand</string>
+    <string name="tab2Fragment_duration">Duree</string>
+
+    <string name="selected_item">Item selectione:</string>
+    <string-array name="Duree">
+        <item>  Choisir Duree  </item>
+        <item>  1 heure  </item>
+        <item>  2 heures  </item>
+        <item>  3 heures  </item>
+        <item>  4 heures  </item>
+        <item>  5 heures  </item>
+        <item>  6 heures  </item>
+        <item>  7 heures  </item>
+        <item>  8 heures  </item>
+    </string-array>
+
 
 </resources>
