@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ca.bntec.itineraireplusplus.databinding.ActivityMapsBinding
 
@@ -14,6 +15,7 @@ import classes.AppGlobal
 import classes.map.MapData
 import classes.map.MapLegData
 import classes.map.MapRawData
+import classes.map.NearPlace
 import classes.settings.Address
 import classes.settings.Coord
 import classes.settings.Destination
@@ -34,7 +36,6 @@ import org.json.JSONObject
 import java.io.IOException
 import java.time.LocalDate
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
@@ -45,6 +46,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var destination: IDestination
     lateinit var mapRawData: IMapRawData
     lateinit var mapLegData: MapLegData
+    var activityPlaces = ArrayList<NearPlace>()
+    val MAX_ACTIVITY = 3
     val mapData = MapData()
     val appGlobal = AppGlobal.instance
     val db = appGlobal.userManager
@@ -68,8 +71,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         context = this
 
@@ -85,8 +87,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // val list: List<String> = listOf("restaurant", "hotel", "gas_station")
         //   val list: List<String> = listOf("restaurant", "hotel", "gas_station")
         //val list: List<String> = listOf("gas_station")
-       getActivityPlaces(Coord(dest.latitude.toString(), dest.longitude.toString()), "gas_station")
-       drawPolylines()
+        getActivityPlaces()
+        drawPolylines()
 
     }
 
@@ -98,69 +100,37 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isCompassEnabled = true
         mMap.uiSettings.isRotateGesturesEnabled = true
         mMap.uiSettings.isZoomGesturesEnabled = true
-//        if (ActivityCompat.checkSelfPermission(
-//                this,
-//                Manifest.permission.ACCESS_FINE_LOCATION
-//            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-//                this,
-//                Manifest.permission.ACCESS_COARSE_LOCATION
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            return
-//        }
-//        mMap.isMyLocationEnabled = false
+
         googleMap.addMarker(
-            MarkerOptions()
-                .position(origin)
-                .title("LinkedIn")
+            MarkerOptions().position(origin).title("LinkedIn")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
         )
         googleMap.addMarker(
-            MarkerOptions()
-                .position(dest)
+            MarkerOptions().position(dest)
         )
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(origin, 15f))
     }
 
     private fun getDirectionsUrl(origin: LatLng, dest: LatLng): String {
 
-        // Origin of route
         val str_origin = "origin=" + origin.latitude + "," + origin.longitude
-
-        // Destination of route
         val str_dest = "destination=" + dest.latitude + "," + dest.longitude
-
-        // Sensor enabled
         val sensor = "sensor=false"
         val mode = "mode=driving"
 
         val app = context.packageManager.getApplicationInfo(
-            context.packageName,
-            PackageManager.GET_META_DATA
+            context.packageName, PackageManager.GET_META_DATA
         )
         val bundle = app.metaData
-
 
         var metaKey = bundle.getString("com.google.android.geo.API_KEY")
 
         val key = "key=$metaKey"
-        // "key=AIzaSyBP4KpmtFwjJ4LkdJQzUWlVpeyH3V6cDnM"
-        // Building the parameters to the web service
-        val parameters =
-            "$str_origin&$str_dest&$sensor&$mode&$key"
-        //"$str_origin&$str_dest&$sensor&$mode&key=AIzaSyBP4KpmtFwjJ4LkdJQzUWlVpeyH3V6cDnM"
 
-        // Output format
+        val parameters = "$str_origin&$str_dest&$sensor&$mode&$key"
+
         val output = "json"
 
-        // Building the url to the web service
         return "https://maps.googleapis.com/maps/api/directions/$output?$parameters"
     }
 
@@ -229,35 +199,37 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 mMap.addPolyline(lineOptions!!)
                 setActivities()
             })
-            progressDialog.dismiss()
+
         }
     }
 
-    private fun getActivityPlaces(coord: Coord, type: String) {
-
-        // Destination of route
-//        val location = "location=" + coord.latitude + "," + coord.longitude
-
+    private fun getActivityPlaces() {
 
         val app = context.packageManager.getApplicationInfo(
-            context.packageName,
-            PackageManager.GET_META_DATA
+            context.packageName, PackageManager.GET_META_DATA
         )
         val bundle = app.metaData
         var metaKey = bundle.getString("com.google.android.geo.API_KEY")
-
-//        val key = "key=$metaKey"
-//        val radius = "radius=5000"
-//        var type = "type=$type"
-//        val output = "json"
-//        val parameters =
-//            "$location&$radius&$type&$key"
-//
-//        var link = "https://maps.googleapis.com/maps/api/place/nearbysearch/$output?$parameters"
+        var types: List<String> = listOf("restaurant", "lodging", "gas_station")
 
         MainScope().launch(Dispatchers.IO) {
-            var places = async { mapData.getActivityPlaces(coord,type,metaKey!!) }.await()
-            var t = places
+            var coord = Coord(dest.latitude.toString(), dest.longitude.toString())
+
+            for (type in types) {
+                var places: ArrayList<NearPlace> =
+                    async { mapData.getActivityPlaces(coord, type, metaKey!!) }.await()
+
+                if (places.size > 0) {
+                    //       val sorted = places.sortBy { it.distance } as ArrayList<NearPlace>
+                    for (idx in 0 until places.size) {
+                        if (idx < MAX_ACTIVITY) {
+                            activityPlaces.add(places[idx])
+                        }
+                    }
+                }
+            }
+          var l = activityPlaces
+            progressDialog.dismiss()
         }
     }
 
@@ -310,12 +282,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         var result = Address()
 
         if (line.subThoroughfare != null) {
-            result.address =
-                "${line.subThoroughfare.toString()}"
+            result.address = "${line.subThoroughfare.toString()}"
         }
         if (line.thoroughfare != null) {
-            result.address +=
-                ", ${line.thoroughfare.toString()}"
+            result.address += ", ${line.thoroughfare.toString()}"
         }
 
         if (line.locality != null) {
