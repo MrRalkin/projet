@@ -9,8 +9,8 @@ class NearPlace(
     var southwest: Coord = Coord(),
     var icon: String = "",
     var name: String = "",
-    var type:String = "",
+    var type: String = "",
     var vicinity: String = "",
-    var distance:Int=0
-
-    )
+    var distance: Int = 0,
+    var step: Int = 0
+)

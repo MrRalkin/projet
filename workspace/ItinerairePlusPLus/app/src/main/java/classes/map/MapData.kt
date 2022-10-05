@@ -80,7 +80,7 @@ class MapData {
     }
 
 
-    suspend fun getActivityPlaces(coord: Coord, type: String, key: String): ArrayList<NearPlace> {
+    suspend fun getActivityPlaces(coord: Coord, type: String, key: String, step:Int): ArrayList<NearPlace> {
         var result = ArrayList<NearPlace>()
 
         val location = "location=" + coord.latitude + "," + coord.longitude
@@ -103,6 +103,7 @@ class MapData {
                 for (idx in 0 until results.length()) {
                     var line: JSONObject = results[idx] as JSONObject
                     var nearPlace: NearPlace = NearPlace()
+                    nearPlace.step=step
                     nearPlace.name = line.getString("name")
                     nearPlace.business_status = line.getString("business_status")
                     nearPlace.icon = line.getString("icon")

@@ -217,7 +217,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
             for (type in types) {
                 var places: ArrayList<NearPlace> =
-                    async { mapData.getActivityPlaces(coord, type, metaKey!!) }.await()
+                    async { mapData.getActivityPlaces(coord, type, metaKey!!, 1) }.await()
 
                 if (places.size > 0) {
                     //       val sorted = places.sortBy { it.distance } as ArrayList<NearPlace>
@@ -333,9 +333,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-    private suspend fun getPlace(coord: Coord, type: String, metaKey: String) {
+    private suspend fun getPlace(coord: Coord, type: String, metaKey: String,step:Int) {
         var places: ArrayList<NearPlace> =
-            mapData.getActivityPlaces(coord, type, metaKey!!)
+            mapData.getActivityPlaces(coord, type, metaKey!!,step)
 
         if (places.size > 0) {
             //       val sorted = places.sortBy { it.distance } as ArrayList<NearPlace>
@@ -359,9 +359,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         MainScope().launch(Dispatchers.IO) {
        // runBlocking {
             val tasks = listOf(
-                async(Dispatchers.IO) { getPlace(coord, "restaurant", metaKey!!) },
-                async(Dispatchers.IO) { getPlace(coord, "lodging", metaKey!!) },
-                async(Dispatchers.IO) { getPlace(coord, "gas_station", metaKey!!) }
+                async(Dispatchers.IO) { getPlace(coord, "restaurant", metaKey!!,0) },
+                async(Dispatchers.IO) { getPlace(coord, "lodging", metaKey!!,0) },
+                async(Dispatchers.IO) { getPlace(coord, "gas_station", metaKey!!,0) }
             )
             tasks.awaitAll()
             var l = activityPlaces
