@@ -239,24 +239,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun setActivities() {
 
-        var db = AppGlobal.instance.userManager
+        var dest = appGlobal.curDestination
+        dest.settings = appGlobal.curSetting
 
-        AppGlobal.instance.ACTIVITY_ESSENCE
+        appGlobal.curDestination = CreateSteps.createSteps(dest, mapLegData)
 
-
-        var user: IUser
-//        AppGlobal.instance.curSetting
-        var dest = Destination()
-        dest.settings = AppGlobal.instance.curSetting
-        var d = CreateSteps.createSteps(dest, mapLegData)
-
-
-        MainScope().launch(Dispatchers.IO) {
-            user = async { db.userGetCurrent()!! }.await()
-
-            user.destinations?.add(d)
-            async { db.userUpdateCurrent(user)!! }.await()
-        }
+        getPlacesAwaitAll()
     }
 
 
