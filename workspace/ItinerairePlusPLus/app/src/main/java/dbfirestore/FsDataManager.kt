@@ -1,6 +1,7 @@
 package dbfirestore
 
 import classes.ActionResult
+import classes.AppGlobal
 import classes.settings.Activity
 import classes.settings.Destination
 import com.google.firebase.auth.AuthResult
@@ -588,25 +589,26 @@ class FsDataManager : IDataManager {
     }
 
     private fun getSettingsDefault(): ISettings {
+        val appGlobal = AppGlobal.instance
         var result: ISettings = FsSettings()
 
         result.energies = ArrayList<IEnergy>()
         result.activities = ArrayList<IActivity>()
         result.vehicles = ArrayList<IVehicle>()
 
-        result.vehicles.add(FsVehicle("Auto gas", "essence", 600, "km", 55, "litre"))
-        result.vehicles.add(FsVehicle("Auto electric", "électricité", 600, "km", 100, "kWh"))
-        result.vehicles.add(FsVehicle("Vélo", "nourriture", 50, "km", 2, ""))
+        result.vehicles.add(FsVehicle("Auto gas", appGlobal.VEHICLE_ESSENCE, 600, "km", 55, "litre"))
+        result.vehicles.add(FsVehicle("Auto electric", appGlobal.VEHICLE_ELECTRIQUE, 600, "km", 100, "kWh"))
+//        result.vehicles.add(FsVehicle("Vélo", "nourriture", 50, "km", 2, ""))
 
-        result.activities.add(FsActivity(1, "Essence", 14400, 900))
-        result.activities.add(FsActivity(2, "Recharge", 14400,7200))
-        result.activities.add(FsActivity(3, "Dormir", 28800, 21600))
-        result.activities.add(FsActivity(4, "Manger", 14400,3600))
-        result.activities.add(FsActivity(5, "Touristique", 14400,3600))
+        result.activities.add(FsActivity(1, appGlobal.ACTIVITY_ESSENCE, 14400, 900))
+        result.activities.add(FsActivity(2, appGlobal.ACTIVITY_RECHARGE, 14400,7200))
+        result.activities.add(FsActivity(3, appGlobal.ACTIVITY_DORMIR, 28800, 21600))
+        result.activities.add(FsActivity(4, appGlobal.ACTIVITY_MANGER, 14400,3600))
+//        result.activities.add(FsActivity(5, "Touristique", 14400,3600))
 
-        result.energies.add(FsEnergy("essence", 1.55, "litre"))
-        result.energies.add(FsEnergy("électricité", 0.147, "kWh"))
-        result.energies.add(FsEnergy("nourriture", 25.0, "repas"))
+        result.energies.add(FsEnergy(appGlobal.ENERGY_ESSENCE, 1.55, "litre"))
+        result.energies.add(FsEnergy(appGlobal.ENERGY_ELECTRICITE, 0.047, "kWh"))
+//        result.energies.add(FsEnergy("nourriture", 25.0, "repas"))
         return result
     }
 

@@ -23,7 +23,6 @@ class CreateSteps {
 
             metersByNbCoord = mapLegData.legDistance.toDouble() / listOfCoord.size
             secondsByNbCoord = mapLegData.legDuration.toDouble() / listOfCoord.size
-            println(String.format("metres/coord : %5.2f m/c\nseconds/coord: %5.2f s/c", metersByNbCoord, secondsByNbCoord))
             nbCoordOneKm = 1000 / metersByNbCoord
             nbCoordOneMinute = 60 / secondsByNbCoord
 
@@ -88,7 +87,6 @@ class CreateSteps {
             var currentKm = 0
             var currentTime = 0
 
-//    for (indexForCoord in 1 until listOfCoord.size) {
             var indexForCoord = 0
             while (indexForCoord < listOfCoord.size) {
 
