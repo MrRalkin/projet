@@ -22,7 +22,6 @@ class AppGlobal private constructor() {
 
     val ENERGY_ESSENCE = "essence"
     val ENERGY_ELECTRICITE = "electricite"
-
     val VEHICLE_ESSENCE = ENERGY_ESSENCE
     val VEHICLE_ELECTRIQUE = ENERGY_ELECTRICITE
 
