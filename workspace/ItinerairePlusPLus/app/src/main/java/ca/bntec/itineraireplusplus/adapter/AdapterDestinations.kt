@@ -65,7 +65,7 @@ class AdapterDestinations(
 
         var lp = lvSteps?.layoutParams
 
-        lp?.height = this.destinations?.get(pos)?.steps!!.size * ada.measuredHeight
+        lp?.height = 16 + (this.destinations?.get(pos)?.steps!!.size * ada.measuredHeight)
         lvSteps?.layoutParams = lp
 
 
