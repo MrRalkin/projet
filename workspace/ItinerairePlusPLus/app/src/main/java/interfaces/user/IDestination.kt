@@ -1,6 +1,7 @@
 package interfaces.user
 
 import android.os.Parcelable
+import classes.map.NearPlace
 import dbfirestore.FsDestination
 import kotlinx.parcelize.Parcelize
 
@@ -28,28 +29,29 @@ abstract class IActivity(
     open var activity: Int = 0,
     open var name: String = "",
     open var time: Int = 0,
-    open var duration:Int=0
+    open var duration: Int = 0,
+    open var nearPlaces: ArrayList<NearPlace>? = null
 )
 
 abstract class IStep(
     open var step: Int = 0,
-    open var start: IPoint?=null,
-    open var end: IPoint?=null,
+    open var start: IPoint? = null,
+    open var end: IPoint? = null,
     open var trip_time: Int = 0,
     open var activities: ArrayList<IActivity>? = null
 )
 
 abstract class IDestination(
-    open var destinationId:String = "",
+    open var destinationId: String = "",
     open var name: String = "",
-    open var coordDepart: ICoord?=null,
-    open var coordDestination: ICoord?=null,
-    open var addressDepart: IAddress?=null,
-    open var addressDestination: IAddress?=null,
+    open var coordDepart: ICoord? = null,
+    open var coordDestination: ICoord? = null,
+    open var addressDepart: IAddress? = null,
+    open var addressDestination: IAddress? = null,
     open var image: String = "",
     open var trip_time: Int = 0,
     open var steps: ArrayList<IStep>? = null,
-    open var settings: ISettings?= null
+    open var settings: ISettings? = null
 )
 
 
