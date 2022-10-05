@@ -358,19 +358,45 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         MainScope().launch(Dispatchers.IO) {
             // runBlocking {
             val tasks = ArrayList<Deferred<Unit>>()
-            //for(step in appGlobal)
+            val steps = appGlobal.curDestination.steps
+            for (idx in 0 until steps.count()) {
+                var step = steps[idx]
+                var coord = Coord(step.end.coord.latitude, step.end.coord.longitude)
+                var id = step.step
+                if (step.activities != null) {
+                    for (activity: IActivity in step.activities) {
+                        var type = ""
+                        when (activity.name) {
+                            appGlobal.ACTIVITY_DORMIR -> type = appGlobal.ACTIVITY_DORMIR_TYPE
+                            appGlobal.ACTIVITY_MANGER -> type = appGlobal.ACTIVITY_MANGER_TYPE
+                            appGlobal.ACTIVITY_ESSENCE -> type = appGlobal.ACTIVITY_ESSENCE_TYPE
+                            appGlobal.ACTIVITY_RECHARGE -> type = appGlobal.ACTIVITY_RECHARGE_TYPE
+                        }
+                        tasks.add(async(Dispatchers.IO) {
+                            getPlace(
+                                coord,
+                                type,
+                                metaKey!!,
+                                id
+                            )
+                        })
+                    }
+                }
+            }
 
-
-
-            tasks.add(async(Dispatchers.IO) { getPlace(coord, "restaurant", metaKey!!, 0) })
-            tasks.add(async(Dispatchers.IO) { getPlace(coord, "lodging", metaKey!!, 0) })
-            tasks.add(async(Dispatchers.IO) { getPlace(coord, "gas_station", metaKey!!, 0) })
+//
+//            tasks.add(async(Dispatchers.IO) { getPlace(coord, "restaurant", metaKey!!, 0) })
+//            tasks.add(async(Dispatchers.IO) { getPlace(coord, "lodging", metaKey!!, 0) })
+//            tasks.add(async(Dispatchers.IO) { getPlace(coord, "gas_station", metaKey!!, 0) })
 //            = listOf(
 //                async(Dispatchers.IO) { getPlace(coord, "restaurant", metaKey!!,0) },
 //                async(Dispatchers.IO) { getPlace(coord, "lodging", metaKey!!,0) },
 //                async(Dispatchers.IO) { getPlace(coord, "gas_station", metaKey!!,0) }
 //            )
             tasks.awaitAll()
+
+
+
             var l = activityPlaces
             val time = System.currentTimeMillis() - start
             val t = time

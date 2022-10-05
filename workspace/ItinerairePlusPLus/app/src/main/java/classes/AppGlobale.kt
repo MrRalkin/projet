@@ -14,9 +14,12 @@ class AppGlobal private constructor() {
     val ACTIVITY_DORMIR = "Dormir"
     val ACTIVITY_MANGER = "Manger"
     val ACTIVITY_RECHARGE = "Recharge"
+    val ACTIVITY_ESSENCE = "Essence"
 
-    val ENERGY_ESSENCE = "essence"
-    val ENERGY_ELECTRICITE = "electricite"
+    val ACTIVITY_ESSENCE_TYPE = "gas_station"
+    val ACTIVITY_DORMIR_TYPE = "lodging"
+    val ACTIVITY_MANGER_TYPE  = "restaurant"
+    val ACTIVITY_RECHARGE_TYPE  = "gas_station"
 
     val VEHICLE_ESSENCE = ENERGY_ESSENCE
     val VEHICLE_ELECTRIQUE = ENERGY_ELECTRICITE
@@ -30,6 +33,5 @@ class AppGlobal private constructor() {
 
     companion object {
         val instance = AppGlobal()
-
     }
 }
