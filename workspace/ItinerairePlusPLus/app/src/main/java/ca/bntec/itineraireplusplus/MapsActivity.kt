@@ -88,8 +88,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         //   val list: List<String> = listOf("restaurant", "hotel", "gas_station")
         //val list: List<String> = listOf("gas_station")
         getActivityPlaces()
-        drawPolylines()
-
+//        drawPolylines()
+       // getPlacesAwaitAll()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -204,7 +204,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun getActivityPlaces() {
-
+        val start = System.currentTimeMillis()
         val app = context.packageManager.getApplicationInfo(
             context.packageName, PackageManager.GET_META_DATA
         )
@@ -228,7 +228,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                 }
             }
-          var l = activityPlaces
+                    var l = activityPlaces
+            val time=  System.currentTimeMillis() - start
+            val t=time
             progressDialog.dismiss()
         }
     }
@@ -310,5 +312,41 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
+    private suspend fun getPlace(coord: Coord, type: String, metaKey: String) {
+        var places: ArrayList<NearPlace> =
+            mapData.getActivityPlaces(coord, type, metaKey!!)
 
+        if (places.size > 0) {
+            //       val sorted = places.sortBy { it.distance } as ArrayList<NearPlace>
+            for (idx in 0 until places.size) {
+                if (idx < MAX_ACTIVITY) {
+                    activityPlaces.add(places[idx])
+                }
+            }
+        }
+    }
+
+    private fun getPlacesAwaitAll() {
+        val start = System.currentTimeMillis()
+        val app = context.packageManager.getApplicationInfo(
+            context.packageName, PackageManager.GET_META_DATA
+        )
+        val bundle = app.metaData
+        var metaKey = bundle.getString("com.google.android.geo.API_KEY")
+        var coord = Coord(dest.latitude.toString(), dest.longitude.toString())
+        //var types: List<String> = listOf("restaurant", "lodging", "gas_station")
+        runBlocking {
+            val tasks = listOf(
+                async(Dispatchers.IO) { getPlace(coord, "restaurant", metaKey!!) },
+                async(Dispatchers.IO) { getPlace(coord, "lodging", metaKey!!) },
+                async(Dispatchers.IO) { getPlace(coord, "gas_station", metaKey!!) }
+            )
+            tasks.awaitAll()
+            var l = activityPlaces
+          val time=  System.currentTimeMillis() - start
+            val t=time
+            progressDialog.dismiss()
+        }
+
+    }
 }
