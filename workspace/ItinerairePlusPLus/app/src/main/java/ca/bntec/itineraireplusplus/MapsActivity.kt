@@ -89,7 +89,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         drawPolylines()
         //  getActivityPlaces()
-        getPlacesAwaitAll()
+      //  getPlacesAwaitAll()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -341,7 +341,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         )
         val bundle = app.metaData
         var metaKey = bundle.getString("com.google.android.geo.API_KEY")
-        var coord = Coord(dest.latitude.toString(), dest.longitude.toString())
+      //  var coord = Coord(dest.latitude.toString(), dest.longitude.toString())
         //var types: List<String> = listOf("restaurant", "lodging", "gas_station")
         MainScope().launch(Dispatchers.IO) {
             // runBlocking {
@@ -349,29 +349,36 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val steps = appGlobal.curDestination.steps
             if (steps != null) {
 
-
                 for (idx in 0 until steps.count()) {
                     var step = steps[idx]
-                    var coord = Coord(step.end.coord.latitude, step.end.coord.longitude)
-                    var id = step.step
-                    if (step.activities != null) {
-                        for (activity: IActivity in step.activities) {
-                            var type = ""
-                            when (activity.name) {
-                                appGlobal.ACTIVITY_DORMIR -> type = appGlobal.ACTIVITY_DORMIR_TYPE
-                                appGlobal.ACTIVITY_MANGER -> type = appGlobal.ACTIVITY_MANGER_TYPE
-                                appGlobal.ACTIVITY_ESSENCE -> type = appGlobal.ACTIVITY_ESSENCE_TYPE
-                                appGlobal.ACTIVITY_RECHARGE -> type =
-                                    appGlobal.ACTIVITY_RECHARGE_TYPE
+
+                    var coord: ICoord
+                    if (step!= null && step.end != null) {
+                        coord = Coord(step.end!!.coord!!.latitude, step.end!!.coord!!.longitude)
+
+                        var id = step.step
+                        if (step.activities != null) {
+                            for (activity: IActivity in step.activities!!) {
+                                var type = ""
+                                when (activity.name) {
+                                    appGlobal.ACTIVITY_DORMIR -> type =
+                                        appGlobal.ACTIVITY_DORMIR_TYPE
+                                    appGlobal.ACTIVITY_MANGER -> type =
+                                        appGlobal.ACTIVITY_MANGER_TYPE
+                                    appGlobal.ACTIVITY_ESSENCE -> type =
+                                        appGlobal.ACTIVITY_ESSENCE_TYPE
+                                    appGlobal.ACTIVITY_RECHARGE -> type =
+                                        appGlobal.ACTIVITY_RECHARGE_TYPE
+                                }
+                                tasks.add(async(Dispatchers.IO) {
+                                    getPlace(
+                                        coord,
+                                        type,
+                                        metaKey!!,
+                                        id
+                                    )
+                                })
                             }
-                            tasks.add(async(Dispatchers.IO) {
-                                getPlace(
-                                    coord,
-                                    type,
-                                    metaKey!!,
-                                    id
-                                )
-                            })
                         }
                     }
                 }
