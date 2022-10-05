@@ -87,9 +87,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // val list: List<String> = listOf("restaurant", "hotel", "gas_station")
         //   val list: List<String> = listOf("restaurant", "hotel", "gas_station")
         //val list: List<String> = listOf("gas_station")
-        getActivityPlaces()
+
 //        drawPolylines()
-       // getPlacesAwaitAll()
+        //  getActivityPlaces()
+       getPlacesAwaitAll()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -196,8 +197,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 // Drawing polyline in the Google Map for the i-th route
             this@MapsActivity.runOnUiThread(java.lang.Runnable {
-                mMap.addPolyline(lineOptions!!)
                 setActivities()
+                mMap.addPolyline(lineOptions!!)
+
             })
 
         }
@@ -335,7 +337,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         var metaKey = bundle.getString("com.google.android.geo.API_KEY")
         var coord = Coord(dest.latitude.toString(), dest.longitude.toString())
         //var types: List<String> = listOf("restaurant", "lodging", "gas_station")
-        runBlocking {
+        MainScope().launch(Dispatchers.IO) {
+       // runBlocking {
             val tasks = listOf(
                 async(Dispatchers.IO) { getPlace(coord, "restaurant", metaKey!!) },
                 async(Dispatchers.IO) { getPlace(coord, "lodging", metaKey!!) },
@@ -345,7 +348,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             var l = activityPlaces
           val time=  System.currentTimeMillis() - start
             val t=time
-            progressDialog.dismiss()
+           // progressDialog.dismiss()
         }
 
     }
