@@ -11,7 +11,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class TestData {
-    private val db = AppGlobal.instance.userManager
+    private val appGlobal = AppGlobal.instance
+    private val db = appGlobal.userManager
 
     fun setTestData(user: IUser) {
 
@@ -34,32 +35,32 @@ class TestData {
          * */
         val activities1 = ArrayList<IActivity>()
 
-        activities1.add(addActivity(1, "Manger", 2 * Tools.HOUR))
+        activities1.add(addActivity(1, appGlobal.ACTIVITY_MANGER, 2 * Tools.HOUR))
 
         val activties2 = ArrayList<IActivity>()
-        activties2.add(addActivity(1, "Manger", 2 * Tools.HOUR))
-        activties2.add(addActivity(2, "Essence", Tools.HOUR / 2))
+        activties2.add(addActivity(1, appGlobal.ACTIVITY_MANGER, 2 * Tools.HOUR))
+        activties2.add(addActivity(2, appGlobal.ACTIVITY_ESSENCE, Tools.HOUR / 2))
 
         val activties3 = ArrayList<IActivity>()
-        activties3.add(addActivity(1, "Manger", 2 * Tools.HOUR))
-        activties3.add(addActivity(2, "Essence", Tools.HOUR / 2))
-        activties3.add(addActivity(3, "Dormir", 6 * Tools.HOUR))
+        activties3.add(addActivity(1, appGlobal.ACTIVITY_MANGER, 2 * Tools.HOUR))
+        activties3.add(addActivity(2, appGlobal.ACTIVITY_ESSENCE, Tools.HOUR / 2))
+        activties3.add(addActivity(3, appGlobal.ACTIVITY_DORMIR, 6 * Tools.HOUR))
 
         /**
          * vehicles
          * */
         val vehicles1 = ArrayList<IVehicle>()
-        vehicles1.add(addVehicle("Auto", "essence", 700, "km", 55, "litre"))
+        vehicles1.add(addVehicle("Auto", appGlobal.VEHICLE_ESSENCE, 700, "km", 55, "litre"))
         val vehicles2 = ArrayList<IVehicle>()
-        vehicles2.add(addVehicle("Auto", "électricité", 600, "km", 100, "kwh"))
+        vehicles2.add(addVehicle("Auto", appGlobal.VEHICLE_ELECTRIQUE, 600, "km", 100, "kwh"))
 
         /**
          * energies
          * */
         val energies1 = ArrayList<IEnergy>()
-        energies1.add(addEnergy("essence", 1.50, "litre"))
+        energies1.add(addEnergy(appGlobal.ENERGY_ESSENCE, 1.50, "litre"))
         val energies2 = ArrayList<IEnergy>()
-        energies2.add(addEnergy("électricité", 0.047, "kwh"))
+        energies2.add(addEnergy(appGlobal.ENERGY_ELECTRICITE, 0.047, "kwh"))
 
 
         /**
@@ -146,20 +147,20 @@ class TestData {
          * user settings
          * */
         val energiesSettings = ArrayList<IEnergy>()
-        energiesSettings.add(addEnergy("essence", 1.50, "litre"))
-        energiesSettings.add(addEnergy("électricité", 0.047, "kwh"))
+        energiesSettings.add(addEnergy(appGlobal.ENERGY_ESSENCE, 1.50, "litre"))
+        energiesSettings.add(addEnergy(appGlobal.ENERGY_ELECTRICITE, 0.047, "kwh"))
         user.settings.energies = energiesSettings
 
 
         val activitiesSettings = ArrayList<IActivity>()
-        activitiesSettings.add(addActivity(1, "Manger", 2 * Tools.HOUR))
-        activitiesSettings.add(addActivity(2, "Essence", Tools.HOUR / 2))
-        activitiesSettings.add(addActivity(3, "Recharge", 1 * Tools.HOUR))
-        activitiesSettings.add(addActivity(4, "Dormir", 8 * Tools.HOUR))
+        activitiesSettings.add(addActivity(1, appGlobal.ACTIVITY_MANGER, 2 * Tools.HOUR))
+        activitiesSettings.add(addActivity(2, appGlobal.ACTIVITY_ESSENCE, Tools.HOUR / 2))
+        activitiesSettings.add(addActivity(3, appGlobal.ACTIVITY_RECHARGE, 1 * Tools.HOUR))
+        activitiesSettings.add(addActivity(4, appGlobal.ACTIVITY_DORMIR, 8 * Tools.HOUR))
         user.settings.activities = activitiesSettings
 
         val vehiclesSettings = ArrayList<IVehicle>()
-        vehiclesSettings.add(addVehicle("Auto", "électricité", 625, "km", 100, "kwh" ))
+        vehiclesSettings.add(addVehicle("Auto", appGlobal.VEHICLE_ELECTRIQUE, 625, "km", 100, "kwh" ))
         user.settings.vehicles = vehiclesSettings
 
         /**
@@ -171,8 +172,6 @@ class TestData {
             println("********************* SAVE/UPDATE user *********************")
             println("*** >>> " + if (result.isSuccess) {result.successMessage} else {result.errorMessage})
             println("************************************************************")
-
-//            Snackbar.make(ctx, view, "Can't delete last record", Snackbar.LENGTH_SHORT).show()
         }
     }
 
@@ -327,38 +326,3 @@ class TestData {
         return s
     }
 }
-
-
-/** -----------------------------------------------------------------------------------------------
-
-        "step" : 1,
-        "start": {
-            "name" : "Montreal",
-            "coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-            "adresse" : {
-            "no_civic" : "123",
-            "street" : "rue paris",
-            "city" : "Paris",
-            "province" : "oups",
-            "postal_code" : "J4J 3K5",
-            "country" : "France",
-        },
-        },
-        "end" : {
-            "name" : "New York",
-            "coord" : {"longitude" : "-12.000909", "latitude" : "-12.000909"},
-            "adresse" : {
-            "no_civic" : "123",
-            "street" : "rue paris",
-            "city" : "Paris",
-            "province" : "oups",
-            "postal_code" : "J4J 3K5",
-            "country" : "France",
-        },
-        },
-        "trip_time_minutes" : 360,
-        "activities": [
-        {"activity" : 1, "name" : "Manger", "time_minutes" : "120"},
-        {"activity" : 2, "name" : "Essence", "time_minutes" : "15"}]
-
- */
