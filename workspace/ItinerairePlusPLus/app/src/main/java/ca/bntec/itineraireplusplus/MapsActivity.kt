@@ -34,6 +34,7 @@ import org.json.JSONObject
 import java.io.IOException
 import java.time.LocalDate
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
@@ -86,9 +87,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         //   val list: List<String> = listOf("restaurant", "hotel", "gas_station")
         //val list: List<String> = listOf("gas_station")
 
-//        drawPolylines()
+        drawPolylines()
         //  getActivityPlaces()
-       getPlacesAwaitAll()
+        getPlacesAwaitAll()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -228,9 +229,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                 }
             }
-                    var l = activityPlaces
-            val time=  System.currentTimeMillis() - start
-            val t=time
+            var l = activityPlaces
+            val time = System.currentTimeMillis() - start
+            val t = time
             progressDialog.dismiss()
         }
     }
@@ -243,8 +244,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         AppGlobal.instance.ACTIVITY_ESSENCE
 
 
-
-        var user:IUser
+        var user: IUser
 //        AppGlobal.instance.curSetting
         var dest = Destination()
         dest.settings = AppGlobal.instance.curSetting
@@ -258,7 +258,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             async { db.userUpdateCurrent(user)!! }.await()
         }
     }
-
 
 
     private fun getDestination(locDep: String, locDest: String): IDestination {
@@ -333,9 +332,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-    private suspend fun getPlace(coord: Coord, type: String, metaKey: String,step:Int) {
+    private suspend fun getPlace(coord: Coord, type: String, metaKey: String, step: Int) {
         var places: ArrayList<NearPlace> =
-            mapData.getActivityPlaces(coord, type, metaKey!!,step)
+            mapData.getActivityPlaces(coord, type, metaKey!!, step)
 
         if (places.size > 0) {
             //       val sorted = places.sortBy { it.distance } as ArrayList<NearPlace>
@@ -357,17 +356,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         var coord = Coord(dest.latitude.toString(), dest.longitude.toString())
         //var types: List<String> = listOf("restaurant", "lodging", "gas_station")
         MainScope().launch(Dispatchers.IO) {
-       // runBlocking {
-            val tasks = listOf(
-                async(Dispatchers.IO) { getPlace(coord, "restaurant", metaKey!!,0) },
-                async(Dispatchers.IO) { getPlace(coord, "lodging", metaKey!!,0) },
-                async(Dispatchers.IO) { getPlace(coord, "gas_station", metaKey!!,0) }
-            )
+            // runBlocking {
+            val tasks = ArrayList<Deferred<Unit>>()
+            tasks.add(async(Dispatchers.IO) { getPlace(coord, "restaurant", metaKey!!, 0) })
+            tasks.add(async(Dispatchers.IO) { getPlace(coord, "lodging", metaKey!!, 0) })
+            tasks.add(async(Dispatchers.IO) { getPlace(coord, "gas_station", metaKey!!, 0) })
+//            = listOf(
+//                async(Dispatchers.IO) { getPlace(coord, "restaurant", metaKey!!,0) },
+//                async(Dispatchers.IO) { getPlace(coord, "lodging", metaKey!!,0) },
+//                async(Dispatchers.IO) { getPlace(coord, "gas_station", metaKey!!,0) }
+//            )
             tasks.awaitAll()
             var l = activityPlaces
-          val time=  System.currentTimeMillis() - start
-            val t=time
-           // progressDialog.dismiss()
+            val time = System.currentTimeMillis() - start
+            val t = time
+            this@MapsActivity.runOnUiThread(java.lang.Runnable {
+                progressDialog.dismiss()
+            })
+            //
         }
 
     }

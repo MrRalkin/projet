@@ -1,13 +1,8 @@
 package classes.map
 
-import android.content.pm.PackageManager
 import android.util.Log
 import classes.settings.Coord
 import com.google.android.gms.maps.model.LatLng
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -83,15 +78,15 @@ class MapData {
     suspend fun getActivityPlaces(coord: Coord, type: String, key: String, step:Int): ArrayList<NearPlace> {
         var result = ArrayList<NearPlace>()
 
-        val location = "location=" + coord.latitude + "," + coord.longitude
-        val key = "key=$key"
-        val radius = "radius=5000"
-        var type = "type=$type"
-        val output = "json"
-        val parameters =
-            "$location&$radius&$type&$key"
+        val uLocation = "location=" + coord.latitude + "," + coord.longitude
+        val uKey = "key=$key"
+        val uRadius = "radius=5000"
+        var uType = "type=$type"
+        val uOutput = "json"
+        val uParams =
+            "$uLocation&$uRadius&$uType&$uKey"
 
-        var link = "https://maps.googleapis.com/maps/api/place/nearbysearch/$output?$parameters"
+        var link = "https://maps.googleapis.com/maps/api/place/nearbysearch/$uOutput?$uParams"
 
 
         try {
@@ -125,7 +120,7 @@ class MapData {
                         line.getJSONObject("geometry").getJSONObject("viewport")
                             .getJSONObject("southwest").getString("lng")
                     nearPlace.type = type
-                    var i: Int = getDistance(coord, nearPlace.location, key)
+                    var i: Int = getDistance(coord, nearPlace.location, uKey)
                     nearPlace.distance = i
                     result.add(nearPlace)
 
