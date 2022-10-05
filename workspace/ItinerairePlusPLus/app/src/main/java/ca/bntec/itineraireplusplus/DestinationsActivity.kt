@@ -11,6 +11,7 @@ import classes.AppGlobal
 import interfaces.user.IUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class DestinationsActivity: AppCompatActivity() {
@@ -22,7 +23,7 @@ class DestinationsActivity: AppCompatActivity() {
         setContentView(R.layout.activity_destinations)
 
         MainScope().launch(Dispatchers.IO) {
-                user = db.userGetCurrent()!!
+            user = async { db.userGetCurrent()!! }.await()
 
             var lv_destinations = findViewById<ListView>(R.id.lv_destinations)
 

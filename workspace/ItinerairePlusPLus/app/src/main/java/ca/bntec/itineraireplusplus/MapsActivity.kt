@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ca.bntec.itineraireplusplus.databinding.ActivityMapsBinding
+import ca.bntec.itineraireplusplus.tools.CreateSteps
 
 import classes.AppGlobal
 import classes.map.MapData
@@ -27,10 +28,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
-import interfaces.user.IAddress
-import interfaces.user.ICoord
-import interfaces.user.IDestination
-import interfaces.user.IMapRawData
+import interfaces.user.*
 import kotlinx.coroutines.*
 import org.json.JSONObject
 import java.io.IOException
@@ -240,7 +238,28 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun setActivities() {
 
+        var db = AppGlobal.instance.userManager
+
+        AppGlobal.instance.ACTIVITY_ESSENCE
+
+
+
+        var user:IUser
+//        AppGlobal.instance.curSetting
+        var dest = Destination()
+        dest.settings = AppGlobal.instance.curSetting
+        var d = CreateSteps.createSteps(dest, mapLegData)
+
+
+        MainScope().launch(Dispatchers.IO) {
+            user = async { db.userGetCurrent()!! }.await()
+
+            user.destinations?.add(d)
+            async { db.userUpdateCurrent(user)!! }.await()
+        }
     }
+
+
 
     private fun getDestination(locDep: String, locDest: String): IDestination {
         var result: IDestination = Destination()
