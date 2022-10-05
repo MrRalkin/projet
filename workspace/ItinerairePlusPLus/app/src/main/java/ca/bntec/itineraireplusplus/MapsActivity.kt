@@ -358,6 +358,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         MainScope().launch(Dispatchers.IO) {
             // runBlocking {
             val tasks = ArrayList<Deferred<Unit>>()
+            //for(step in appGlobal)
+
+
+
             tasks.add(async(Dispatchers.IO) { getPlace(coord, "restaurant", metaKey!!, 0) })
             tasks.add(async(Dispatchers.IO) { getPlace(coord, "lodging", metaKey!!, 0) })
             tasks.add(async(Dispatchers.IO) { getPlace(coord, "gas_station", metaKey!!, 0) })
