@@ -79,6 +79,35 @@
             android:maxLength="255" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/setting_edit_activity_durationLayout"
+        style="@style/LoginTextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
+        app:counterEnabled="false"
+        app:counterMaxLength="255"
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_edit_activity_timeLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/setting_edit_activity_duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:hint="@string/settingAddActivity_duration"
+            android:maxLength="255" />
+    </com.google.android.material.textfield.TextInputLayout>
     <Button
         android:id="@+id/btnAnnuler"
         android:layout_width="wrap_content"
@@ -87,7 +116,7 @@
         android:layout_marginEnd="16dp"
         android:text="@string/settingAddActivity_cancelBtn"
         app:layout_constraintEnd_toStartOf="@+id/btnConfirmer"
-        app:layout_constraintTop_toBottomOf="@+id/setting_edit_activity_timeLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/setting_edit_activity_durationLayout" />
 
     <Button
         android:id="@+id/btnConfirmer"
@@ -97,6 +126,6 @@
         android:layout_marginEnd="16dp"
         android:text="@string/settingAddActivity_addBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setting_edit_activity_timeLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/setting_edit_activity_durationLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

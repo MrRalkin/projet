@@ -32,7 +32,7 @@ class AdapterSettingsActivities(
         val btnEdit = view.findViewById<Button>(R.id.setting_activity_btn_edit)
         val btnDel = view.findViewById<Button>(R.id.setting_activity_btn_delete)
 
-        txt.text = "${data.name} : ${Tools.convertSecondsToTime(data.time, Tools.FMT_HM_LONG)}"
+        txt.text = "${data.name} : ${Tools.convertSecondsToTime(data.time, Tools.FMT_HM_LONG)} : ${Tools.convertSecondsToTime(data.duration, Tools.FMT_HM_LONG)}"
 
         btnEdit.setOnClickListener { view ->
             if (context is SettingsActivity) {
