@@ -448,9 +448,11 @@ class SettingsActivity : AppCompatActivity() {
 
         val name = dialog.findViewById<TextInputEditText>(R.id.setting_edit_activity_name)
         val time = dialog.findViewById<TextInputEditText>(R.id.setting_edit_activity_time)
+        val duration = dialog.findViewById<TextInputEditText>(R.id.setting_edit_activity_duration)
 
         name.setText(item.name)
         time.setText(item.time.toString())
+        duration.setText(item.duration.toString())
 
         dialogTitle.setText("Ajouter une activité")
         btnCancel.setOnClickListener { dialog.dismiss() }
@@ -467,10 +469,17 @@ class SettingsActivity : AppCompatActivity() {
             } else {
                 time.error = null
             }
+            if (duration.text.toString().isEmpty()) {
+                duration.error = "Entrer la durée"
+                return@OnClickListener
+            } else {
+                duration.error = null
+            }
 
             item.activity = 0
             item.name = name.text.toString()
             item.time = time.text.toString().toInt()
+            item.duration = duration.text.toString().toInt()
 
             if (idx < 0) {
                 user.settings.activities.add(item)
@@ -484,23 +493,6 @@ class SettingsActivity : AppCompatActivity() {
 
         dialog.show()
     }
-
-//    private fun askedToDeleteItem(titre : String, texte :String) {
-//        val dialog = Dialog(context)
-//        dialog.setContentView(R.layout.dialog_confirm_layout)
-//        val btnCancel = dialog.findViewById<Button>(R.id.btnCancel)
-//        val btnOk = dialog.findViewById<Button>(R.id.btnOk)
-//        val dialogTitle = dialog.findViewById<TextView>(R.id.dialogTitle)
-//        val propertyValue = dialog.findViewById<EditText>(R.id.propertyValue)
-//
-//        dialogTitle.setText(titre)
-//        propertyValue.setText(texte)
-//
-//        propertyValue.isEnabled = false
-//        propertyValue.setTextColor(ContextCompat.getColor(context, R.color.black))
-//        btnCancel.setOnClickListener { dialog.dismiss() }
-//        dialog.show()
-//    }
 
     fun activityDelete(activity: IActivity) {
         if (user.settings.activities.count() <= 1) {
