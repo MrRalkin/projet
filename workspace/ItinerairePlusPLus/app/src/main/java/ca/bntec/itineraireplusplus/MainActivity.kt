@@ -8,19 +8,13 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.viewpager.widget.ViewPager
 import classes.*
-import classes.settings.*
 import interfaces.user.IUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import ca.bntec.itineraireplusplus.data.TestData
-import com.google.android.material.tabs.TabLayout
-import interfaces.user.IActivity
-import interfaces.user.IDestination
-import interfaces.user.IStep
 
 
 class MainActivity : AppCompatActivity() {

@@ -7,12 +7,12 @@ import android.graphics.Color
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ca.bntec.itineraireplusplus.databinding.ActivityMapsBinding
 import ca.bntec.itineraireplusplus.tools.CreateSteps
 
 import classes.AppGlobal
+import classes.StepActivities
 import classes.map.MapData
 import classes.map.MapLegData
 import classes.map.MapRawData
@@ -45,12 +45,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var destination: IDestination
     lateinit var mapRawData: IMapRawData
     lateinit var mapLegData: MapLegData
-    var activityPlaces = ArrayList<NearPlace>()
+    var activityPlaces = ArrayList<INearPlace>()
     val MAX_ACTIVITY = 3
     val mapData = MapData()
     val appGlobal = AppGlobal.instance
     val db = appGlobal.userManager
     val uid: String = UUID.randomUUID().toString()
+    var activitiesList: ArrayList<StepActivities> = ArrayList<StepActivities>()
 
     //    var origin = LatLng(45.5419056, -73.4924797)
 //    var dest = LatLng(25.8102247,-80.2101818)
@@ -89,7 +90,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         drawPolylines()
         //  getActivityPlaces()
-      //  getPlacesAwaitAll()
+        //  getPlacesAwaitAll()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -204,39 +205,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun getActivityPlaces() {
-        val start = System.currentTimeMillis()
-        val app = context.packageManager.getApplicationInfo(
-            context.packageName, PackageManager.GET_META_DATA
-        )
-        val bundle = app.metaData
-        var metaKey = bundle.getString("com.google.android.geo.API_KEY")
-        var types: List<String> = listOf("restaurant", "lodging", "gas_station")
-
-        MainScope().launch(Dispatchers.IO) {
-            var coord = Coord(dest.latitude.toString(), dest.longitude.toString())
-
-            for (type in types) {
-                var places: ArrayList<NearPlace> =
-                    async { mapData.getActivityPlaces(coord, type, metaKey!!, 1) }.await()
-
-                if (places.size > 0) {
-                    //       val sorted = places.sortBy { it.distance } as ArrayList<NearPlace>
-                    for (idx in 0 until places.size) {
-                        if (idx < MAX_ACTIVITY) {
-                            activityPlaces.add(places[idx])
-                        }
-                    }
-                }
-            }
-            var l = activityPlaces
-            val time = System.currentTimeMillis() - start
-            val t = time
-            progressDialog.dismiss()
-        }
-    }
-
-
     private fun setActivities() {
 
         var dest = appGlobal.curDestination
@@ -341,7 +309,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         )
         val bundle = app.metaData
         var metaKey = bundle.getString("com.google.android.geo.API_KEY")
-      //  var coord = Coord(dest.latitude.toString(), dest.longitude.toString())
+        //  var coord = Coord(dest.latitude.toString(), dest.longitude.toString())
         //var types: List<String> = listOf("restaurant", "lodging", "gas_station")
         MainScope().launch(Dispatchers.IO) {
             // runBlocking {
@@ -353,7 +321,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     var step = steps[idx]
 
                     var coord: ICoord
-                    if (step!= null && step.end != null) {
+                    if (step != null && step.end != null) {
                         coord = Coord(step.end!!.coord!!.latitude, step.end!!.coord!!.longitude)
 
                         var id = step.step
@@ -396,9 +364,47 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             tasks.awaitAll()
 
 
-            var l = activityPlaces
+            //  var pls:ArrayList<NearPlace> = activityPlaces.sortBy { it.step } as ArrayList<NearPlace>
+            for (step in appGlobal.curDestination.steps!!) {
+                val list = activityPlaces.filter {
+                    it.step == step.step
+                }
+                if (list != null) {
+                    for (activity in step.activities!!) {
+                        var type = ""
+                        when (activity.name) {
+                            appGlobal.ACTIVITY_DORMIR -> type =
+                                appGlobal.ACTIVITY_DORMIR_TYPE
+                            appGlobal.ACTIVITY_MANGER -> type =
+                                appGlobal.ACTIVITY_MANGER_TYPE
+                            appGlobal.ACTIVITY_ESSENCE -> type =
+                                appGlobal.ACTIVITY_ESSENCE_TYPE
+                            appGlobal.ACTIVITY_RECHARGE -> type =
+                                appGlobal.ACTIVITY_RECHARGE_TYPE
+                        }
+
+
+                        if (activity.nearPlaces == null) {
+                            activity.nearPlaces = ArrayList<INearPlace>()
+                        }
+                        activity.nearPlaces =
+                            list.filter { it.type == type } as ArrayList<INearPlace>
+                        var listItem: StepActivities = StepActivities()
+                        listItem.stepId = step.step
+                        listItem.activityId = activity.activity
+                        listItem.activityName = activity.name
+                        listItem.activityDuration = activity.duration
+                        listItem.stepCoord = step.end!!.coord!!
+                        listItem.activityPlaces = activity.nearPlaces
+                        activitiesList.add(listItem)
+                    }
+                }
+                // step.activities
+            }
+
             val time = System.currentTimeMillis() - start
             val t = time
+            val l = activitiesList
             this@MapsActivity.runOnUiThread(java.lang.Runnable {
                 progressDialog.dismiss()
             })

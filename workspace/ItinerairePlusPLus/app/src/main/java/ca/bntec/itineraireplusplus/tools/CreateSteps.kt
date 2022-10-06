@@ -5,6 +5,7 @@ import classes.map.MapLegData
 import classes.settings.*
 import interfaces.user.IActivity
 import interfaces.user.IDestination
+import interfaces.user.INearPlace
 
 class CreateSteps {
     companion object {
@@ -182,6 +183,7 @@ class CreateSteps {
                     a.name = s.activities[i].name
                     a.time = s.activities[i].time
                     a.duration = s.activities[i].duration
+                    a.nearPlaces= ArrayList<INearPlace>()
                     listActivity.add(a)
                 }
             }

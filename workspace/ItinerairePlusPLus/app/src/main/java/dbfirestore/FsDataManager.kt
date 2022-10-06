@@ -14,7 +14,6 @@ import interfaces.auth.ILogin
 import interfaces.auth.IRegister
 import interfaces.user.*
 import kotlinx.coroutines.tasks.await
-import java.time.LocalDate
 
 class FsDataManager : IDataManager {
     private fun dbInit() {

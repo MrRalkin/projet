@@ -1,7 +1,6 @@
 package ca.bntec.itineraireplusplus.data
 
 import ca.bntec.itineraireplusplus.tools.Tools
-import ca.bntec.itineraireplusplus.tools.Tools.Companion.convertSecondsToTime
 import classes.*
 import classes.settings.*
 import interfaces.user.*

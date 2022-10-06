@@ -1,10 +1,5 @@
 package interfaces.user
 
-import android.os.Parcelable
-import classes.map.NearPlace
-import dbfirestore.FsDestination
-import kotlinx.parcelize.Parcelize
-
 abstract class ICoord(
     open var longitude: String = "",
     open var latitude: String = ""
@@ -24,13 +19,25 @@ abstract class IPoint(
     open var address: IAddress? = null
 )
 
+abstract class INearPlace(
+    open var business_status: String = "",
+    open var location: ICoord? = null,
+    open var northeast: ICoord? = null,
+    open var southwest: ICoord? = null,
+    open var icon: String = "",
+    open var name: String = "",
+    open var type: String = "",
+    open var vicinity: String = "",
+    open var distance: Int = 0,
+    open var step: Int = 0
+)
 
 abstract class IActivity(
     open var activity: Int = 0,
     open var name: String = "",
     open var time: Int = 0,
     open var duration: Int = 0,
-    open var nearPlaces: ArrayList<NearPlace>? = null
+    open var nearPlaces: ArrayList<INearPlace>? = null
 )
 
 abstract class IStep(

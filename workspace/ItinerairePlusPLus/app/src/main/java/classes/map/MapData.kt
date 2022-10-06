@@ -3,6 +3,7 @@ package classes.map
 import android.util.Log
 import classes.settings.Coord
 import com.google.android.gms.maps.model.LatLng
+import interfaces.user.ICoord
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -80,7 +81,7 @@ class MapData {
 
         val uLocation = "location=" + coord.latitude + "," + coord.longitude
         val uKey = "key=$key"
-        val uRadius = "radius=5000"
+        val uRadius = "radius=30000"
         var uType = "type=$type"
         val uOutput = "json"
         val uParams =
@@ -103,24 +104,24 @@ class MapData {
                     nearPlace.business_status = line.getString("business_status")
                     nearPlace.icon = line.getString("icon")
                     nearPlace.vicinity = line.getString("vicinity")
-                    nearPlace.location.latitude =
+                    nearPlace.location!!.latitude =
                         line.getJSONObject("geometry").getJSONObject("location").getString("lat")
-                    nearPlace.location.longitude =
+                    nearPlace.location!!.longitude =
                         line.getJSONObject("geometry").getJSONObject("location").getString("lng")
-                    nearPlace.northeast.latitude =
+                    nearPlace.northeast!!.latitude =
                         line.getJSONObject("geometry").getJSONObject("viewport")
                             .getJSONObject("northeast").getString("lat")
-                    nearPlace.northeast.longitude =
+                    nearPlace.northeast!!.longitude =
                         line.getJSONObject("geometry").getJSONObject("viewport")
                             .getJSONObject("northeast").getString("lng")
-                    nearPlace.northeast.latitude =
+                    nearPlace.northeast!!.latitude =
                         line.getJSONObject("geometry").getJSONObject("viewport")
                             .getJSONObject("southwest").getString("lat")
-                    nearPlace.northeast.longitude =
+                    nearPlace.northeast!!.longitude =
                         line.getJSONObject("geometry").getJSONObject("viewport")
                             .getJSONObject("southwest").getString("lng")
                     nearPlace.type = type
-                    var i: Int = getDistance(coord, nearPlace.location, uKey)
+                    var i: Int = getDistance(coord, nearPlace.location!!, uKey)
                     nearPlace.distance = i
                     result.add(nearPlace)
 
@@ -134,7 +135,7 @@ class MapData {
 
     }
 
-    private suspend fun getDistance(origins: Coord, destinations: Coord, apiKey: String): Int {
+    private suspend fun getDistance(origins: ICoord, destinations: ICoord, apiKey: String): Int {
         var result = 0
 
         val org = "origins=${origins.latitude},${origins.longitude}"

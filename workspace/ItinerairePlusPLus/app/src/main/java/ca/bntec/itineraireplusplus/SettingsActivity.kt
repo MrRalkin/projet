@@ -17,7 +17,6 @@ import classes.settings.Energy
 import classes.settings.Vehicle
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import interfaces.user.IActivity
 import interfaces.user.IEnergy
 import interfaces.user.IUser

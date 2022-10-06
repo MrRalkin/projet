@@ -14,8 +14,8 @@ import kotlinx.parcelize.RawValue
 class Destination(
     override var destinationId: String = "",
     override var name: String = "",
-    override var coordDepart: @RawValue ICoord? = FsCoord(),
-    override var coordDestination: @RawValue ICoord? = FsCoord(),
+    override var coordDepart: @RawValue ICoord? = Coord(),
+    override var coordDestination: @RawValue ICoord? = Coord(),
     override var addressDepart: @RawValue IAddress? = Address(),
     override var addressDestination: @RawValue IAddress? = Address(),
     override var image: String = "",
