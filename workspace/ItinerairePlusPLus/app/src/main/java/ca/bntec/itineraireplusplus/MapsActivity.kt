@@ -10,6 +10,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import ca.bntec.itineraireplusplus.databinding.ActivityMapsBinding
 import ca.bntec.itineraireplusplus.tools.CreateSteps
+import ca.bntec.itineraireplusplus.tools.Tools
 
 import classes.AppGlobal
 import classes.StepActivities
@@ -212,6 +213,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         appGlobal.curDestination = CreateSteps.createSteps(dest, mapLegData)
 
+        CreateSteps.dumpDestination(appGlobal.curDestination as Destination)
+
         getPlacesAwaitAll()
     }
 
@@ -325,6 +328,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         coord = Coord(step.end!!.coord!!.latitude, step.end!!.coord!!.longitude)
 
                         var id = step.step
+                        println("step:${step.step} [${step.end!!.coord!!.latitude}, ${step.end!!.coord!!.longitude}]")
                         if (step.activities != null) {
                             for (activity: IActivity in step.activities!!) {
                                 var type = ""
@@ -405,6 +409,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val time = System.currentTimeMillis() - start
             val t = time
             val l = activitiesList
+            toto(activityPlaces)
             this@MapsActivity.runOnUiThread(java.lang.Runnable {
                 progressDialog.dismiss()
             })
@@ -412,4 +417,53 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
     }
+
+    fun toto(ap: ArrayList<INearPlace>) {
+
+        println("****************************************************************************")
+        for (aPlace in ap) {
+
+            var tmp  = aPlace.vicinity.split(",")
+            println("${aPlace.name} type:${aPlace.type} distance:${aPlace.distance} business_status:${aPlace.business_status}")
+            var msg = "[${aPlace.step} ${aPlace.vicinity}]"
+            for (s in tmp) {
+                msg += " -$s-"
+            }
+            println(msg)
+        }
+        println("****************************************************************************")
+    }
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

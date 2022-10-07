@@ -198,7 +198,7 @@ class MapData {
             }
             data = sb.toString()
             br.close()
-            Log.d("data", data)
+//            Log.d("data", data)
         } catch (e: Exception) {
             Log.d("Exception", e.toString())
         } finally {
