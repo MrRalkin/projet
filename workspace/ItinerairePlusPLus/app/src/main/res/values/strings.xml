@@ -84,19 +84,10 @@
     <string name="tab2Fragment_checkbox4">Dormir</string>
     <string name="tab2Fragment_startingTime">Quand</string>
     <string name="tab2Fragment_duration">Duree</string>
+    <string name="addDestination_vehicleMsg">Veuillez choisir le type de vehicule \n Que vous souhaitez utiliser</string>
+    <string name="addDestination_activitiesMsg">Veuillez choisir une ou plusieures activitees</string>
 
-    <string name="selected_item">Item selectione:</string>
-    <string-array name="Duree">
-        <item>  Choisir Duree  </item>
-        <item>  1 heure  </item>
-        <item>  2 heures  </item>
-        <item>  3 heures  </item>
-        <item>  4 heures  </item>
-        <item>  5 heures  </item>
-        <item>  6 heures  </item>
-        <item>  7 heures  </item>
-        <item>  8 heures  </item>
-    </string-array>
+
 
 
 </resources>

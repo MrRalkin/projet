@@ -1,9 +1,6 @@
 package dbfirestore
 
 import android.provider.BaseColumns
-import interfaces.user.IAddress
-import interfaces.user.ICoord
-import kotlinx.parcelize.RawValue
 
 
 object FsContract {
@@ -64,6 +61,23 @@ object FsContract {
             val FD_NAME = "name"
             val FD_TIME = "time"
             val FD_DURATION = "duration"
+            val FD_NEARPLACES="nearPlaces"
+        }
+    }
+
+
+    class TbNearPlace:BaseColumns{
+        companion object{
+            val FD_BUSINESS_STATUS="business_status"
+            val FD_LOCATION="location"
+            val FD_NORTHEAST="northeast"
+            val FD_SOUTHWEST="southwest"
+            val FD_ICON="icon"
+            val FD_NAME="name"
+            val FD_TYPE="type"
+            val FD_VICINITY="vicinity"
+            val FD_DISTANCE="distance"
+            val FD_STEP="step"
         }
     }
 

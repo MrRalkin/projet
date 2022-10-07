@@ -63,44 +63,249 @@
             android:maxLength="255" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabs"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/vehicle_type_msgLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:tabGravity="fill"
-        app:tabMode="fixed"
-        app:tabBackground="@drawable/tab_selector"
-        app:tabIndicatorColor="@color/yellow"
-        app:tabTextColor="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout_dest"
-        tools:layout_editor_absoluteX="16dp">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tab_1" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tab_2" />
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:text="@string/addDestination_vehicleMsg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabs"/>
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout_dest" />
 
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_type_msgLayout">
+
+        <RadioButton
+            android:id="@+id/radio_button_electrique"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/tab1Fragment_radio1"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <RadioButton
+            android:id="@+id/radio_button_essence"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:text="@string/tab1Fragment_radio2"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/activities_msgLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:text="@string/addDestination_activitiesMsg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <LinearLayout
+        android:id="@+id/checkBox_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:background="@color/material_dynamic_primary90"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/activities_msgLayout">
+
+        <LinearLayout
+            android:id="@+id/eatLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+         >
+
+            <CheckBox
+                android:id="@+id/checkboxManger"
+                android:layout_width="112dp"
+                android:layout_height="match_parent"
+                android:checked="false"
+                android:text="@string/tab2Fragment_checkbox1"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/pickTimeManger"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginLeft="5dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:text="Choisir Heure"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@color/light_blue_shade_1"/>
+
+            <TextView
+                android:id="@+id/pickDurationManger"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginLeft="12dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:text="Choisir Duree"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:visibility="visible"
+                android:background="@color/light_blue_shade_1"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/gazLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:visibility="gone">
+
+            <CheckBox
+                android:id="@+id/checkboxEssence"
+                android:layout_width="112dp"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:enabled="false"
+                android:text="@string/tab2Fragment_checkbox2"
+                android:textStyle="bold"
+
+                />
+
+            <TextView
+                android:id="@+id/pickTimeEssence"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginLeft="5dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:text="Choisir Heure"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@color/light_blue_shade_1"/>
+
+            <TextView
+                android:id="@+id/pickDurationEssence"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginLeft="12dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:text="Choisir Duree"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:visibility="visible"
+                android:background="@color/light_blue_shade_1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rechargeLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:visibility="gone">
+
+            <CheckBox
+                android:id="@+id/checkboxRecharge"
+                android:layout_width="112dp"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:enabled="false"
+                android:text="@string/tab2Fragment_checkbox3"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/pickTimeRecharge"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginLeft="5dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:text="Choisir Heure"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@color/light_blue_shade_1"/>
+
+            <TextView
+                android:id="@+id/pickDurationRecharge"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginLeft="12dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:text="Choisir Duree"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:visibility="visible"
+                android:background="@color/light_blue_shade_1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dormirLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <CheckBox
+                android:id="@+id/checkboxDormir"
+                android:layout_width="112dp"
+                android:layout_height="match_parent"
+                android:checked="false"
+                android:text="@string/tab2Fragment_checkbox4"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/pickTimeDormir"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginLeft="5dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:text="Choisir Heure"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@color/light_blue_shade_1"/>
+
+            <TextView
+                android:id="@+id/pickDurationDormir"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginLeft="12dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:text="Choisir Duree"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:visibility="visible"
+                android:background="@color/light_blue_shade_1"/>
+
+        </LinearLayout>
+    </LinearLayout>
     <Button
         android:id="@+id/btnShowDestination"
         android:layout_width="wrap_content"
@@ -109,6 +314,6 @@
         android:text="Calculer l'itinéraire"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewPager" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_container" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,25 +24,26 @@
             app:layout_constraintTop_toTopOf="parent">
             <RadioGroup
                 android:id="@+id/radioGroup"
-                android:checkedButton="@+id/radio_button_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <RadioButton
-                    android:id="@+id/radio_button_1"
+                    android:id="@+id/radio_button_electrique"
                     android:layout_width="182dp"
                     android:layout_height="match_parent"
                     android:text="@string/tab1Fragment_radio1"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
                 <RadioButton
-                    android:id="@+id/radio_button_2"
+                    android:id="@+id/radio_button_essence"
                     android:layout_width="182dp"
                     android:layout_height="match_parent"
                     android:text="@string/tab1Fragment_radio2"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
             </RadioGroup>
         </LinearLayout>
 
-        <LinearLayout
+     <!--   <LinearLayout
             android:id="@+id/iconLinearLayout"
             android:layout_width="182dp"
             android:layout_height="wrap_content"
@@ -78,7 +79,7 @@
                 android:paddingStart="2dp"
                 android:paddingEnd="2dp"
                 app:icon="@drawable/ic_edit"/>
-        </LinearLayout>
+        </LinearLayout>-->
 
     </LinearLayout>
 

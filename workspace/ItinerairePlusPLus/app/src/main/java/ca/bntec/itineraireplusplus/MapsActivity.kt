@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import ca.bntec.itineraireplusplus.databinding.ActivityMapsBinding
+
 import ca.bntec.itineraireplusplus.tools.CreateSteps
 import ca.bntec.itineraireplusplus.tools.Tools
 
