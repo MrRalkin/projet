@@ -408,7 +408,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val time = System.currentTimeMillis() - start
             val t = time
             val l = activitiesList
-            toto(activityPlaces)
+//            toto(activityPlaces)
             this@MapsActivity.runOnUiThread(java.lang.Runnable {
                 progressDialog.dismiss()
             })
