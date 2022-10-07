@@ -2,6 +2,7 @@ package dbfirestore
 
 import classes.ActionResult
 import classes.AppGlobal
+import classes.map.NearPlace
 import classes.settings.Activity
 import classes.settings.Destination
 import com.google.firebase.auth.AuthResult
@@ -388,6 +389,8 @@ class FsDataManager : IDataManager {
                 steps.add(getStep(stp as HashMap<String, Any>))
             }
             result.steps = steps
+            result.settings =
+                getSettings(item[FsContract.TbDestination.FD_SETTINGS] as HashMap<String, Any>)
 
         } catch (e: Exception) {
             println(e.message)
@@ -403,7 +406,7 @@ class FsDataManager : IDataManager {
             result.end = getPoint(item[FsContract.TbStep.FD_END] as HashMap<String, Any>)
             result.trip_time = item[FsContract.TbStep.FD_TRIP_TIME].toString().toInt()
             val items =
-                item[FsContract.TbStep.FD_ACTIVITIES] as ArrayList<HashMap<String, Activity>>
+                item[FsContract.TbStep.FD_ACTIVITIES] as ArrayList<HashMap<String, FsActivity>>
 
             var activities = ArrayList<IActivity>()
             for (act in items) {
@@ -438,6 +441,38 @@ class FsDataManager : IDataManager {
             result.name = item[FsContract.TbActivity.FD_NAME].toString()
             result.time = item[FsContract.TbActivity.FD_TIME].toString().toInt()
             result.duration = item[FsContract.TbActivity.FD_DURATION].toString().toInt()
+
+            val items =
+                item[FsContract.TbActivity.FD_NEARPLACES] as ArrayList<HashMap<String, FsNearPlace>>
+            var places = ArrayList<INearPlace>()
+            for (pls in items) {
+                places.add(getNearPlace(pls as HashMap<String, Any>))
+            }
+            result.nearPlaces = places
+
+        } catch (e: Exception) {
+            println(e.message)
+        }
+
+        return result
+    }
+
+    private fun getNearPlace(item: HashMap<String, Any>): FsNearPlace {
+        var result = FsNearPlace()
+        try {
+            result.business_status = item[FsContract.TbNearPlace.FD_BUSINESS_STATUS].toString()
+            result.location =
+                getCoord(item[FsContract.TbNearPlace.FD_LOCATION] as HashMap<String, Any>)
+            result.northeast =
+                getCoord(item[FsContract.TbNearPlace.FD_NORTHEAST] as HashMap<String, Any>)
+            result.southwest =
+                getCoord(item[FsContract.TbNearPlace.FD_SOUTHWEST] as HashMap<String, Any>)
+            result.icon = item[FsContract.TbNearPlace.FD_ICON].toString()
+            result.name = item[FsContract.TbNearPlace.FD_NAME].toString()
+            result.type = item[FsContract.TbNearPlace.FD_TYPE].toString()
+            result.vicinity = item[FsContract.TbNearPlace.FD_VICINITY].toString()
+            result.distance = item[FsContract.TbNearPlace.FD_DISTANCE].toString().toInt()
+            result.step = item[FsContract.TbNearPlace.FD_STEP].toString().toInt()
 
         } catch (e: Exception) {
             println(e.message)
@@ -595,14 +630,32 @@ class FsDataManager : IDataManager {
         result.activities = ArrayList<IActivity>()
         result.vehicles = ArrayList<IVehicle>()
 
-        result.vehicles.add(FsVehicle("Auto gas", appGlobal.VEHICLE_ESSENCE, 600, "km", 55, "litre"))
-        result.vehicles.add(FsVehicle("Auto electric", appGlobal.VEHICLE_ELECTRIQUE, 600, "km", 100, "kWh"))
+        result.vehicles.add(
+            FsVehicle(
+                "Auto gas",
+                appGlobal.VEHICLE_ESSENCE,
+                600,
+                "km",
+                55,
+                "litre"
+            )
+        )
+        result.vehicles.add(
+            FsVehicle(
+                "Auto electric",
+                appGlobal.VEHICLE_ELECTRIQUE,
+                600,
+                "km",
+                100,
+                "kWh"
+            )
+        )
 //        result.vehicles.add(FsVehicle("Vélo", "nourriture", 50, "km", 2, ""))
 
         result.activities.add(FsActivity(1, appGlobal.ACTIVITY_ESSENCE, 14400, 900))
-        result.activities.add(FsActivity(2, appGlobal.ACTIVITY_RECHARGE, 14400,7200))
+        result.activities.add(FsActivity(2, appGlobal.ACTIVITY_RECHARGE, 14400, 7200))
         result.activities.add(FsActivity(3, appGlobal.ACTIVITY_DORMIR, 28800, 21600))
-        result.activities.add(FsActivity(4, appGlobal.ACTIVITY_MANGER, 14400,3600))
+        result.activities.add(FsActivity(4, appGlobal.ACTIVITY_MANGER, 14400, 3600))
 //        result.activities.add(FsActivity(5, "Touristique", 14400,3600))
 
         result.energies.add(FsEnergy(appGlobal.ENERGY_ESSENCE, 1.55, "litre"))
