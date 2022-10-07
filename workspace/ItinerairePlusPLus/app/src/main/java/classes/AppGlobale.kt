@@ -10,6 +10,7 @@ import classes.settings.Settings as destSettings
 
 class AppGlobal private constructor() {
 
+    val TITRE_NOUVELLE_ACTIVITE = "Nouvelle destination"
     val ACTIVITY_ESSENCE = "Essence"
     val ACTIVITY_DORMIR = "Dormir"
     val ACTIVITY_MANGER = "Manger"
@@ -31,6 +32,7 @@ class AppGlobal private constructor() {
     var curDestination: IDestination = Destination()
     var departAddress: String = ""
     var destAddress: String = ""
+
 
     companion object {
         val instance = AppGlobal()
