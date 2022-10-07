@@ -33,15 +33,18 @@
         </activity>
 
         <activity
-            android:name=".Tab2Fragment"
-            android:exported="false">
+            android:name=".Fragments.Tab2Fragment"
+            android:parentActivityName=".AddDestinationActivity"
+            android:exported="false"
+            >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Tab1Fragment"
-            android:exported="false">
+            android:name=".Fragments.Tab1Fragment"
+            android:exported="false"
+            android:parentActivityName=".AddDestinationActivity"     >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -57,7 +60,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBP4KpmtFwjJ4LkdJQzUWlVpeyH3V6cDnM" />
+            android:value="AIzaSyAkCldkSwO95SI5aRuGbpGuTvlqyt9SrOg" />
 
         <activity
             android:name=".MapsActivity"
