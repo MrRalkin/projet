@@ -94,7 +94,7 @@ class CreateSteps {
 
                 c = listOfCoord[indexForCoord]
 
-                println("==>> $indexForCoord: ${c.latitude},${c.longitude}")
+//                println("==>> $indexForCoord: ${c.latitude},${c.longitude}")
                 indexForCoord++
 
 
@@ -102,18 +102,18 @@ class CreateSteps {
                 if ((indexForCoord % nbCoordOneKm).toInt() == 0) {
 
                     currentKm++
-                    println("==>> km   : $currentKm")
+//                    println("==>> km   : $currentKm")
                 }
                 if ((indexForCoord % nbCoordOneMinute).toInt() == 0) {
 
                     currentTime++
-                    println("==>> time : $currentTime")
+//                    println("==>> time : $currentTime")
                 }
 
                 if (currentKm == currentUserKm) {
 
                     currentUserKm += userKm
-                    println("==>> currentUserKm : $currentUserKm")
+//                    println("==>> currentUserKm : $currentUserKm")
                     listOfCoordToKeep[indiceKm] = true
                 }
 
@@ -122,8 +122,8 @@ class CreateSteps {
                     currentUserDormir += userDormir
                     currentUserKm = (currentKm + userKm)
 
-                    println("==>> currentUserDormir : $currentUserDormir")
-                    println("==>> currentUserKm     : $currentUserKm")
+//                    println("==>> currentUserDormir : $currentUserDormir")
+//                    println("==>> currentUserKm     : $currentUserKm")
 
                     listOfCoordToKeep[indiceDormir] = true
                     listOfCoordToKeep[indiceKm] = true
@@ -133,8 +133,8 @@ class CreateSteps {
 
                     currentUserManger += userManger
                     currentUserKm = (currentKm + userKm)
-                    println("==>> currentUserManger : $currentUserManger")
-                    println("==>> currentUserKm     : $currentUserKm")
+//                    println("==>> currentUserManger : $currentUserManger")
+//                    println("==>> currentUserKm     : $currentUserKm")
 
                     listOfCoordToKeep[indiceManger] = true
                     listOfCoordToKeep[indiceKm] = true
@@ -154,14 +154,14 @@ class CreateSteps {
                     }
 
                     val step = addCoordToStep(++stepCount, fromCoord, toCoord)
-                    println("==============================================================>>")
-                    println("==>> ADD STEP: $stepCount: ${toCoord.latitude},${toCoord.longitude}")
-                    println("==>> km   : $currentKm")
-                    println("==>> time : $currentTime")
-                    println("==>> currentUserKm : $currentUserKm")
-                    println("==>> currentUserDormir : $currentUserDormir")
-                    println("==>> currentUserManger : $currentUserManger")
-                    println("==>>")
+//                    println("==============================================================>>")
+//                    println("==>> ADD STEP: $stepCount: ${toCoord.latitude},${toCoord.longitude}")
+//                    println("==>> km   : $currentKm")
+//                    println("==>> time : $currentTime")
+//                    println("==>> currentUserKm : $currentUserKm")
+//                    println("==>> currentUserDormir : $currentUserDormir")
+//                    println("==>> currentUserManger : $currentUserManger")
+//                    println("==>>")
 
                     step.trip_time =  (currentTime * 60)
                     step.activities = addActivityToStep(settings as Settings, listOfCoordToKeep)
@@ -185,14 +185,14 @@ class CreateSteps {
 
                 val step = addCoordToStep(++stepCount, fromCoord, toCoord)
 
-                println("==============================================================>>")
-                println("==>> ADD STEP: $stepCount: ${toCoord.latitude},${toCoord.longitude}")
-                println("==>> km   : $currentKm")
-                println("==>> time : $currentTime")
-                println("==>> currentUserKm : $currentUserKm")
-                println("==>> currentUserDormir : $currentUserDormir")
-                println("==>> currentUserManger : $currentUserManger")
-                println("==>>")
+//                println("==============================================================>>")
+//                println("==>> ADD STEP: $stepCount: ${toCoord.latitude},${toCoord.longitude}")
+//                println("==>> km   : $currentKm")
+//                println("==>> time : $currentTime")
+//                println("==>> currentUserKm : $currentUserKm")
+//                println("==>> currentUserDormir : $currentUserDormir")
+//                println("==>> currentUserManger : $currentUserManger")
+//                println("==>>")
                 step.trip_time = ((listOfCoord.size / nbCoordOneMinute) * 60).toInt()
                 step.activities = addActivityToStep(settings as Settings, listOfCoordToKeep)
 

@@ -214,8 +214,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         appGlobal.curDestination = CreateSteps.createSteps(dest, mapLegData)
 
-        CreateSteps.dumpDestination(appGlobal.curDestination as Destination)
-
         getPlacesAwaitAll()
     }
 
