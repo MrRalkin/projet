@@ -21,17 +21,14 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 
 class AddDestinationActivity : AppCompatActivity() {
-    var radioGroup: RadioGroup? = null
     val appGlobal = AppGlobal.instance
-    val db = appGlobal.userManager
+
     lateinit var inputDepart: TextInputEditText
     lateinit var inputDest: TextInputEditText
-    lateinit var btnShowDetination: Button
+    lateinit var btnShowDestination: Button
     lateinit var user: IUser
-    private lateinit var mContext: Context
     lateinit var radioButtonElectrique: RadioButton
     lateinit var radioButtonEssence: RadioButton
-    lateinit var setRadioVisibility: RadioButton
     lateinit var context: Context
 
     lateinit var checkBoxManger: CheckBox
@@ -48,9 +45,9 @@ class AddDestinationActivity : AppCompatActivity() {
     lateinit var pickDurationRecharge: TextView
     lateinit var pickTimeDormir: TextView
     lateinit var pickDurationDormir: TextView
-    var isEssence: Boolean = false
-    var isElectrique: Boolean = false
 
+    private val db = appGlobal.userManager
+    var radioGroup: RadioGroup? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,11 +57,10 @@ class AddDestinationActivity : AppCompatActivity() {
 
         appGlobal.curSetting = Settings()
 
-
         // Initialisation des champs texts et du bouton de calcul de destination
         inputDepart = findViewById(R.id.textInputEdit_depart)
         inputDest = findViewById(R.id.textInputEdit_dest)
-        btnShowDetination = findViewById(R.id.btnShowDestination)
+        btnShowDestination = findViewById(R.id.btnShowDestination)
 
         radioButtonEssence = findViewById(R.id.radio_button_essence)
         radioButtonElectrique = findViewById(R.id.radio_button_electrique)
@@ -83,7 +79,6 @@ class AddDestinationActivity : AppCompatActivity() {
         pickTimeDormir = findViewById(R.id.pickTimeDormir)
         pickDurationDormir = findViewById(R.id.pickDurationDormir)
 
-
         MainScope().launch(Dispatchers.IO) {
             if (db.userIsAuthenticated()) {
                 user = db.userGetCurrent()!!
@@ -96,21 +91,22 @@ class AddDestinationActivity : AppCompatActivity() {
                         })
                     }
                 })
+
                 radioButtonStatus()
                 afficherActivity()
                 remplirBoutons()
                 creerListeners()
                 createCheckboxListener()
 
+                var isEssence: Boolean = false
+                var isElectrique: Boolean = false
                 // On regarde les vehicules de l'utilisateur et on affiche les activites energetique correspondantes
                 for (i in user.settings.vehicles) {
                     if (i.energy.equals(appGlobal.VEHICLE_ESSENCE)) {
-                        setRadioVisibility = findViewById(R.id.radio_button_essence)
-                        setRadioVisibility.setVisibility(View.VISIBLE);
+                        radioButtonEssence.visibility = View.VISIBLE;
                         isEssence = true
                     } else {
-                        setRadioVisibility = findViewById(R.id.radio_button_electrique)
-                        setRadioVisibility.setVisibility(View.VISIBLE);
+                        radioButtonElectrique.visibility = View.VISIBLE;
                         isElectrique = true
                     }
                 }
@@ -121,14 +117,11 @@ class AddDestinationActivity : AppCompatActivity() {
                 if (!isEssence && isElectrique) {
                     radioButtonElectrique.isChecked = true
                 }
-
             }
         }
 
-
-
         // Prise en charge des coordonnees d'adresses entrees par l'utilisateur et lancement de l'activite MapsActivity
-        btnShowDetination.setOnClickListener() {
+        btnShowDestination.setOnClickListener() {
 
             if (inputDepart.text.toString().isEmpty()) {
                 inputDepart.error = "Entrer le depart"
@@ -149,11 +142,10 @@ class AddDestinationActivity : AppCompatActivity() {
             startActivity(i)
             finish()
         }
-
     }
 
     // Savoir le type de vehicule choisi par l'utilisateur et mettre a jour les donnees dans l'Array appGlobal
-    fun radioButtonStatus(){
+    private fun radioButtonStatus(){
         radioGroup = findViewById(R.id.radioGroup)
         radioGroup?.setOnCheckedChangeListener { group, checkedId ->
             // Responds to child RadioButton checked/unchecked
@@ -178,7 +170,7 @@ class AddDestinationActivity : AppCompatActivity() {
         appGlobal.curSetting.activities.add(getActivity(appGlobal.ACTIVITY_ESSENCE))
     }
     // Mettre a jour les donnees sur le vehicule dans appGlobal
-    fun getVehicle(energy:String) : Vehicle {
+    private fun getVehicle(energy:String) : Vehicle {
         var ve = Vehicle()
         for (vehicle in user.settings.vehicles) {
             if (vehicle.energy.equals(energy)) {
@@ -192,9 +184,8 @@ class AddDestinationActivity : AppCompatActivity() {
         }
         return ve
     }
-
     // Mettre a jour les donnees sur l'energie dans appGlobal
-    fun getEnergy(energy:String) : Energy {
+    private fun getEnergy(energy:String) : Energy {
         var en = Energy()
         for (e in user.settings.energies) {
             if (e.type.equals(energy)) {
@@ -205,9 +196,8 @@ class AddDestinationActivity : AppCompatActivity() {
         }
         return en
     }
-
     // Mettre a jour les donnees sur l'activite dans appGlobal
-    fun getActivity(name:String) : Activity {
+    private fun getActivity(name:String) : Activity {
         var a = Activity()
         for (activity in user.settings.activities) {
             if (activity.name.equals(name)) {
@@ -215,12 +205,13 @@ class AddDestinationActivity : AppCompatActivity() {
                 a.duration = activity.duration
                 a.time = activity.time
                 a.name = activity.name
+                a.nearPlaces = activity.nearPlaces
             }
         }
         return a
     }
 
-    fun afficherActivity() {
+    private fun afficherActivity() {
         var isEssence = false
         var isRecharge = false
         for (i in user.settings.vehicles) {
@@ -239,7 +230,7 @@ class AddDestinationActivity : AppCompatActivity() {
         }
     }
 
-    fun findActivity(currentActivity: String):Int{
+    private fun findActivity(currentActivity: String):Int{
         var idx:Int = -1
         for (i in 0 until appGlobal.curSetting.activities.size) {
             if ( appGlobal.curSetting.activities[i].name.equals(currentActivity)) {
@@ -249,7 +240,7 @@ class AddDestinationActivity : AppCompatActivity() {
         return idx
     }
 
-    fun remplirBoutons() {
+    private fun remplirBoutons() {
         var a = getActivity(appGlobal.ACTIVITY_MANGER)
         pickTimeManger.text = Tools.convertSecondsToTime(a.time, Tools.FMT_HM_SHORT)
         pickDurationManger.text = Tools.convertSecondsToTime(a.duration, Tools.FMT_HM_SHORT)
@@ -264,104 +255,75 @@ class AddDestinationActivity : AppCompatActivity() {
         pickDurationDormir.text = Tools.convertSecondsToTime(a.duration, Tools.FMT_HM_SHORT)
     }
 
-    fun creerListeners(){
+    private fun creerListeners(){
         pickTimeManger.setOnClickListener {
-            if(checkBoxManger.isChecked()) {
+            if(checkBoxManger.isChecked) {
                 timeModal(pickTimeManger)
             }
         }
-
         pickDurationManger.setOnClickListener {
-            if (checkBoxManger.isChecked()) {
+            if (checkBoxManger.isChecked) {
                 timeModal(pickDurationManger)
             }
         }
         pickTimeEssence.setOnClickListener {
-            if (checkBoxEssence.isChecked()) {
+            if (checkBoxEssence.isChecked) {
                 timeModal(pickTimeEssence)
             }
         }
         pickDurationEssence.setOnClickListener {
-            if (checkBoxEssence.isChecked()) {
+            if (checkBoxEssence.isChecked) {
                 timeModal(pickDurationEssence)
             }
         }
         pickTimeRecharge.setOnClickListener {
-            if (checkBoxRecharge.isChecked()) {
+            if (checkBoxRecharge.isChecked) {
                 timeModal(pickTimeRecharge)
             }
         }
         pickDurationRecharge.setOnClickListener {
-            if (checkBoxRecharge.isChecked()) {
+            if (checkBoxRecharge.isChecked) {
                 timeModal(pickDurationRecharge)
             }
         }
         pickTimeDormir.setOnClickListener {
-            if (checkBoxDormir.isChecked()) {
+            if (checkBoxDormir.isChecked) {
                 timeModal(pickTimeDormir)
             }
         }
         pickDurationDormir.setOnClickListener {
-            if (checkBoxDormir.isChecked()) {
+            if (checkBoxDormir.isChecked) {
                 timeModal(pickDurationDormir)
             }
         }
     }
 
-    fun timeModal( pickTimeDuration:TextView) {
-        // instance of MDC time picker
+    private fun timeModal(pickTimeDuration:TextView) {
         val materialTimePicker: MaterialTimePicker = MaterialTimePicker.Builder()
-            // set the title for the alert dialog
             .setTitleText("SELECTION DU TEMPS")
-            // set the default hour for the
-            // dialog when the dialog opens
             .setHour(pickTimeDuration.text.subSequence(0,2).toString().toInt())
-            // set the default minute for the
-            // dialog when the dialog opens
             .setMinute(pickTimeDuration.text.subSequence(3,5).toString().toInt())
-            // set the time format
-            // according to the region
             .setTimeFormat(TimeFormat.CLOCK_24H)
             .build()
 
         materialTimePicker.show(supportFragmentManager, "Tab2Fragment")
 
-        // on clicking the positive button of the time picker
-        // dialog update the TextView accordingly
         materialTimePicker.addOnPositiveButtonClickListener {
 
             val pickedHour: Int = materialTimePicker.hour
             val pickedMinute: Int = materialTimePicker.minute
 
-            // check for single digit hour hour and minute
-            // and update TextView accordingly
-            val formattedTime: String = if(pickedHour >= 10) {
+            val seconds = (pickedHour * 3600) + (pickedMinute * 60)
 
-                if (pickedMinute >= 10) {
-                    "${materialTimePicker.hour}:${materialTimePicker.minute}"
-                } else {
-                    "${materialTimePicker.hour}:0${materialTimePicker.minute}"
-                }
-            } else if(pickedMinute >= 10){
+            pickTimeDuration.text = Tools.convertSecondsToTime(seconds, Tools.FMT_HM_SHORT)
 
-                "0${materialTimePicker.hour}:${materialTimePicker.minute}"
-            } else {
-                "0${materialTimePicker.hour}:0${materialTimePicker.minute}"
-            }
-
-            // then update the preview TextView
-            pickTimeDuration.text = formattedTime
-
-            addToSettings(pickTimeDuration, formattedTime)
-
+            addToSettings(pickTimeDuration, seconds)
         }
     }
 
-    fun addToSettings(tv : TextView, fmtTime : String) {
+    private fun addToSettings(tv : TextView, seconds : Int) {
 
         var indice = 0
-        var seconds = convertirStrToSec(fmtTime)
-
         when (tv.id) {
             R.id.pickDurationDormir -> {
                 indice = findActivity(appGlobal.ACTIVITY_DORMIR)
@@ -398,7 +360,7 @@ class AddDestinationActivity : AppCompatActivity() {
         }
     }
 
-    fun createCheckboxListener() {
+    private fun createCheckboxListener() {
         checkBoxManger.setOnClickListener{
             if (checkBoxManger.isChecked){
                 appGlobal.curSetting.activities.add(getActivity(appGlobal.ACTIVITY_MANGER))
@@ -414,11 +376,5 @@ class AddDestinationActivity : AppCompatActivity() {
                 appGlobal.curSetting.activities.remove(getActivity(appGlobal.ACTIVITY_DORMIR))
             }
         }
-    }
-
-    fun convertirStrToSec(strToConvert : String) : Int {
-        var h = strToConvert.subSequence(0,2).toString().toInt()
-        var m = strToConvert.subSequence(3,5).toString().toInt()
-        return (h*3600)+(m*60)
     }
 }
