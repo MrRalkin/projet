@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:gravity="center|top"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/nearby_title"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/purple_500"
+            android:padding="5dp"
+            android:text="@string/dialogEstimation_captionBtn"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_activity1"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:gravity="center|top"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/tv_activity1_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_margin="4dp"
+                android:background="@color/purple_200"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:text="@string/destAdapter_name" />
+            <LinearLayout
+                android:id="@+id/ll_activity1sub"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:gravity="center|top"
+                android:orientation="vertical"
+                android:visibility="gone">
+            <ListView
+                android:id="@+id/lv_activity1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:visibility="visible"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_activity2"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:gravity="center|top"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/tv_activity2_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_margin="4dp"
+                android:background="@color/purple_200"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:text="@string/destAdapter_name" />
+            <LinearLayout
+                android:id="@+id/ll_activity2sub"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:gravity="center|top"
+                android:orientation="vertical"
+                android:visibility="gone">
+            <ListView
+                android:id="@+id/lv_activity2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:visibility="visible"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_activity3"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:gravity="center|top"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/tv_activity3_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_margin="4dp"
+                android:background="@color/purple_200"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:text="@string/destAdapter_name" />
+            <LinearLayout
+                android:id="@+id/ll_activity3sub"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:gravity="center|top"
+                android:orientation="vertical"
+                android:visibility="gone">
+            <ListView
+                android:id="@+id/lv_activity3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:visibility="visible"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_activity4"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:gravity="center|top"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/tv_activity4_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_margin="4dp"
+                android:background="@color/purple_200"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:text="@string/destAdapter_name" />
+            <LinearLayout
+                android:id="@+id/ll_activity4sub"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:gravity="center|top"
+                android:orientation="vertical"
+                android:visibility="gone">
+            <ListView
+                android:id="@+id/lv_activity4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:visibility="visible"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnOk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/dialogEstimation_acknowledge" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

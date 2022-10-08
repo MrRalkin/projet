@@ -1,5 +1,6 @@
 package ca.bntec.itineraireplusplus
 
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.pm.PackageManager
@@ -7,12 +8,18 @@ import android.graphics.Color
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import ca.bntec.itineraireplusplus.adapter.AdapterDialogDestinations
 import ca.bntec.itineraireplusplus.databinding.ActivityMapsBinding
-
 import ca.bntec.itineraireplusplus.tools.CreateSteps
-import ca.bntec.itineraireplusplus.tools.Tools
-
+import classes.ActionResult
 import classes.AppGlobal
 import classes.StepActivities
 import classes.map.MapData
@@ -30,14 +37,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.material.snackbar.Snackbar
 import interfaces.user.*
 import kotlinx.coroutines.*
 import org.json.JSONObject
 import java.io.IOException
 import java.time.LocalDate
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -323,11 +329,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     var step = steps[idx]
 
                     var coord: ICoord
+                    if (idx == 0) {
+                        coord = Coord(step.start!!.coord!!.latitude, step.start!!.coord!!.longitude)
+
+                        tasks.add(async(Dispatchers.IO) {
+                            getPlace(
+                                coord as Coord,
+                                appGlobal.ACTIVITY_MANGER_TYPE,
+                                metaKey!!,
+                                0
+                            )
+                        })
+                    }
+
                     if (step != null && step.end != null) {
                         coord = Coord(step.end!!.coord!!.latitude, step.end!!.coord!!.longitude)
 
                         var id = step.step
-                        println("step:${step.step} [${step.end!!.coord!!.latitude}, ${step.end!!.coord!!.longitude}]")
+//                        println("step:${step.step} [${step.end!!.coord!!.latitude}, ${step.end!!.coord!!.longitude}]")
                         if (step.activities != null) {
                             for (activity: IActivity in step.activities!!) {
                                 var type = ""
@@ -402,22 +421,132 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         activitiesList.add(listItem)
                     }
                 }
+
                 // step.activities
             }
 
             val time = System.currentTimeMillis() - start
             val t = time
             val l = activitiesList
-//            toto(activityPlaces)
+
+            addCitiesToSteps(activityPlaces)
+
+//            CreateSteps.dumpDestination(appGlobal.curDestination as Destination)
+//            dumpNearByPlaces(activityPlaces)
+
             this@MapsActivity.runOnUiThread(java.lang.Runnable {
                 progressDialog.dismiss()
+                modalDialogDestination()
             })
-            //
         }
 
     }
 
-    fun toto(ap: ArrayList<INearPlace>) {
+    private fun addCitiesToSteps(ap: ArrayList<INearPlace>) {
+
+        var cityName = "vide"
+        for (place in ap) {
+            if (place.step == 0) {
+                var tmp  = place.vicinity.split(",")
+                cityName = tmp[tmp.size - 1]
+            }
+        }
+        this.appGlobal.curDestination.steps!![0].start!!.name = cityName.trim()
+
+        for (step in this.appGlobal.curDestination.steps!!) {
+            for (place in ap) {
+                if (place.step == step.step) {
+                    var tmp  = place.vicinity.split(",")
+                    cityName = tmp[tmp.size - 1]
+                }
+            }
+
+            if (step.step != 1) {
+                this.appGlobal.curDestination.steps!![step.step - 1].start!!.name = this.appGlobal.curDestination.steps!![step.step - 2].end!!.name
+            }
+
+            this.appGlobal.curDestination.steps!![step.step - 1].end!!.name = cityName.trim()
+        }
+    }
+
+    private fun modalDialogDestination() {
+
+        val dialog = Dialog(context)
+        dialog.setContentView(R.layout.dialog_display_destinations_layout)
+
+        val dialogTitle = dialog.findViewById<TextView>(R.id.estimation_title)
+        val lvDialogDestinations = dialog.findViewById<ListView>(R.id.lv_dialog_destinations)
+        val llDisplayStepsView = dialog.findViewById<LinearLayout>(R.id.ll_display_steps_view)
+
+        val btnCancel = dialog.findViewById<Button>(R.id.btnCancel)
+        val btnOk = dialog.findViewById<Button>(R.id.btnOk)
+
+        dialogTitle.text = "Les Étapes"
+
+        val adapterDialogDestinations = AdapterDialogDestinations(this@MapsActivity,appGlobal.curDestination.steps!!)
+        lvDialogDestinations.adapter = adapterDialogDestinations
+
+        btnCancel.setOnClickListener {
+            confirmer(dialog)
+        }
+
+        btnOk.setOnClickListener {
+            saveUserData(llDisplayStepsView)
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    fun confirmer(dialogParent : Dialog) {
+
+        val dialog = Dialog(context)
+        dialog.setContentView(R.layout.dialog_cancel_confirmation_layout)
+
+        val btnCancel = dialog.findViewById<Button>(R.id.btnCancel)
+        val btnOk = dialog.findViewById<Button>(R.id.btnOk)
+
+        val dialogTitle = dialog.findViewById<TextView>(R.id.dialogTitle)
+        val tvWarningMessage = dialog.findViewById<TextView>(R.id.tv_warning_message)
+
+        dialogTitle.text = "Confimation"
+
+        tvWarningMessage.text = "Veullez confirmer l'annulation!"
+
+        btnCancel.setOnClickListener { dialog.dismiss() }
+
+        btnOk.setOnClickListener {
+            dialog.dismiss()
+            dialogParent.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    fun saveUserData(ll : LinearLayout) {
+        MainScope().launch(Dispatchers.IO) {
+//            var user = async { db.userGetCurrent() }.await()
+
+//            user!!.destinations!!.add(appGlobal.curDestination)
+//
+//            var result = async { db.userUpdateCurrent(user) }.await()
+
+            var result = ActionResult()
+            result.isSuccess = true
+            result.successMessage = "Yaaahoooooo!!!"
+
+            if (result.isSuccess) {
+                showMessage(result.successMessage, ll)
+            } else {
+                showMessage(result.errorMessage, ll)
+            }
+        }
+    }
+
+    private fun showMessage(message : String, view: View) {
+        Snackbar.make(context, view, message, Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun dumpNearByPlaces(ap: ArrayList<INearPlace>) {
 
         println("****************************************************************************")
         for (aPlace in ap) {
@@ -432,37 +561,4 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         println("****************************************************************************")
     }
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
