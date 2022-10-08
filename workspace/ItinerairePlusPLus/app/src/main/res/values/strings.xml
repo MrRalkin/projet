@@ -86,6 +86,10 @@
     <string name="tab2Fragment_duration">Duree</string>
     <string name="addDestination_vehicleMsg">Veuillez choisir le type de vehicule \n Que vous souhaitez utiliser</string>
     <string name="addDestination_activitiesMsg">Veuillez choisir une ou plusieures activitees</string>
+    <string name="main_welcomeMsg">Bienvenue Dans l\'Itineraire Plus Plus</string>
+    <string name="main_addDestinationBtn">Ajouter Une \nNouvelle Destination</string>
+    <string name="main_listViewTitle"> Vos Destinations Recentes</string>
+
 
 
 

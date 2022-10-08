@@ -5,9 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.core.content.ContextCompat.startActivity
 import classes.*
 import interfaces.user.IUser
 import kotlinx.coroutines.Dispatchers
@@ -31,8 +30,9 @@ class MainActivity : AppCompatActivity() {
                 user = db.userGetCurrent()!!
                 this@MainActivity.runOnUiThread(java.lang.Runnable {
                     if (user != null) {
-                        txt.text = "Hello ${user.settings.activities.get(0).name}"
-//                        txt.text = "Hello ${user.settings.vehicles.get(0).type}"
+                        txt.text = "Bonjour ${user.name}"
+                        recentesDestinations()
+                        newDestBtnListener()
                     }
                 })
             } else {
@@ -42,9 +42,10 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 })
             }
+
         }
 
-        var btnSetData = findViewById<Button>(R.id.setData)
+      /*  var btnSetData = findViewById<Button>(R.id.setData)
         btnSetData.setOnClickListener() {
             TestData().setTestData(user)
         }
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         var btnResetDate = findViewById<Button>(R.id.getData)
         btnResetDate.setOnClickListener() {
             resetSettings()
-        }
+        }*/
 
     }
 
@@ -125,4 +126,29 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
+
+    fun recentesDestinations(){
+        // use arrayadapter and define an array
+        val arrayAdapter: ArrayAdapter<*>
+        val previousdest = arrayOf(
+            user.destinations?.get(0)?.name,  user.destinations?.get(1)?.name,  user.destinations?.get(2)?.name,
+            user.destinations?.get(3)?.name,  user.destinations?.get(4)?.name
+        )
+
+        // access the listView from xml file
+        var mListView = findViewById<ListView>(R.id.lv_recentes_destinations)
+        arrayAdapter = ArrayAdapter(this,
+            R.layout.listrow, R.id.textView2,previousdest)
+        mListView.adapter = arrayAdapter
+    }
+
+    fun newDestBtnListener() {
+        var main_adddestination_btn = findViewById<Button>(R.id.main_adddestination_btn)
+        main_adddestination_btn.setOnClickListener { // opening a login activity on clicking login text.
+            val i = Intent(this, AddDestinationActivity::class.java)
+            startActivity(i)
+        }
+    }
 }
+
+//coffeeList.setAdapter(new ArrayAdapter<String>(this, R.layout.listrow, R.id.textView2, coffeeChoices));
