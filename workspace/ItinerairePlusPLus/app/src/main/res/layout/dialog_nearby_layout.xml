@@ -38,20 +38,12 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:text="@string/destAdapter_name" />
-            <LinearLayout
-                android:id="@+id/ll_activity1sub"
-                android:layout_width="360dp"
-                android:layout_height="wrap_content"
-                android:gravity="center|top"
-                android:orientation="vertical"
-                android:visibility="gone">
             <ListView
                 android:id="@+id/lv_activity1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
                 android:visibility="visible"/>
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -71,20 +63,12 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:text="@string/destAdapter_name" />
-            <LinearLayout
-                android:id="@+id/ll_activity2sub"
-                android:layout_width="360dp"
-                android:layout_height="wrap_content"
-                android:gravity="center|top"
-                android:orientation="vertical"
-                android:visibility="gone">
             <ListView
                 android:id="@+id/lv_activity2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
                 android:visibility="visible"/>
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -104,20 +88,12 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:text="@string/destAdapter_name" />
-            <LinearLayout
-                android:id="@+id/ll_activity3sub"
-                android:layout_width="360dp"
-                android:layout_height="wrap_content"
-                android:gravity="center|top"
-                android:orientation="vertical"
-                android:visibility="gone">
             <ListView
                 android:id="@+id/lv_activity3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
                 android:visibility="visible"/>
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -137,20 +113,12 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:text="@string/destAdapter_name" />
-            <LinearLayout
-                android:id="@+id/ll_activity4sub"
-                android:layout_width="360dp"
-                android:layout_height="wrap_content"
-                android:gravity="center|top"
-                android:orientation="vertical"
-                android:visibility="gone">
             <ListView
                 android:id="@+id/lv_activity4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
                 android:visibility="visible"/>
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout

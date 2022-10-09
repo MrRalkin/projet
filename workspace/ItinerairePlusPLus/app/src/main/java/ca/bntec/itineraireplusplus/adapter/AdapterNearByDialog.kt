@@ -38,8 +38,10 @@ class AdapterNearByDialog(
         val returnView = inf?.inflate(R.layout.adapter_nearby_dialog_layout, parent, false)
 
         val tvNearbyName = returnView?.findViewById<TextView>(R.id.tv_nearby_name)
+        val tvNearbyDistance = returnView?.findViewById<TextView>(R.id.tv_nearby_distance)
 
-        tvNearbyName?.text = "${nearPlaces?.get(pos)?.name} : "
+        tvNearbyName?.text = nearPlaces?.get(pos)?.name
+        tvNearbyDistance?.text = String.format("%d km", nearPlaces?.get(pos)?.distance!! / 1000)
 
         return returnView!!
     }
