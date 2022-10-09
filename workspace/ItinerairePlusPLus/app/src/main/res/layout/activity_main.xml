@@ -42,7 +42,7 @@
             <ListView
                 android:id="@+id/lv_recentes_destinations"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"/>
+                android:layout_height="145dp"/>
 
             <Button
                 android:id="@+id/main_adddestination_btn"
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:text="@string/main_addDestinationBtn"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="100dp"
                 app:icon="@drawable/ic_add"
                 android:layout_marginStart="67dp"/>
 

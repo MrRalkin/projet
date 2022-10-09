@@ -1,6 +1,7 @@
 package ca.bntec.itineraireplusplus
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -140,6 +141,8 @@ class MainActivity : AppCompatActivity() {
         arrayAdapter = ArrayAdapter(this,
             R.layout.listrow, R.id.textView2,previousdest)
         mListView.adapter = arrayAdapter
+
+        mListView.setBackgroundColor(Color.argb(80,0,0 ,0))
     }
 
     fun newDestBtnListener() {
@@ -151,4 +154,3 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-//coffeeList.setAdapter(new ArrayAdapter<String>(this, R.layout.listrow, R.id.textView2, coffeeChoices));
