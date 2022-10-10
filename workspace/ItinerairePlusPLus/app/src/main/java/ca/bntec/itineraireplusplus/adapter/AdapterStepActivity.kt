@@ -38,8 +38,11 @@ class AdapterStepActivity(
         val tvStepActivityName = returnView?.findViewById<TextView>(R.id.step_activity_name)
         val tvStepActivityTime = returnView?.findViewById<TextView>(R.id.step_activity_time)
 
-        tvStepActivityName?.text = "${activities?.get(pos)?.name} : "
-        tvStepActivityTime?.text = Tools.convertSecondsToTime(activities?.get(pos)?.time!!, Tools.FMT_HM_LONG)
+        tvStepActivityName?.text = "${activities?.get(pos)?.name} :"
+
+        val time = Tools.convertSecondsToTime(activities?.get(pos)?.time!!, Tools.FMT_HM_SHORT)
+        val duration = Tools.convertSecondsToTime(activities?.get(pos)?.duration!!, Tools.FMT_HM_SHORT)
+        tvStepActivityTime?.text = "Temps: $time -- Durée: $duration"
 
         return returnView!!
     }

@@ -12,7 +12,6 @@ import android.widget.TextView
 import ca.bntec.itineraireplusplus.DestinationsActivity
 import ca.bntec.itineraireplusplus.R
 import ca.bntec.itineraireplusplus.tools.Tools
-import classes.settings.Step
 import interfaces.user.IStep
 
 class AdapterSteps(
@@ -68,14 +67,14 @@ class AdapterSteps(
         dialogTitle.text = "Étape ${step?.step}"
         detailStepStart.text = step?.start?.name
         detailStepEnd.text = step?.end?.name
-        detailStepTripTime.text = Tools.convertSecondsToTime(step?.trip_time!!, Tools.FMT_HM_LONG)
+        detailStepTripTime.text = Tools.convertSecondsToTime(step?.trip_time!!, Tools.FMT_OTHER)
 
-        val adapterSteps = AdapterStepActivity(ctx, step.activities)
-        detailStepActivity.adapter = adapterSteps
+        val adapterStepActivity = AdapterStepActivity(ctx, step.activities)
+        detailStepActivity.adapter = adapterStepActivity
 
-        btnOk.setOnClickListener(View.OnClickListener {
+        btnOk.setOnClickListener{
             dialog.dismiss()
-        })
+        }
         dialog.show()
     }
 }

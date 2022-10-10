@@ -313,20 +313,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 for (idx in 0 until steps.count()) {
                     var step = steps[idx]
 
-                    var coord: ICoord
+                    var coord0: ICoord
                     if (idx == 0) {
-                        coord = Coord(step.start!!.coord!!.latitude, step.start!!.coord!!.longitude)
+                        coord0 = Coord(step.start!!.coord!!.latitude, step.start!!.coord!!.longitude)
 
                         tasks.add(async(Dispatchers.IO) {
-                            getPlace(
-                                coord as Coord,
-                                appGlobal.ACTIVITY_MANGER_TYPE,
-                                metaKey!!,
-                                0
-                            )
+                            getPlace(coord0, appGlobal.ACTIVITY_MANGER_TYPE, metaKey!!,0)
+                        })
+                        tasks.add(async(Dispatchers.IO) {
+                            getPlace(coord0, appGlobal.ACTIVITY_DORMIR_TYPE, metaKey!!,0)
+                        })
+                        tasks.add(async(Dispatchers.IO) {
+                            getPlace(coord0, appGlobal.ACTIVITY_ESSENCE_TYPE, metaKey!!,0)
+                        })
+                        tasks.add(async(Dispatchers.IO) {
+                            getPlace(coord0, appGlobal.ACTIVITY_RECHARGE_TYPE, metaKey!!,0)
                         })
                     }
 
+                    var coord: ICoord
                     if (step != null && step.end != null) {
                         coord = Coord(step.end!!.coord!!.latitude, step.end!!.coord!!.longitude)
 
@@ -346,12 +351,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                         appGlobal.ACTIVITY_RECHARGE_TYPE
                                 }
                                 tasks.add(async(Dispatchers.IO) {
-                                    getPlace(
-                                        coord,
-                                        type,
-                                        metaKey!!,
-                                        id
-                                    )
+                                    getPlace(coord, type, metaKey!!, id)
                                 })
                             }
                         }

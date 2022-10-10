@@ -70,7 +70,7 @@ class AdapterDestinations(
 
 
         tvDestinationName?.text = destinations?.get(pos)?.name
-        tvDestinationTime?.text = "Estimation : ${Tools.convertSecondsToTime(destinations?.get(pos)?.trip_time!!, Tools.FMT_HM_LONG)}"
+        tvDestinationTime?.text = "Estimation : ${Tools.convertSecondsToTime(destinations?.get(pos)?.trip_time!!, Tools.FMT_OTHER)}"
 
         return returnView
     }
