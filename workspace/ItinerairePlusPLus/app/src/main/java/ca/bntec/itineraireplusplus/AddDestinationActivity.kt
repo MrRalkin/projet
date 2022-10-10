@@ -156,7 +156,7 @@ class AddDestinationActivity : AppCompatActivity() {
 //            radioButtonEssence.isChecked = false
         } else {
 //            radioButtonElectrique.isChecked = false
-            radioButtonEssence.visibility = View.GONE;
+            radioButtonElectrique.visibility = View.GONE;
         }
         val firstVehicle =
             vehucles.first { it.energy == appGlobal.ENERGY_ELECTRICITE || it.energy == appGlobal.ENERGY_ESSENCE }
