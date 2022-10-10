@@ -20,6 +20,7 @@ class Destination(
     override var addressDestination: @RawValue IAddress? = Address(),
     override var image: String = "",
     override var trip_time: Int = 0,
+    override var trip_meters: Int = 0,
     override var steps: @RawValue ArrayList<IStep>? = ArrayList<IStep>(),
 
     ) : IDestination(), Parcelable

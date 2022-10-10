@@ -26,7 +26,6 @@ class CreateSteps {
             secondsByNbCoord = mapLegData.legDuration.toDouble() / listOfCoord.size
             nbCoordOneKm = 1000 / metersByNbCoord
             nbCoordOneMinute = 60 / secondsByNbCoord
-
         }
 
         fun createSteps(
@@ -39,6 +38,7 @@ class CreateSteps {
             dest.settings = appGlobal.curSetting
 
             setLegData(mapLegData)
+            dest.trip_meters = mapLegData.legDistance
 
             val settings = dest.settings
             var userKm = 0
@@ -167,7 +167,8 @@ class CreateSteps {
 //                    println("==>> currentUserManger : $currentUserManger")
 //                    println("==>>")
 
-                    step.trip_time =  (currentTime * 60)
+                    step.trip_time = (currentTime * 60)
+                    dest.trip_time = step.trip_time
                     step.activities = addActivityToStep(settings as Settings, listOfCoordToKeep)
 
                     dest.steps!!.add(step)
@@ -198,6 +199,7 @@ class CreateSteps {
 //                println("==>> currentUserManger : $currentUserManger")
 //                println("==>>")
                 step.trip_time = ((listOfCoord.size / nbCoordOneMinute) * 60).toInt()
+                dest.trip_time = step.trip_time
                 step.activities = addActivityToStep(settings as Settings, listOfCoordToKeep)
 
                 dest.steps!!.add(step)

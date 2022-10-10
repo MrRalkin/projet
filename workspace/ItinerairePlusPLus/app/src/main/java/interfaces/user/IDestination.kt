@@ -57,6 +57,7 @@ abstract class IDestination(
     open var addressDestination: IAddress? = null,
     open var image: String = "",
     open var trip_time: Int = 0,
+    open var trip_meters: Int = 0,
     open var steps: ArrayList<IStep>? = null,
     open var settings: ISettings? = null
 )

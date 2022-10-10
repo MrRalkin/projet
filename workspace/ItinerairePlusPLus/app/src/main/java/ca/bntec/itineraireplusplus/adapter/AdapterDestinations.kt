@@ -85,6 +85,7 @@ class AdapterDestinations(
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun displayEstimation(destination : IDestination?) {
 
         val dialog = Dialog(ctx)
@@ -95,15 +96,39 @@ class AdapterDestinations(
         val estimationStartDeplacementValue = dialog.findViewById<TextView>(R.id.estimation_deplacement_value)
         val estimationArretValue = dialog.findViewById<TextView>(R.id.estimation_arret_value)
         val estimationTotalValue = dialog.findViewById<TextView>(R.id.estimation_total_value)
+        val estimationKmValue = dialog.findViewById<TextView>(R.id.estimation_km_value)
+        val estimationVehicleValue = dialog.findViewById<TextView>(R.id.estimation_vehicle_value)
         val estimationCoutValue = dialog.findViewById<TextView>(R.id.estimation_cout_value)
 
+        dialogTitle.text = "Estimation : ${destination?.name}"
 
-        dialogTitle.text = "Estimation ${destination?.name}"
+        var stepTripTime = 0
+        for (step in destination!!.steps!!) {
 
-        estimationStartDeplacementValue.text = Tools.convertSecondsToTime(6 * Tools.HOUR + 34 * Tools.MINUTES, Tools.FMT_HM_LONG)
-        estimationArretValue.text = Tools.convertSecondsToTime(2 * Tools.HOUR + 10 * Tools.MINUTES, Tools.FMT_HM_LONG)
-        estimationTotalValue.text = Tools.convertSecondsToTime(8 * Tools.HOUR + 44 * Tools.MINUTES, Tools.FMT_HM_LONG)
-        estimationCoutValue.text = String.format("%.2f $", 739.56)
+            for (activity in step.activities!!) {
+                stepTripTime += activity.duration
+            }
+        }
+
+        val totalTrip = destination!!.trip_time + stepTripTime
+
+        val fmt = if ((totalTrip) > 24) Tools.FMT_OTHER else Tools.FMT_HM_LONG
+
+        estimationStartDeplacementValue.text = Tools.convertSecondsToTime(destination!!.trip_time, fmt)
+        estimationArretValue.text = Tools.convertSecondsToTime(stepTripTime, fmt)
+
+        estimationTotalValue.text = Tools.convertSecondsToTime(totalTrip, fmt)
+
+        estimationKmValue.text = "Kilométrages parcouru : " + (destination!!.trip_meters / 1000).toString()
+
+        val data = destination!!.settings!!.vehicles[0]
+
+        estimationVehicleValue.text = "${data.type} : (${data.energy}) ${data.capacity} ${data.unit} pour ${data.distance} ${data.mesure}"
+
+        var unPlein = (destination!!.settings!!.vehicles[0].capacity * destination!!.settings!!.energies[0].price)
+        var nbPlein = (destination!!.trip_meters / 1000) / destination!!.settings!!.vehicles[0].distance
+        var cout = unPlein * nbPlein
+        estimationCoutValue.text = String.format("%.2f $", cout)
 
         btnOk.setOnClickListener(View.OnClickListener {
             dialog.dismiss()

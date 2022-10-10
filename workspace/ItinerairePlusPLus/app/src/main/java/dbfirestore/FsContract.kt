@@ -101,6 +101,7 @@ object FsContract {
             val FD_ADDRESS_DEST = "addressDestination"
             val FD_IMAGE = "image"
             val FD_TRIP_TIME = "trip_time"
+            val FD_TRIP_METERS = "trip_meters"
             val FD_STEPS = "steps"
             val FD_SETTINGS = "settings"
         }

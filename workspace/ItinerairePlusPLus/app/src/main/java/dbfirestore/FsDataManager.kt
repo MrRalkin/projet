@@ -381,6 +381,7 @@ class FsDataManager : IDataManager {
                 getCoord(item[FsContract.TbDestination.FD_COORD_DEST] as HashMap<String, Any>)
             result.image = item[FsContract.TbDestination.FD_IMAGE].toString()
             result.trip_time = item[FsContract.TbDestination.FD_TRIP_TIME].toString().toInt()
+            result.trip_meters = item[FsContract.TbDestination.FD_TRIP_METERS].toString().toInt()
             val items =
                 item[FsContract.TbDestination.FD_STEPS] as ArrayList<HashMap<String, FsStep>>
 
@@ -632,7 +633,7 @@ class FsDataManager : IDataManager {
 
         result.vehicles.add(
             FsVehicle(
-                "Auto gas",
+                "Audi A4",
                 appGlobal.VEHICLE_ESSENCE,
                 600,
                 "km",
@@ -642,7 +643,7 @@ class FsDataManager : IDataManager {
         )
         result.vehicles.add(
             FsVehicle(
-                "Auto electric",
+                "Tesla Model S",
                 appGlobal.VEHICLE_ELECTRIQUE,
                 600,
                 "km",
@@ -650,17 +651,15 @@ class FsDataManager : IDataManager {
                 "kWh"
             )
         )
-//        result.vehicles.add(FsVehicle("Vélo", "nourriture", 50, "km", 2, ""))
 
         result.activities.add(FsActivity(1, appGlobal.ACTIVITY_ESSENCE, 14400, 900))
         result.activities.add(FsActivity(2, appGlobal.ACTIVITY_RECHARGE, 14400, 7200))
         result.activities.add(FsActivity(3, appGlobal.ACTIVITY_DORMIR, 28800, 21600))
         result.activities.add(FsActivity(4, appGlobal.ACTIVITY_MANGER, 14400, 3600))
-//        result.activities.add(FsActivity(5, "Touristique", 14400,3600))
 
         result.energies.add(FsEnergy(appGlobal.ENERGY_ESSENCE, 1.55, "litre"))
         result.energies.add(FsEnergy(appGlobal.ENERGY_ELECTRICITE, 0.047, "kWh"))
-//        result.energies.add(FsEnergy("nourriture", 25.0, "repas"))
+
         return result
     }
 

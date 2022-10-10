@@ -38,11 +38,14 @@
     <string name="dialogStepDtls_activity">Activité(s)</string>
     <string name="dialogEstimation_captionBtn">Caption</string>
     <string name="dialogEstimation_trips">Déplacements</string>
-    <string name="dialogEstimation_trip">Déplacement</string>
-    <string name="dialogEstimation_stop">Arrêt</string>
-    <string name="dialogEstimation_total">Total</string>
+    <string name="dialogEstimation_trip">Routes :</string>
+    <string name="dialogEstimation_stop">Arrêts :</string>
+    <string name="dialogEstimation_total">Total :</string>
+    <string name="dialogEstimation_km">Kilométrages</string>
+    <string name="dialogEstimation_vehicle">Véhicule</string>
     <string name="dialogEstimation_costs">Coûts</string>
     <string name="dialogEstimation_cost">Coût</string>
+
     <string name="dialogEstimation_acknowledge">Ok</string>
     <string name="settingAddActivity_captionBtn">Caption</string>
     <string name="settingAddActivity_name">Nom</string>
