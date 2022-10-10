@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">ItinerairePlusPLus</string>
+    <string name="app_name">ItinerairePlusPlus</string>
     <string name="setting_user_profile_btn_view">View profile</string>
     <string name="setting_user_profile_btn_edit">Edit profile</string>
     <string name="setting_user_setting_btn_edit">Edit settings</string>
-    <string name="title_activity_maps">MapsActivity</string>Destinations
+    <string name="title_activity_maps">Destination Courante</string>
     <string name="login_userName">Entrez votre nom</string>
     <string name="login_password">Entrez votre mot de passe</string>
     <string name="login_btn">Entrer</string>
@@ -89,9 +89,10 @@
     <string name="main_welcomeMsg">Bienvenue Dans l\'Itineraire Plus Plus</string>
     <string name="main_addDestinationBtn">Ajouter Une \nNouvelle Destination</string>
     <string name="main_listViewTitle"> Vos Destinations Recentes</string>
-
-
-
+    <string name="menu_configuration">Configuration</string>
+    <string name="menu_vos_destinations">Vos Destinations</string>
+    <string name="menu_ajouter_une_destination">Ajouter une Destination</string>
+    <string name="menu_quitter">Quitter</string>
 
 
 </resources>

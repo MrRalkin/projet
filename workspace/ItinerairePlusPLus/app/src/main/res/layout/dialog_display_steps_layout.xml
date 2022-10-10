@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="@string/dialog_cancelBtn" />
+                android:text="Voir la carte" />
             <Button
                 android:id="@+id/btnOk"
                 android:layout_width="wrap_content"

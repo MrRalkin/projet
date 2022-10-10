@@ -22,6 +22,7 @@ class DestinationsActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_destinations)
 
+        title = "Vos Destinations"
         MainScope().launch(Dispatchers.IO) {
             user = async { db.userGetCurrent()!! }.await()
 

@@ -7,19 +7,13 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Geocoder
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import ca.bntec.itineraireplusplus.adapter.AdapterDialogDestinations
 import ca.bntec.itineraireplusplus.databinding.ActivityMapsBinding
 import ca.bntec.itineraireplusplus.tools.CreateSteps
-import classes.ActionResult
 import classes.AppGlobal
 import classes.StepActivities
 import classes.map.MapData
@@ -48,29 +42,29 @@ import java.util.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
+    val appGlobal = AppGlobal.instance
+    var activitiesList: ArrayList<StepActivities> = ArrayList<StepActivities>()
+
     lateinit var mapFragment: SupportMapFragment
     lateinit var progressDialog: ProgressDialog
     lateinit var destination: IDestination
     lateinit var mapRawData: IMapRawData
     lateinit var mapLegData: MapLegData
-    var activityPlaces = ArrayList<INearPlace>()
-    val MAX_ACTIVITY = 3
-    val mapData = MapData()
-    val appGlobal = AppGlobal.instance
-    val db = appGlobal.userManager
-    val uid: String = UUID.randomUUID().toString()
-    var activitiesList: ArrayList<StepActivities> = ArrayList<StepActivities>()
-
-    //    var origin = LatLng(45.5419056, -73.4924797)
-//    var dest = LatLng(25.8102247,-80.2101818)
-    var origin = LatLng(34.1993851, -79.8373477)
-    var dest = LatLng(30.3321579, -81.6736059)
-
-    //var dest = LatLng(45.4779697, -75.5184535)
+    lateinit var btnSeeSteps : Button
+    lateinit var btnSaveData : Button
     lateinit var context: Context
+
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
 
+    private var activityPlaces = ArrayList<INearPlace>()
+    private val MAX_ACTIVITY = 3
+    private val mapData = MapData()
+    private val db = appGlobal.userManager
+    private val uid: String = UUID.randomUUID().toString()
+
+    var origin = LatLng(34.1993851, -79.8373477)
+    var dest = LatLng(30.3321579, -81.6736059)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,10 +72,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         context = this
+
+        btnSeeSteps = findViewById(R.id.btn_see_steps)
+        btnSaveData = findViewById(R.id.btn_save_data)
 
         destination = getDestination(appGlobal.departAddress, appGlobal.destAddress)
         origin = LatLng(
@@ -92,13 +90,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             destination.coordDestination!!.latitude.toDouble(),
             destination.coordDestination!!.longitude.toDouble()
         )
-        // val list: List<String> = listOf("restaurant", "hotel", "gas_station")
-        //   val list: List<String> = listOf("restaurant", "hotel", "gas_station")
-        //val list: List<String> = listOf("gas_station")
 
         drawPolylines()
-        //  getActivityPlaces()
-        //  getPlacesAwaitAll()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -122,8 +115,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun getDirectionsUrl(origin: LatLng, dest: LatLng): String {
 
-        val str_origin = "origin=" + origin.latitude + "," + origin.longitude
-        val str_dest = "destination=" + dest.latitude + "," + dest.longitude
+        val strOrigin = "origin=" + origin.latitude + "," + origin.longitude
+        val strDest = "destination=" + dest.latitude + "," + dest.longitude
         val sensor = "sensor=false"
         val mode = "mode=driving"
 
@@ -136,7 +129,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val key = "key=$metaKey"
 
-        val parameters = "$str_origin&$str_dest&$sensor&$mode&$key"
+        val parameters = "$strOrigin&$strDest&$sensor&$mode&$key"
 
         val output = "json"
 
@@ -152,7 +145,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // Checks, whether start and end locations are captured
         // Getting URL to the Google Directions API
         val url: String = getDirectionsUrl(origin, dest)
-        Log.d("url", url + "")
+//        Log.d("url", url + "")
         //val downloadTask = DownloadTask()
         // Start downloading json data from Google Directions API
         //downloadTask.execute(url)
@@ -177,10 +170,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             jObject = JSONObject(data)
 
             routes = mapData.parse(jObject)
-            ///code for Nicol
             mapLegData = mapData.getMapLegData()
 
-            Log.d("result", routes.toString())
+//            Log.d("result", routes.toString())
             var points = ArrayList<LatLng>()
             var lineOptions: PolylineOptions? = null
 
@@ -201,24 +193,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 lineOptions.geodesic(true)
             }
 
-// Drawing polyline in the Google Map for the i-th route
-
-// Drawing polyline in the Google Map for the i-th route
+            // Drawing polyline in the Google Map for the i-th route
             this@MapsActivity.runOnUiThread(java.lang.Runnable {
                 setActivities()
                 mMap.addPolyline(lineOptions!!)
 
             })
-
         }
     }
 
     private fun setActivities() {
 
-        var dest = appGlobal.curDestination
-        dest.settings = appGlobal.curSetting
-
-        appGlobal.curDestination = CreateSteps.createSteps(dest, mapLegData)
+        appGlobal.curDestination = CreateSteps.createSteps(Destination(), mapLegData)
 
         getPlacesAwaitAll()
     }
@@ -317,8 +303,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         )
         val bundle = app.metaData
         var metaKey = bundle.getString("com.google.android.geo.API_KEY")
-        //  var coord = Coord(dest.latitude.toString(), dest.longitude.toString())
-        //var types: List<String> = listOf("restaurant", "lodging", "gas_station")
+
         MainScope().launch(Dispatchers.IO) {
             // runBlocking {
             val tasks = ArrayList<Deferred<Unit>>()
@@ -374,17 +359,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
 
-//
-//            tasks.add(async(Dispatchers.IO) { getPlace(coord, "restaurant", metaKey!!, 0) })
-//            tasks.add(async(Dispatchers.IO) { getPlace(coord, "lodging", metaKey!!, 0) })
-//            tasks.add(async(Dispatchers.IO) { getPlace(coord, "gas_station", metaKey!!, 0) })
-//            = listOf(
-//                async(Dispatchers.IO) { getPlace(coord, "restaurant", metaKey!!,0) },
-//                async(Dispatchers.IO) { getPlace(coord, "lodging", metaKey!!,0) },
-//                async(Dispatchers.IO) { getPlace(coord, "gas_station", metaKey!!,0) }
-//            )
             tasks.awaitAll()
-
 
             //  var pls:ArrayList<NearPlace> = activityPlaces.sortBy { it.step } as ArrayList<NearPlace>
             for (step in appGlobal.curDestination.steps!!) {
@@ -405,12 +380,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                 appGlobal.ACTIVITY_RECHARGE_TYPE
                         }
 
-
                         if (activity.nearPlaces == null) {
                             activity.nearPlaces = ArrayList<INearPlace>()
                         }
                         activity.nearPlaces =
                             list.filter { it.type == type } as ArrayList<INearPlace>
+
                         var listItem: StepActivities = StepActivities()
                         listItem.stepId = step.step
                         listItem.activityId = activity.activity
@@ -421,7 +396,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         activitiesList.add(listItem)
                     }
                 }
-
                 // step.activities
             }
 
@@ -434,9 +408,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 //            CreateSteps.dumpDestination(appGlobal.curDestination as Destination)
 //            dumpNearByPlaces(activityPlaces)
 
+            btnSeeSteps.setOnClickListener {
+                this@MapsActivity.runOnUiThread(java.lang.Runnable {
+                    modalDialogSteps()
+                })
+            }
+
+            btnSaveData.setOnClickListener {
+                if (!appGlobal.isCurDestinationSaved)
+                {
+                    saveUserData()
+                    appGlobal.isCurDestinationSaved = true
+                    btnSaveData.isEnabled = false
+                } else {
+                    btnSaveData.isEnabled = true
+                }
+            }
+
             this@MapsActivity.runOnUiThread(java.lang.Runnable {
                 progressDialog.dismiss()
-                modalDialogDestination()
+                modalDialogSteps()
             })
         }
 
@@ -469,81 +460,89 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun modalDialogDestination() {
+    private fun modalDialogSteps() {
 
         val dialog = Dialog(context)
-        dialog.setContentView(R.layout.dialog_display_destinations_layout)
+        dialog.setContentView(R.layout.dialog_display_steps_layout)
 
         val dialogTitle = dialog.findViewById<TextView>(R.id.estimation_title)
         val lvDialogDestinations = dialog.findViewById<ListView>(R.id.lv_dialog_destinations)
-        val llDisplayStepsView = dialog.findViewById<LinearLayout>(R.id.ll_display_steps_view)
 
         val btnCancel = dialog.findViewById<Button>(R.id.btnCancel)
         val btnOk = dialog.findViewById<Button>(R.id.btnOk)
 
-        dialogTitle.text = "Les Étapes"
+        if (appGlobal.isCurDestinationSaved)
+            btnOk.text = "Ok"
+        else
+            btnOk.text = "Sauvegarder"
+
+        dialogTitle.text = "${appGlobal.curDestination.name} : Les Étapes"
 
         val adapterDialogDestinations = AdapterDialogDestinations(this@MapsActivity,appGlobal.curDestination.steps!!)
         lvDialogDestinations.adapter = adapterDialogDestinations
 
+        // Ici le bouton Cancel sert pour aller voir la carte.
         btnCancel.setOnClickListener {
-            confirmer(dialog)
+//            confirmer(dialog)
+            dialog.dismiss()
         }
 
         btnOk.setOnClickListener {
-            saveUserData(llDisplayStepsView)
+            if (!appGlobal.isCurDestinationSaved)
+            {
+                saveUserData()
+                appGlobal.isCurDestinationSaved = true
+            }
             dialog.dismiss()
         }
         dialog.show()
     }
 
-    fun confirmer(dialogParent : Dialog) {
-
-        val dialog = Dialog(context)
-        dialog.setContentView(R.layout.dialog_cancel_confirmation_layout)
-
-        val btnCancel = dialog.findViewById<Button>(R.id.btnCancel)
-        val btnOk = dialog.findViewById<Button>(R.id.btnOk)
-
-        val dialogTitle = dialog.findViewById<TextView>(R.id.dialogTitle)
-        val tvWarningMessage = dialog.findViewById<TextView>(R.id.tv_warning_message)
-
-        dialogTitle.text = "Confimation"
-
-        tvWarningMessage.text = "Veullez confirmer l'annulation!"
-
-        btnCancel.setOnClickListener { dialog.dismiss() }
-
-        btnOk.setOnClickListener {
-            dialog.dismiss()
-            dialogParent.dismiss()
-        }
-
-        dialog.show()
-    }
-
-    fun saveUserData(ll : LinearLayout) {
-        MainScope().launch(Dispatchers.IO) {
-//            var user = async { db.userGetCurrent() }.await()
-
-//            user!!.destinations!!.add(appGlobal.curDestination)
+//    private fun confirmer(dialogParent : Dialog) {
 //
-//            var result = async { db.userUpdateCurrent(user) }.await()
+//        val dialog = Dialog(context)
+//        dialog.setContentView(R.layout.dialog_cancel_confirmation_layout)
+//
+//        val btnCancel = dialog.findViewById<Button>(R.id.btnCancel)
+//        val btnOk = dialog.findViewById<Button>(R.id.btnOk)
+//
+//        val dialogTitle = dialog.findViewById<TextView>(R.id.dialogTitle)
+//        val tvWarningMessage = dialog.findViewById<TextView>(R.id.tv_warning_message)
+//
+//        dialogTitle.text = "Confimation"
+//
+//        tvWarningMessage.text = "Veullez confirmer l'annulation!"
+//
+//        btnCancel.setOnClickListener { dialog.dismiss() }
+//
+//        btnOk.setOnClickListener{
+//            dialog.dismiss()
+//            dialogParent.dismiss()
+//        }
+//
+//        dialog.show()
+//    }
 
-            var result = ActionResult()
-            result.isSuccess = true
-            result.successMessage = "Yaaahoooooo!!!"
+    private fun saveUserData() {
+        MainScope().launch(Dispatchers.IO) {
+            var user = async { db.userGetCurrent() }.await()
+
+            user!!.destinations!!.add(appGlobal.curDestination)
+
+            var result = async { db.userUpdateCurrent(user) }.await()
 
             if (result.isSuccess) {
-                showMessage(result.successMessage, ll)
+                showMessage(result.successMessage)
             } else {
-                showMessage(result.errorMessage, ll)
+                showMessage(result.errorMessage)
             }
         }
     }
 
-    private fun showMessage(message : String, view: View) {
-        Snackbar.make(context, view, message, Snackbar.LENGTH_SHORT).show()
+    private fun showMessage(message : String) {
+        this@MapsActivity.runOnUiThread(java.lang.Runnable {
+            Snackbar.make(context, binding.root, message, Snackbar.LENGTH_SHORT).show()
+        })
     }
 
     private fun dumpNearByPlaces(ap: ArrayList<INearPlace>) {

@@ -3,18 +3,18 @@
     <item
         android:id="@+id/idSettings"
         android:icon="@drawable/ic_baseline_settings"
-        android:title="Settings" />
+        android:title="@string/menu_configuration" />
     <item
         android:id="@+id/idDestinations"
         android:icon="@drawable/ic_baseline_settings"
-        android:title="Destinations" />
+        android:title="@string/menu_vos_destinations" />
 
     <item
         android:id="@+id/idAddDestination"
         android:icon="@drawable/ic_car"
-        android:title="Add Destination" />
+        android:title="@string/menu_ajouter_une_destination" />
     <item
         android:id="@+id/idLogOut"
         android:icon="@drawable/ic_logout"
-        android:title="Log Out" />
+        android:title="@string/menu_quitter" />
 </menu>

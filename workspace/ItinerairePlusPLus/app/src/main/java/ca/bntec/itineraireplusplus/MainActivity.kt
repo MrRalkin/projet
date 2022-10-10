@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 })
             }
-
         }
 
       /*  var btnSetData = findViewById<Button>(R.id.setData)
@@ -122,13 +121,24 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    fun recentesDestinations(){
+    private fun recentesDestinations(){
         // use arrayadapter and define an array
         val arrayAdapter: ArrayAdapter<*>
-        val previousdest = arrayOf(
-            user.destinations?.get(0)?.name,  user.destinations?.get(1)?.name,  user.destinations?.get(2)?.name,
-            user.destinations?.get(3)?.name,  user.destinations?.get(4)?.name
-        )
+//        val previousdest = arrayOf(
+//            user.destinations?.get(0)?.name,  user.destinations?.get(1)?.name,  user.destinations?.get(2)?.name,
+//            user.destinations?.get(3)?.name,  user.destinations?.get(4)?.name
+//        )
+
+        val previousdest = ArrayList<String>()
+
+        val nbDest = if (user.destinations!!.size > 5) 5 else user.destinations!!.size
+
+        for ((idx, destination) in user.destinations!!.withIndex()) {
+            if (idx < nbDest)
+                previousdest.add(destination.name)
+            else
+                break
+        }
 
         // access the listView from xml file
         var mListView = findViewById<ListView>(R.id.lv_recentes_destinations)

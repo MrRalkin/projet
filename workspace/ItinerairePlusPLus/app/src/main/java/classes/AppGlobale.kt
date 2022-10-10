@@ -29,6 +29,7 @@ class AppGlobal private constructor() {
 
     val userManager: IDataManager = FsDataManager()
     var curSetting: ISettings = destSettings()
+    var isCurDestinationSaved : Boolean = false
     var curDestination: IDestination = Destination()
     var departAddress: String = ""
     var destAddress: String = ""

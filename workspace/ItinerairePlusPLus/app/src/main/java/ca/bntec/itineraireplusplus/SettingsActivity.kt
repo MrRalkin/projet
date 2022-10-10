@@ -62,6 +62,7 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
         context = this
 
+        title = "Configuration"
         viewUser = findViewById<View>(R.id.setting_profile_view)
         viewSettings = findViewById<View>(R.id.setting_settings_view)
 

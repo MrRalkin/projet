@@ -34,6 +34,10 @@ class CreateSteps {
             mapLegData: MapLegData
         ): IDestination {
 
+            appGlobal.isCurDestinationSaved = false
+            dest.name = appGlobal.name
+            dest.settings = appGlobal.curSetting
+
             setLegData(mapLegData)
 
             val settings = dest.settings
