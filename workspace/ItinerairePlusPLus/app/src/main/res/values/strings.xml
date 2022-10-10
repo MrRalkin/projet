@@ -82,8 +82,8 @@
     <string name="tab2Fragment_checkbox2">Essence</string>
     <string name="tab2Fragment_checkbox3">Recharge</string>
     <string name="tab2Fragment_checkbox4">Dormir</string>
-    <string name="tab2Fragment_startingTime">Quand</string>
-    <string name="tab2Fragment_duration">Duree</string>
+    <string name="dialog_pickTime">Temps</string>
+    <string name="dialog_pickDuration">Duree</string>
     <string name="addDestination_vehicleMsg">Veuillez choisir le type de vehicule \n Que vous souhaitez utiliser</string>
     <string name="addDestination_activitiesMsg">Veuillez choisir une ou plusieures activitees</string>
     <string name="main_welcomeMsg">Bienvenue Dans l\'Itineraire Plus Plus</string>

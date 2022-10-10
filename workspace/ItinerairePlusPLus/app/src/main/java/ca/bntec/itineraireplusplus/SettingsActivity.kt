@@ -11,12 +11,15 @@ import androidx.core.view.isVisible
 import ca.bntec.itineraireplusplus.adapter.AdapterSettingsActivities
 import ca.bntec.itineraireplusplus.adapter.AdapterSettingsEnergies
 import ca.bntec.itineraireplusplus.adapter.AdapterSettingsVehicles
+import ca.bntec.itineraireplusplus.tools.Tools
 import classes.settings.Activity
 import classes.AppGlobal
 import classes.settings.Energy
 import classes.settings.Vehicle
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import interfaces.user.IActivity
 import interfaces.user.IEnergy
 import interfaces.user.IUser
@@ -49,6 +52,8 @@ class SettingsActivity : AppCompatActivity() {
     lateinit var btnEnergyAdd: Button
     lateinit var btnEnergyMoreLess: Button
     lateinit var btnEditUser: Button
+    lateinit var pickTimeActivity: TextView
+    lateinit var pickDurationActivity: TextView
 
     var isDataChanged = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,6 +121,8 @@ class SettingsActivity : AppCompatActivity() {
             userEdit()
         }
 
+
+
         getUserData()
     }
 
@@ -131,7 +138,7 @@ class SettingsActivity : AppCompatActivity() {
 
     fun setUserData() {
         MainScope().launch(Dispatchers.IO) {
-            var result = async { db.userUpdateCurrent(user) }.await()
+            val result = async { db.userUpdateCurrent(user) }.await()
             if (result.isSuccess) {
                 showMessage(result.successMessage)
             } else {
@@ -446,14 +453,22 @@ class SettingsActivity : AppCompatActivity() {
         val dialogTitle = dialog.findViewById<TextView>(R.id.txt_setting_activity_title)
 
         val name = dialog.findViewById<TextInputEditText>(R.id.setting_edit_activity_name)
-        val time = dialog.findViewById<TextInputEditText>(R.id.setting_edit_activity_time)
-        val duration = dialog.findViewById<TextInputEditText>(R.id.setting_edit_activity_duration)
+        val time = dialog.findViewById<TextView>(R.id.pickTimeActivity)
+        val duration = dialog.findViewById<TextView>(R.id.pickDurationActivity)
+
+        time.setOnClickListener {
+            timeModal(time)
+        }
+        duration.setOnClickListener {
+            timeModal(duration)
+        }
 
         name.setText(item.name)
-        time.setText(item.time.toString())
-        duration.setText(item.duration.toString())
+        time.setText(Tools.convertSecondsToTime(item.time, Tools.FMT_HM_SHORT))
+        duration.setText(Tools.convertSecondsToTime(item.duration, Tools.FMT_HM_SHORT))
 
         dialogTitle.setText("Ajouter une activité")
+
         btnCancel.setOnClickListener { dialog.dismiss() }
         btnOk.setOnClickListener(View.OnClickListener {
             if (name.text.toString().isEmpty()) {
@@ -462,23 +477,11 @@ class SettingsActivity : AppCompatActivity() {
             } else {
                 name.error = null
             }
-            if (time.text.toString().isEmpty()) {
-                time.error = "Entrer le temps"
-                return@OnClickListener
-            } else {
-                time.error = null
-            }
-            if (duration.text.toString().isEmpty()) {
-                duration.error = "Entrer la durée"
-                return@OnClickListener
-            } else {
-                duration.error = null
-            }
 
             item.activity = 0
             item.name = name.text.toString()
-            item.time = time.text.toString().toInt()
-            item.duration = duration.text.toString().toInt()
+            item.time = convertirStrToSec (time.text.toString())
+            item.duration = convertirStrToSec (duration.text.toString())
 
             if (idx < 0) {
                 user.settings.activities.add(item)
@@ -530,4 +533,33 @@ class SettingsActivity : AppCompatActivity() {
             Snackbar.make(context, viewUser, message, Snackbar.LENGTH_SHORT).show()
         })
     }
+
+    private fun timeModal(pickTimeDuration:TextView) {
+        val materialTimePicker: MaterialTimePicker = MaterialTimePicker.Builder()
+            .setTitleText("SELECTION DU TEMPS")
+            .setHour(pickTimeDuration.text.subSequence(0,2).toString().toInt())
+            .setMinute(pickTimeDuration.text.subSequence(3,5).toString().toInt())
+            .setTimeFormat(TimeFormat.CLOCK_24H)
+            .build()
+
+        materialTimePicker.show(supportFragmentManager, "EditActivity")
+
+        materialTimePicker.addOnPositiveButtonClickListener {
+
+            val pickedHour: Int = materialTimePicker.hour
+            val pickedMinute: Int = materialTimePicker.minute
+
+            val seconds = (pickedHour * 3600) + (pickedMinute * 60)
+
+            pickTimeDuration.text = Tools.convertSecondsToTime(seconds, Tools.FMT_HM_SHORT)
+
+        }
+    }
+
+    fun convertirStrToSec(strToConvert : String) : Int {
+        var h = strToConvert.subSequence(0,2).toString().toInt()
+        var m = strToConvert.subSequence(3,5).toString().toInt()
+        return (h*3600)+(m*60)
+    }
+
 }
