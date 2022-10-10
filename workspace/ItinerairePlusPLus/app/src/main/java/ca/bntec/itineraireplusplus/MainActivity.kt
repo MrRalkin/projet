@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
                 user = db.userGetCurrent()!!
                 this@MainActivity.runOnUiThread(java.lang.Runnable {
                     if (user != null) {
-                        txt.text = "Bonjour ${user.name}"
+                        txt.text = "Bonjour\n${user.name}"
                         recentesDestinations()
                         newDestBtnListener()
                     }
