@@ -8,10 +8,7 @@
         android:id="@+id/idDestinations"
         android:icon="@drawable/ic_baseline_settings"
         android:title="Destinations" />
-    <item
-        android:id="@+id/idMap"
-        android:icon="@drawable/ic_map"
-        android:title="Map" />
+
     <item
         android:id="@+id/idAddDestination"
         android:icon="@drawable/ic_car"

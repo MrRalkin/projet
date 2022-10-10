@@ -18,8 +18,8 @@ class AppGlobal private constructor() {
 
     val ACTIVITY_ESSENCE_TYPE = "gas_station"
     val ACTIVITY_DORMIR_TYPE = "lodging"
-    val ACTIVITY_MANGER_TYPE  = "restaurant"
-    val ACTIVITY_RECHARGE_TYPE  = "gas_station"
+    val ACTIVITY_MANGER_TYPE = "restaurant"
+    val ACTIVITY_RECHARGE_TYPE = "gas_station"
 
     val ENERGY_ESSENCE = "essence"
     val ENERGY_ELECTRICITE = "electricite"
@@ -32,7 +32,7 @@ class AppGlobal private constructor() {
     var curDestination: IDestination = Destination()
     var departAddress: String = ""
     var destAddress: String = ""
-
+    var name: String = ""
 
     companion object {
         val instance = AppGlobal()

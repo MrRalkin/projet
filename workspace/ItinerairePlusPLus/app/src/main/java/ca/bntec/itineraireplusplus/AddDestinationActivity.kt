@@ -19,18 +19,21 @@ import classes.settings.Energy
 import classes.settings.Vehicle
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import interfaces.user.IEnergy
+import interfaces.user.IVehicle
 
 class AddDestinationActivity : AppCompatActivity() {
     val appGlobal = AppGlobal.instance
 
+    lateinit var context: Context
+
     lateinit var inputDepart: TextInputEditText
     lateinit var inputDest: TextInputEditText
+    lateinit var inputName: TextInputEditText
     lateinit var btnShowDestination: Button
     lateinit var user: IUser
     lateinit var radioButtonElectrique: RadioButton
     lateinit var radioButtonEssence: RadioButton
-    lateinit var context: Context
-
     lateinit var checkBoxManger: CheckBox
     lateinit var checkBoxRecharge: CheckBox
     lateinit var checkBoxEssence: CheckBox
@@ -60,6 +63,7 @@ class AddDestinationActivity : AppCompatActivity() {
         // Initialisation des champs texts et du bouton de calcul de destination
         inputDepart = findViewById(R.id.textInputEdit_depart)
         inputDest = findViewById(R.id.textInputEdit_dest)
+        inputName = findViewById(R.id.textInputEdit_name)
         btnShowDestination = findViewById(R.id.btnShowDestination)
 
         radioButtonEssence = findViewById(R.id.radio_button_essence)
@@ -98,31 +102,18 @@ class AddDestinationActivity : AppCompatActivity() {
                 creerListeners()
                 createCheckboxListener()
 
-                var isEssence: Boolean = false
-                var isElectrique: Boolean = false
-                // On regarde les vehicules de l'utilisateur et on affiche les activites energetique correspondantes
-                for (i in user.settings.vehicles) {
-                    if (i.energy.equals(appGlobal.VEHICLE_ESSENCE)) {
-                        radioButtonEssence.visibility = View.VISIBLE;
-                        isEssence = true
-                    } else {
-                        radioButtonElectrique.visibility = View.VISIBLE;
-                        isElectrique = true
-                    }
-                }
-
-                if (isEssence && !isElectrique) {
-                    radioButtonEssence.isChecked = true
-                }
-                if (!isEssence && isElectrique) {
-                    radioButtonElectrique.isChecked = true
-                }
             }
         }
 
         // Prise en charge des coordonnees d'adresses entrees par l'utilisateur et lancement de l'activite MapsActivity
         btnShowDestination.setOnClickListener() {
 
+            if (inputName.text.toString().isEmpty()) {
+                inputName.error = "Entrer le nom"
+                return@setOnClickListener
+            } else {
+                inputName.error = null
+            }
             if (inputDepart.text.toString().isEmpty()) {
                 inputDepart.error = "Entrer le depart"
                 return@setOnClickListener
@@ -137,7 +128,7 @@ class AddDestinationActivity : AppCompatActivity() {
             }
             appGlobal.departAddress = inputDepart.text.toString()
             appGlobal.destAddress = inputDest.text.toString()
-
+            appGlobal.name = inputName.text.toString()
             val i = Intent(this@AddDestinationActivity, MapsActivity::class.java)
             startActivity(i)
             finish()
@@ -145,32 +136,83 @@ class AddDestinationActivity : AppCompatActivity() {
     }
 
     // Savoir le type de vehicule choisi par l'utilisateur et mettre a jour les donnees dans l'Array appGlobal
-    private fun radioButtonStatus(){
+    private fun radioButtonStatus() {
+
+
+        val vehucles = user.settings.vehicles
+
+        if (vehucles.any { it.energy == appGlobal.VEHICLE_ESSENCE }) {
+            radioButtonEssence.visibility = View.VISIBLE;
+//            radioButtonEssence.isChecked = true
+//            radioButtonElectrique.isChecked = false
+        } else {
+//            radioButtonEssence.isChecked = false
+            radioButtonEssence.visibility = View.GONE;
+        }
+
+        if (vehucles.any { it.energy == appGlobal.ENERGY_ELECTRICITE }) {
+            radioButtonElectrique.visibility = View.VISIBLE;
+//            radioButtonElectrique.isChecked = true
+//            radioButtonEssence.isChecked = false
+        } else {
+//            radioButtonElectrique.isChecked = false
+            radioButtonEssence.visibility = View.GONE;
+        }
+        val firstVehicle =
+            vehucles.first { it.energy == appGlobal.ENERGY_ELECTRICITE || it.energy == appGlobal.ENERGY_ESSENCE }
+        if (firstVehicle.energy == appGlobal.ENERGY_ELECTRICITE) {
+            setChecked(R.id.radio_button_electrique)
+        } else {
+            setChecked(R.id.radio_button_essence)
+        }
+
+
         radioGroup = findViewById(R.id.radioGroup)
         radioGroup?.setOnCheckedChangeListener { group, checkedId ->
             // Responds to child RadioButton checked/unchecked
-            if (checkedId == R.id.radio_button_electrique) {
-                addElectrique()
-            }
-            if (checkedId == R.id.radio_button_essence) {
-                addEssence()
-            }
+            setChecked(checkedId)
         }
     }
 
-    private fun addElectrique() {
-        appGlobal.curSetting.vehicles.add(getVehicle(appGlobal.VEHICLE_ELECTRIQUE))
-        appGlobal.curSetting.energies.add(getEnergy(appGlobal.ENERGY_ELECTRICITE))
-        appGlobal.curSetting.activities.add(getActivity(appGlobal.ACTIVITY_RECHARGE))
+    private fun setChecked(id: Int) {
+        if (id == R.id.radio_button_electrique) {
+            radioButtonElectrique.isChecked = true
+            checkBoxRecharge.isChecked = true
+            radioButtonEssence.isChecked = false
+            checkBoxEssence.isChecked = false
+            setSetting(true)
+        } else {
+            radioButtonElectrique.isChecked = false
+            checkBoxRecharge.isChecked = false
+            radioButtonEssence.isChecked = true
+            checkBoxEssence.isChecked = true
+            setSetting(false)
+        }
     }
 
-    private fun addEssence() {
-        appGlobal.curSetting.vehicles.add(getVehicle(appGlobal.VEHICLE_ESSENCE))
-        appGlobal.curSetting.energies.add(getEnergy(appGlobal.VEHICLE_ESSENCE))
-        appGlobal.curSetting.activities.add(getActivity(appGlobal.ACTIVITY_ESSENCE))
+
+    private fun setSetting(isElectric: Boolean) {
+
+        appGlobal.curSetting.vehicles = ArrayList<IVehicle>()
+        appGlobal.curSetting.energies = ArrayList<IEnergy>()
+        appGlobal.curSetting.activities.remove(getActivity(appGlobal.ACTIVITY_RECHARGE))
+        appGlobal.curSetting.activities.remove(getActivity(appGlobal.ACTIVITY_ESSENCE))
+        if (isElectric) {
+            appGlobal.curSetting.vehicles.add(getVehicle(appGlobal.VEHICLE_ELECTRIQUE))
+            appGlobal.curSetting.energies.add(getEnergy(appGlobal.ENERGY_ELECTRICITE))
+            appGlobal.curSetting.activities.add(getActivity(appGlobal.ACTIVITY_RECHARGE))
+        } else {
+            appGlobal.curSetting.vehicles.add(getVehicle(appGlobal.VEHICLE_ESSENCE))
+            appGlobal.curSetting.energies.add(getEnergy(appGlobal.VEHICLE_ESSENCE))
+            appGlobal.curSetting.activities.add(getActivity(appGlobal.ACTIVITY_ESSENCE))
+        }
+
+
     }
+
+
     // Mettre a jour les donnees sur le vehicule dans appGlobal
-    private fun getVehicle(energy:String) : Vehicle {
+    private fun getVehicle(energy: String): Vehicle {
         var ve = Vehicle()
         for (vehicle in user.settings.vehicles) {
             if (vehicle.energy.equals(energy)) {
@@ -184,8 +226,9 @@ class AddDestinationActivity : AppCompatActivity() {
         }
         return ve
     }
+
     // Mettre a jour les donnees sur l'energie dans appGlobal
-    private fun getEnergy(energy:String) : Energy {
+    private fun getEnergy(energy: String): Energy {
         var en = Energy()
         for (e in user.settings.energies) {
             if (e.type.equals(energy)) {
@@ -196,8 +239,9 @@ class AddDestinationActivity : AppCompatActivity() {
         }
         return en
     }
+
     // Mettre a jour les donnees sur l'activite dans appGlobal
-    private fun getActivity(name:String) : Activity {
+    private fun getActivity(name: String): Activity {
         var a = Activity()
         for (activity in user.settings.activities) {
             if (activity.name.equals(name)) {
@@ -230,10 +274,10 @@ class AddDestinationActivity : AppCompatActivity() {
         }
     }
 
-    private fun findActivity(currentActivity: String):Int{
-        var idx:Int = -1
+    private fun findActivity(currentActivity: String): Int {
+        var idx: Int = -1
         for (i in 0 until appGlobal.curSetting.activities.size) {
-            if ( appGlobal.curSetting.activities[i].name.equals(currentActivity)) {
+            if (appGlobal.curSetting.activities[i].name.equals(currentActivity)) {
                 idx = i
             }
         }
@@ -255,9 +299,9 @@ class AddDestinationActivity : AppCompatActivity() {
         pickDurationDormir.text = Tools.convertSecondsToTime(a.duration, Tools.FMT_HM_SHORT)
     }
 
-    private fun creerListeners(){
+    private fun creerListeners() {
         pickTimeManger.setOnClickListener {
-            if(checkBoxManger.isChecked) {
+            if (checkBoxManger.isChecked) {
                 timeModal(pickTimeManger)
             }
         }
@@ -298,11 +342,11 @@ class AddDestinationActivity : AppCompatActivity() {
         }
     }
 
-    private fun timeModal(pickTimeDuration:TextView) {
+    private fun timeModal(pickTimeDuration: TextView) {
         val materialTimePicker: MaterialTimePicker = MaterialTimePicker.Builder()
             .setTitleText("SELECTION DU TEMPS")
-            .setHour(pickTimeDuration.text.subSequence(0,2).toString().toInt())
-            .setMinute(pickTimeDuration.text.subSequence(3,5).toString().toInt())
+            .setHour(pickTimeDuration.text.subSequence(0, 2).toString().toInt())
+            .setMinute(pickTimeDuration.text.subSequence(3, 5).toString().toInt())
             .setTimeFormat(TimeFormat.CLOCK_24H)
             .build()
 
@@ -321,7 +365,7 @@ class AddDestinationActivity : AppCompatActivity() {
         }
     }
 
-    private fun addToSettings(tv : TextView, seconds : Int) {
+    private fun addToSettings(tv: TextView, seconds: Int) {
 
         var indice = 0
         when (tv.id) {
@@ -361,18 +405,18 @@ class AddDestinationActivity : AppCompatActivity() {
     }
 
     private fun createCheckboxListener() {
-        checkBoxManger.setOnClickListener{
-            if (checkBoxManger.isChecked){
+        checkBoxManger.setOnClickListener {
+            if (checkBoxManger.isChecked) {
                 appGlobal.curSetting.activities.add(getActivity(appGlobal.ACTIVITY_MANGER))
-            } else{
+            } else {
                 appGlobal.curSetting.activities.remove(getActivity(appGlobal.ACTIVITY_MANGER))
             }
         }
 
-        checkBoxDormir.setOnClickListener{
-            if (checkBoxDormir.isChecked){
+        checkBoxDormir.setOnClickListener {
+            if (checkBoxDormir.isChecked) {
                 appGlobal.curSetting.activities.add(getActivity(appGlobal.ACTIVITY_DORMIR))
-            } else{
+            } else {
                 appGlobal.curSetting.activities.remove(getActivity(appGlobal.ACTIVITY_DORMIR))
             }
         }

@@ -82,10 +82,7 @@ class MainActivity : AppCompatActivity() {
                 showDestinations()
                 true
             }
-            R.id.idMap->{
-                showMap()
-                true
-            }
+          
             R.id.idAddDestination->{
                 addDestinations()
                 true
@@ -106,10 +103,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun showMap(){
-        val i = Intent(this@MainActivity, MapsActivity::class.java)
-        startActivity(i)
-    }
+
     fun showSettings(){
         val i = Intent(this@MainActivity, SettingsActivity::class.java)
         startActivity(i)
