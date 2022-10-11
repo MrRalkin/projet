@@ -166,7 +166,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             l += date.dayOfMonth.toString().padStart(2, '0')
 
             mapRawData = MapRawData(uid, l.toLong(), data)
-            db.setMapRawData(mapRawData)
+            /***
+             * FUTURE feature
+             * JSON will be save in DB for later reference.
+             */
+//            db.setMapRawData(mapRawData)
             jObject = JSONObject(data)
 
             routes = mapData.parse(jObject)
