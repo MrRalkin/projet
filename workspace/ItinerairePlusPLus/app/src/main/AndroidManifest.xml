@@ -31,24 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".Fragments.Tab2Fragment"
-            android:parentActivityName=".AddDestinationActivity"
-            android:exported="false"
-            >
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Fragments.Tab1Fragment"
-            android:exported="false"
-            android:parentActivityName=".AddDestinationActivity"     >
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
         <activity
             android:name=".AddDestinationActivity"
             android:exported="false"
