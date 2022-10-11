@@ -139,33 +139,28 @@ class AddDestinationActivity : AppCompatActivity() {
     private fun radioButtonStatus() {
 
 
-        val vehucles = user.settings.vehicles
+        val vehicle = user.settings.vehicles
 
-        if (vehucles.any { it.energy == appGlobal.VEHICLE_ESSENCE }) {
+        if (vehicle.any { it.energy == appGlobal.VEHICLE_ESSENCE }) {
             radioButtonEssence.visibility = View.VISIBLE;
-//            radioButtonEssence.isChecked = true
-//            radioButtonElectrique.isChecked = false
         } else {
-//            radioButtonEssence.isChecked = false
             radioButtonEssence.visibility = View.GONE;
         }
 
-        if (vehucles.any { it.energy == appGlobal.ENERGY_ELECTRICITE }) {
+        if (vehicle.any { it.energy == appGlobal.ENERGY_ELECTRICITE }) {
             radioButtonElectrique.visibility = View.VISIBLE;
-//            radioButtonElectrique.isChecked = true
-//            radioButtonEssence.isChecked = false
         } else {
-//            radioButtonElectrique.isChecked = false
             radioButtonElectrique.visibility = View.GONE;
         }
+
         val firstVehicle =
-            vehucles.first { it.energy == appGlobal.ENERGY_ELECTRICITE || it.energy == appGlobal.ENERGY_ESSENCE }
+            vehicle.first { it.energy == appGlobal.ENERGY_ELECTRICITE || it.energy == appGlobal.ENERGY_ESSENCE }
+
         if (firstVehicle.energy == appGlobal.ENERGY_ELECTRICITE) {
             setChecked(R.id.radio_button_electrique)
         } else {
             setChecked(R.id.radio_button_essence)
         }
-
 
         radioGroup = findViewById(R.id.radioGroup)
         radioGroup?.setOnCheckedChangeListener { group, checkedId ->
@@ -195,8 +190,10 @@ class AddDestinationActivity : AppCompatActivity() {
 
         appGlobal.curSetting.vehicles = ArrayList<IVehicle>()
         appGlobal.curSetting.energies = ArrayList<IEnergy>()
-        appGlobal.curSetting.activities.remove(getActivity(appGlobal.ACTIVITY_RECHARGE))
-        appGlobal.curSetting.activities.remove(getActivity(appGlobal.ACTIVITY_ESSENCE))
+
+        removeActivity(appGlobal.ACTIVITY_RECHARGE)
+        removeActivity(appGlobal.ACTIVITY_ESSENCE)
+
         if (isElectric) {
             appGlobal.curSetting.vehicles.add(getVehicle(appGlobal.VEHICLE_ELECTRIQUE))
             appGlobal.curSetting.energies.add(getEnergy(appGlobal.ENERGY_ELECTRICITE))
@@ -206,10 +203,13 @@ class AddDestinationActivity : AppCompatActivity() {
             appGlobal.curSetting.energies.add(getEnergy(appGlobal.VEHICLE_ESSENCE))
             appGlobal.curSetting.activities.add(getActivity(appGlobal.ACTIVITY_ESSENCE))
         }
-
-
     }
 
+    private fun removeActivity(anActivity : String) {
+        var idx = findActivity(anActivity)
+        if (idx != -1)
+            appGlobal.curSetting.activities.removeAt(idx)
+    }
 
     // Mettre a jour les donnees sur le vehicule dans appGlobal
     private fun getVehicle(energy: String): Vehicle {
