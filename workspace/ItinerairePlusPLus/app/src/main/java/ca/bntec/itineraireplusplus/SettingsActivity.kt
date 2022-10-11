@@ -458,10 +458,10 @@ class SettingsActivity : AppCompatActivity() {
         val duration = dialog.findViewById<TextView>(R.id.pickDurationActivity)
 
         time.setOnClickListener {
-            timeModal(time)
+            timeModal(time, "Temps avant l'arrêt.")
         }
         duration.setOnClickListener {
-            timeModal(duration)
+            timeModal(duration,"Durée de l'arrêt.")
         }
 
         name.setText(item.name)
@@ -535,9 +535,9 @@ class SettingsActivity : AppCompatActivity() {
         })
     }
 
-    private fun timeModal(pickTimeDuration:TextView) {
+    private fun timeModal(pickTimeDuration:TextView, titre : String) {
         val materialTimePicker: MaterialTimePicker = MaterialTimePicker.Builder()
-            .setTitleText("SELECTION DU TEMPS")
+            .setTitleText(titre)
             .setHour(pickTimeDuration.text.subSequence(0,2).toString().toInt())
             .setMinute(pickTimeDuration.text.subSequence(3,5).toString().toInt())
             .setTimeFormat(TimeFormat.CLOCK_24H)

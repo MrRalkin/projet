@@ -300,51 +300,53 @@ class AddDestinationActivity : AppCompatActivity() {
     }
 
     private fun creerListeners() {
+        val strTemps = "Temps avant l'arrêt."
+        val strDuration = "Durée de l'arrêt."
         pickTimeManger.setOnClickListener {
             if (checkBoxManger.isChecked) {
-                timeModal(pickTimeManger)
+                timeModal(pickTimeManger, "Manger - $strTemps")
             }
         }
         pickDurationManger.setOnClickListener {
             if (checkBoxManger.isChecked) {
-                timeModal(pickDurationManger)
+                timeModal(pickDurationManger,"Manger - $strDuration")
             }
         }
         pickTimeEssence.setOnClickListener {
             if (checkBoxEssence.isChecked) {
-                timeModal(pickTimeEssence)
+                timeModal(pickTimeEssence, "Essence - $strTemps")
             }
         }
         pickDurationEssence.setOnClickListener {
             if (checkBoxEssence.isChecked) {
-                timeModal(pickDurationEssence)
+                timeModal(pickDurationEssence,"Essence - $strDuration")
             }
         }
         pickTimeRecharge.setOnClickListener {
             if (checkBoxRecharge.isChecked) {
-                timeModal(pickTimeRecharge)
+                timeModal(pickTimeRecharge, "Recharge - $strTemps")
             }
         }
         pickDurationRecharge.setOnClickListener {
             if (checkBoxRecharge.isChecked) {
-                timeModal(pickDurationRecharge)
+                timeModal(pickDurationRecharge, "Recharge - $strDuration")
             }
         }
         pickTimeDormir.setOnClickListener {
             if (checkBoxDormir.isChecked) {
-                timeModal(pickTimeDormir)
+                timeModal(pickTimeDormir, "Dormir - $strTemps")
             }
         }
         pickDurationDormir.setOnClickListener {
             if (checkBoxDormir.isChecked) {
-                timeModal(pickDurationDormir)
+                timeModal(pickDurationDormir, "Dormir - $strDuration")
             }
         }
     }
 
-    private fun timeModal(pickTimeDuration: TextView) {
+    private fun timeModal(pickTimeDuration: TextView, titre : String) {
         val materialTimePicker: MaterialTimePicker = MaterialTimePicker.Builder()
-            .setTitleText("SELECTION DU TEMPS")
+            .setTitleText(titre)
             .setHour(pickTimeDuration.text.subSequence(0, 2).toString().toInt())
             .setMinute(pickTimeDuration.text.subSequence(3, 5).toString().toInt())
             .setTimeFormat(TimeFormat.CLOCK_24H)
