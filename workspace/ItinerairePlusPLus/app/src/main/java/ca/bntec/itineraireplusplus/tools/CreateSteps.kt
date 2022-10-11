@@ -93,15 +93,13 @@ class CreateSteps {
             var currentTime = 0
 
             var indexForCoord = 0
-            var c:Coord
+//            var c:Coord
             while (indexForCoord < listOfCoord.size) {
 
-                c = listOfCoord[indexForCoord]
+//                c = listOfCoord[indexForCoord]
 
 //                println("==>> $indexForCoord: ${c.latitude},${c.longitude}")
                 indexForCoord++
-
-
 
                 if ((indexForCoord % nbCoordOneKm).toInt() == 0) {
 
@@ -173,9 +171,9 @@ class CreateSteps {
 
                     dest.steps!!.add(step)
 
-                    for (i in 0 until step.activities!!.size) {
-                        dest.trip_time += step.activities!![i].duration
-                    }
+//                    for (i in 0 until step.activities!!.size) {
+//                        dest.trip_time += step.activities!![i].duration
+//                    }
 
                     fromCoord = copyCoord(toCoord)
 
@@ -263,39 +261,39 @@ class CreateSteps {
         }
 
 
-        fun dumpDestination(d: Destination) {
-            println("Destination     : ${d.name}")
-            println("Temps (seconds) : ${Tools.convertSecondsToTime(d.trip_time, Tools.FMT_OTHER)}")
-
-            val s = d.settings
-            for (i in 0 until s!!.vehicles.size) {
-                println("${s.vehicles[i].type} ${s.vehicles[i].distance} ${s.vehicles[i].mesure} ${s.vehicles[i].capacity} ${s.vehicles[i].unit}")
-            }
-            for (i in 0 until s.activities.size) {
-                println("${s.activities[i].activity} ${s.activities[i].name} T:${Tools.convertSecondsToTime(s.activities[i].time, Tools.FMT_HM_SHORT)} D:${Tools.convertSecondsToTime(s.activities[i].duration, Tools.FMT_HM_SHORT)}")
-            }
-            val step = d.steps
-            var t = 0
-            for (i in 0 until step!!.size) {
-                println("----------\nSTEP : ${step[i].step}")
-                println("De '${step[i].start?.name}' A '${step[i].end?.name}'")
-
-                println("temps : ${Tools.convertSecondsToTime(step[i].trip_time, Tools.FMT_OTHER)}")
-                println("temps : ${Tools.convertSecondsToTime((step[i].trip_time - t), Tools.FMT_OTHER)}")
-                t = step[i].trip_time
-
-                println("${step[i].start?.coord?.latitude}, ${step[i].start?.coord?.longitude}")
-                println("${step[i].end?.coord?.latitude}, ${step[i].end?.coord?.longitude}")
-                val a = step[i].activities
-                for (j in 0 until a!!.size) {
-                    println("\t${a[j].activity} ${a[j].name} time:${Tools.convertSecondsToTime(a[j].time, Tools.FMT_HM_SHORT)} duration:${Tools.convertSecondsToTime(a[j].duration, Tools.FMT_HM_SHORT)}")
-                }
-            }
-            val totalKm = listOfCoord.size / nbCoordOneKm
-            val nbPlein = totalKm / d.settings!!.vehicles[0].distance
-            val consomation = nbPlein * (d.settings!!.energies[0].price * d.settings!!.vehicles[0].capacity)
-            println(String.format("Tkm %d : nb %.5f : %.2f $", totalKm.toInt(), nbPlein, consomation))
-            println("---- fin ----")
-        }
+//        fun dumpDestination(d: Destination) {
+//            println("Destination     : ${d.name}")
+//            println("Temps (seconds) : ${Tools.convertSecondsToTime(d.trip_time, Tools.FMT_OTHER)}")
+//
+//            val s = d.settings
+//            for (i in 0 until s!!.vehicles.size) {
+//                println("${s.vehicles[i].type} ${s.vehicles[i].distance} ${s.vehicles[i].mesure} ${s.vehicles[i].capacity} ${s.vehicles[i].unit}")
+//            }
+//            for (i in 0 until s.activities.size) {
+//                println("${s.activities[i].activity} ${s.activities[i].name} T:${Tools.convertSecondsToTime(s.activities[i].time, Tools.FMT_HM_SHORT)} D:${Tools.convertSecondsToTime(s.activities[i].duration, Tools.FMT_HM_SHORT)}")
+//            }
+//            val step = d.steps
+//            var t = 0
+//            for (i in 0 until step!!.size) {
+//                println("----------\nSTEP : ${step[i].step}")
+//                println("De '${step[i].start?.name}' A '${step[i].end?.name}'")
+//
+//                println("temps : ${Tools.convertSecondsToTime(step[i].trip_time, Tools.FMT_OTHER)}")
+//                println("temps : ${Tools.convertSecondsToTime((step[i].trip_time - t), Tools.FMT_OTHER)}")
+//                t = step[i].trip_time
+//
+//                println("${step[i].start?.coord?.latitude}, ${step[i].start?.coord?.longitude}")
+//                println("${step[i].end?.coord?.latitude}, ${step[i].end?.coord?.longitude}")
+//                val a = step[i].activities
+//                for (j in 0 until a!!.size) {
+//                    println("\t${a[j].activity} ${a[j].name} time:${Tools.convertSecondsToTime(a[j].time, Tools.FMT_HM_SHORT)} duration:${Tools.convertSecondsToTime(a[j].duration, Tools.FMT_HM_SHORT)}")
+//                }
+//            }
+//            val totalKm = listOfCoord.size / nbCoordOneKm
+//            val nbPlein = totalKm / d.settings!!.vehicles[0].distance
+//            val consomation = nbPlein * (d.settings!!.energies[0].price * d.settings!!.vehicles[0].capacity)
+//            println(String.format("Tkm %d : nb %.5f : %.2f $", totalKm.toInt(), nbPlein, consomation))
+//            println("---- fin ----")
+//        }
     }
 }

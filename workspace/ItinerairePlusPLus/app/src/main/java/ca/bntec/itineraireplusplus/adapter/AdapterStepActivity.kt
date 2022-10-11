@@ -9,6 +9,7 @@ import android.widget.TextView
 import ca.bntec.itineraireplusplus.DestinationsActivity
 import ca.bntec.itineraireplusplus.R
 import ca.bntec.itineraireplusplus.tools.Tools
+import classes.AppGlobal
 import interfaces.user.IActivity
 
 class AdapterStepActivity(
@@ -38,11 +39,20 @@ class AdapterStepActivity(
         val tvStepActivityName = returnView?.findViewById<TextView>(R.id.step_activity_name)
         val tvStepActivityTime = returnView?.findViewById<TextView>(R.id.step_activity_time)
 
-        tvStepActivityName?.text = "${activities?.get(pos)?.name} :"
+        val activityName = activities?.get(pos)?.name
+        tvStepActivityName?.text = "$activityName :"
 
         val time = Tools.convertSecondsToTime(activities?.get(pos)?.time!!, Tools.FMT_HM_SHORT)
         val duration = Tools.convertSecondsToTime(activities?.get(pos)?.duration!!, Tools.FMT_HM_SHORT)
-        tvStepActivityTime?.text = "Temps: $time -- Durée: $duration"
+
+        when (activityName) {
+            AppGlobal.instance.ACTIVITY_RECHARGE ->
+                tvStepActivityTime?.text = "Durée: $duration -- Recharge électique"
+            AppGlobal.instance.ACTIVITY_ESSENCE ->
+                tvStepActivityTime?.text = "Durée: $duration -- Plein d'essence"
+            else ->
+                tvStepActivityTime?.text = "Durée: $duration -- Temps: $time"
+        }
 
         return returnView!!
     }
