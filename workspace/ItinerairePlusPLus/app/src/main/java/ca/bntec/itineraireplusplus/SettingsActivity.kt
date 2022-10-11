@@ -276,8 +276,14 @@ class SettingsActivity : AppCompatActivity() {
         mesure.setText(item.mesure)
         capacity.setText(item.capacity.toString())
         unit.setText(item.unit)
+        if (idx < 0) {
+            dialogTitle.text = "Ajouter un véhicule"
+            btnOk.text="Ajouter"
+        }else{
+            dialogTitle.text = "Modifier un véhicule"
+            btnOk.text="Sauvegarder"
+        }
 
-        dialogTitle.text = "Ajouter un véhicule"
         btnCancel.setOnClickListener { dialog.dismiss() }
         btnOk.setOnClickListener(View.OnClickListener {
             if (type.text.toString().isEmpty()) {
@@ -378,8 +384,14 @@ class SettingsActivity : AppCompatActivity() {
         type.setText(item.type)
         price.setText(item.price.toString())
         unit.setText(item.unit)
+        if (idx < 0) {
+            dialogTitle.text = "Ajouter l'énergie"
+            btnOk.text="Ajouter"
+        }else{
+            dialogTitle.text = "Modifier l'énergie"
+            btnOk.text="Sauvegarder"
+        }
 
-        dialogTitle.setText("Ajouter l'énergie")
         btnCancel.setOnClickListener { dialog.dismiss() }
         btnOk.setOnClickListener(View.OnClickListener {
             if (type.text.toString().isEmpty()) {
@@ -468,8 +480,13 @@ class SettingsActivity : AppCompatActivity() {
         time.setText(Tools.convertSecondsToTime(item.time, Tools.FMT_HM_SHORT))
         duration.setText(Tools.convertSecondsToTime(item.duration, Tools.FMT_HM_SHORT))
 
-        dialogTitle.setText("Ajouter une activité")
-
+        if (idx < 0) {
+            dialogTitle.text = "Ajouter une activité"
+            btnOk.text="Ajouter"
+        }else{
+            dialogTitle.text = "Modifier une activité"
+            btnOk.text="Sauvegarder"
+        }
         btnCancel.setOnClickListener { dialog.dismiss() }
         btnOk.setOnClickListener(View.OnClickListener {
             if (name.text.toString().isEmpty()) {
