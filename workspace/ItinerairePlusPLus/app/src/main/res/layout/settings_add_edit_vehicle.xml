@@ -76,6 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:hint="@string/settingAddVehicule_energy"
+            android:editable="false"
             android:maxLength="255" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -165,6 +166,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
+            android:editable="false"
+            android:text="km"
             android:hint="@string/settingAddVehicule_mesure"
             android:maxLength="255" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -196,6 +199,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:hint="@string/settingAddVehicule_unit"
+            android:editable="false"
             android:maxLength="255" />
     </com.google.android.material.textfield.TextInputLayout>
 

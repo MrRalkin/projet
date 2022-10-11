@@ -4,8 +4,10 @@ import android.app.Dialog
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import androidx.annotation.MenuRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import ca.bntec.itineraireplusplus.adapter.AdapterSettingsActivities
@@ -30,8 +32,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class SettingsActivity : AppCompatActivity() {
-
-    val db = AppGlobal.instance.userManager
+    val appGlobal = AppGlobal.instance
+    val db = appGlobal.userManager
     lateinit var listViewVehicles: ListView
     lateinit var listViewEnergies: ListView
     lateinit var listViewActivities: ListView
@@ -46,7 +48,7 @@ class SettingsActivity : AppCompatActivity() {
     lateinit var btnSaveChanges: Button
     lateinit var btnCancelChanges: Button
     lateinit var btnVehicleAdd: Button
-    lateinit var btnVehiclesMoreLess:Button
+    lateinit var btnVehiclesMoreLess: Button
     lateinit var btnActivityAdd: Button
     lateinit var btnActivityMoreLess: Button
     lateinit var btnEnergyAdd: Button
@@ -127,12 +129,12 @@ class SettingsActivity : AppCompatActivity() {
         getUserData()
     }
 
-    private fun setListViewVisibilityAndMoreLessButton(lv : ListView, btn : Button) {
+    private fun setListViewVisibilityAndMoreLessButton(lv: ListView, btn: Button) {
         if (lv.isVisible) {
-            btn.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.baseline_expand_more_24,0)
+            btn.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_expand_more_24, 0)
             lv.isVisible = false
         } else {
-            btn.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.baseline_expand_less_24,0)
+            btn.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_expand_less_24, 0)
             lv.isVisible = true
         }
     }
@@ -255,6 +257,7 @@ class SettingsActivity : AppCompatActivity() {
         dialog.show()
     }
 
+
     fun vehicleAddEdit(vehicle: IVehicle, idx: Int) {
         val item: IVehicle = vehicle
         val dialog = Dialog(context)
@@ -270,6 +273,41 @@ class SettingsActivity : AppCompatActivity() {
         val capacity = dialog.findViewById<TextInputEditText>(R.id.setting_edit_vehicle_capacity)
         val unit = dialog.findViewById<TextInputEditText>(R.id.setting_edit_vehicle_unit)
 
+        energy.setOnClickListener {
+            val popupMenu: PopupMenu = PopupMenu(this, energy)
+            popupMenu.menuInflater.inflate(R.menu.popup_menu_energy, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.popup_essence ->
+                        energy.setText(appGlobal.ENERGY_ESSENCE)
+                    R.id.popup_electricite ->
+                        energy.setText(appGlobal.ENERGY_ELECTRICITE)
+                }
+                true
+            })
+            popupMenu.show()
+            true
+        }
+        unit.setOnClickListener {
+            val popupMenu: PopupMenu = PopupMenu(this, unit)
+            popupMenu.menuInflater.inflate(R.menu.popup_menu_units, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                unit.setText(item.title)
+             //   when (item.itemId) {
+
+//                    R.id.popup_litres ->
+//                        unit.setText("litre")
+//                    R.id.popup_kwh ->
+//                        unit.setText("kWh")
+            //    }
+                true
+            })
+            popupMenu.show()
+            true
+        }
+
+
+
         type.setText(item.type)
         energy.setText(item.energy)
         distance.setText(item.distance.toString())
@@ -278,10 +316,10 @@ class SettingsActivity : AppCompatActivity() {
         unit.setText(item.unit)
         if (idx < 0) {
             dialogTitle.text = "Ajouter un véhicule"
-            btnOk.text="Ajouter"
-        }else{
+            btnOk.text = "Ajouter"
+        } else {
             dialogTitle.text = "Modifier un véhicule"
-            btnOk.text="Sauvegarder"
+            btnOk.text = "Sauvegarder"
         }
 
         btnCancel.setOnClickListener { dialog.dismiss() }
@@ -345,7 +383,8 @@ class SettingsActivity : AppCompatActivity() {
     fun vehicleDelete(vehicle: IVehicle) {
 
         if (user.settings.vehicles.count() <= 1) {
-            Snackbar.make(context, viewUser, "Can't delete last record", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(context, viewUser, "Can't delete last record", Snackbar.LENGTH_SHORT)
+                .show()
             return
         }
         val dialog = Dialog(context)
@@ -386,10 +425,10 @@ class SettingsActivity : AppCompatActivity() {
         unit.setText(item.unit)
         if (idx < 0) {
             dialogTitle.text = "Ajouter l'énergie"
-            btnOk.text="Ajouter"
-        }else{
+            btnOk.text = "Ajouter"
+        } else {
             dialogTitle.text = "Modifier l'énergie"
-            btnOk.text="Sauvegarder"
+            btnOk.text = "Sauvegarder"
         }
 
         btnCancel.setOnClickListener { dialog.dismiss() }
@@ -432,7 +471,8 @@ class SettingsActivity : AppCompatActivity() {
 
     fun energyDelete(energy: IEnergy) {
         if (user.settings.energies.count() <= 1) {
-            Snackbar.make(context, viewUser, "Can't delete last record", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(context, viewUser, "Can't delete last record", Snackbar.LENGTH_SHORT)
+                .show()
             return
         }
         val dialog = Dialog(context)
@@ -473,7 +513,7 @@ class SettingsActivity : AppCompatActivity() {
             timeModal(time, "Temps avant l'arrêt.")
         }
         duration.setOnClickListener {
-            timeModal(duration,"Durée de l'arrêt.")
+            timeModal(duration, "Durée de l'arrêt.")
         }
 
         name.setText(item.name)
@@ -482,10 +522,10 @@ class SettingsActivity : AppCompatActivity() {
 
         if (idx < 0) {
             dialogTitle.text = "Ajouter une activité"
-            btnOk.text="Ajouter"
-        }else{
+            btnOk.text = "Ajouter"
+        } else {
             dialogTitle.text = "Modifier une activité"
-            btnOk.text="Sauvegarder"
+            btnOk.text = "Sauvegarder"
         }
         btnCancel.setOnClickListener { dialog.dismiss() }
         btnOk.setOnClickListener(View.OnClickListener {
@@ -498,8 +538,8 @@ class SettingsActivity : AppCompatActivity() {
 
             item.activity = 0
             item.name = name.text.toString()
-            item.time = convertirStrToSec (time.text.toString())
-            item.duration = convertirStrToSec (duration.text.toString())
+            item.time = convertirStrToSec(time.text.toString())
+            item.duration = convertirStrToSec(duration.text.toString())
 
             if (idx < 0) {
                 user.settings.activities.add(item)
@@ -516,7 +556,8 @@ class SettingsActivity : AppCompatActivity() {
 
     fun activityDelete(activity: IActivity) {
         if (user.settings.activities.count() <= 1) {
-            Snackbar.make(context, viewUser, "Can't delete last record", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(context, viewUser, "Can't delete last record", Snackbar.LENGTH_SHORT)
+                .show()
             return
         }
 
@@ -552,11 +593,11 @@ class SettingsActivity : AppCompatActivity() {
         })
     }
 
-    private fun timeModal(pickTimeDuration:TextView, titre : String) {
+    private fun timeModal(pickTimeDuration: TextView, titre: String) {
         val materialTimePicker: MaterialTimePicker = MaterialTimePicker.Builder()
             .setTitleText(titre)
-            .setHour(pickTimeDuration.text.subSequence(0,2).toString().toInt())
-            .setMinute(pickTimeDuration.text.subSequence(3,5).toString().toInt())
+            .setHour(pickTimeDuration.text.subSequence(0, 2).toString().toInt())
+            .setMinute(pickTimeDuration.text.subSequence(3, 5).toString().toInt())
             .setTimeFormat(TimeFormat.CLOCK_24H)
             .build()
 
@@ -574,10 +615,10 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    fun convertirStrToSec(strToConvert : String) : Int {
-        var h = strToConvert.subSequence(0,2).toString().toInt()
-        var m = strToConvert.subSequence(3,5).toString().toInt()
-        return (h*3600)+(m*60)
+    fun convertirStrToSec(strToConvert: String): Int {
+        var h = strToConvert.subSequence(0, 2).toString().toInt()
+        var m = strToConvert.subSequence(3, 5).toString().toInt()
+        return (h * 3600) + (m * 60)
     }
 
 }
