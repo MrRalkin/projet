@@ -47,6 +47,7 @@
     <string name="dialogEstimation_cost">Coût</string>
 
     <string name="dialogEstimation_acknowledge">Sauvegarder</string>
+    <string name="dialogEstimation_ok">OK</string>
     <string name="settingAddActivity_captionBtn">Caption</string>
     <string name="settingAddActivity_name">Nom</string>
     <string name="settingAddActivity_time">Temps</string>

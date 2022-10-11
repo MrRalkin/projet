@@ -14,6 +14,7 @@ import androidx.core.view.isVisible
 import ca.bntec.itineraireplusplus.DestinationsActivity
 import ca.bntec.itineraireplusplus.R
 import ca.bntec.itineraireplusplus.tools.Tools
+import classes.AppGlobal
 import interfaces.user.IDestination
 import interfaces.user.IStep
 
@@ -135,9 +136,11 @@ class AdapterDestinations(
         estimationEnergyValue.text = "(${energy.type}) $prix $ au ${energy.unit}"
 
         var unPlein = (destination!!.settings!!.vehicles[0].capacity * destination!!.settings!!.energies[0].price)
-        var nbPlein = (destination!!.trip_meters / 1000) / destination!!.settings!!.vehicles[0].distance
+        var nbPlein = (destination!!.trip_meters / 1000.0) / destination!!.settings!!.vehicles[0].distance
         var cout = unPlein * nbPlein
-        estimationCoutValue.text = String.format("%.2f $", cout)
+
+        val strEnergy = if (data.energy == AppGlobal.instance.ENERGY_ESSENCE) "plein(s)" else "recharge(s)"
+        estimationCoutValue.text = String.format("Nombre de %s : %.2f\n\n%.2f $", strEnergy, nbPlein, cout)
 
         btnOk.setOnClickListener(View.OnClickListener {
             dialog.dismiss()
