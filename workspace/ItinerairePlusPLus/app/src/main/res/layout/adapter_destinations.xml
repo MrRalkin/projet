@@ -30,7 +30,7 @@
             android:insetTop="0dp"
             android:insetRight="0dp"
             android:insetBottom="0dp"
-            android:text="E"
+            android:drawableRight="@drawable/baseline_query_builder_24"
             android:drawableTint="@color/white"
             android:paddingStart="2dp"
             android:paddingEnd="2dp"  />

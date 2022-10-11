@@ -129,7 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
                <TextView
                 android:id="@+id/estimation_vehicle_value"
@@ -137,7 +137,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <TextView
+                android:id="@+id/estimation_energy_value"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
+
 
         <TextView
             android:layout_width="match_parent"

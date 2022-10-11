@@ -34,10 +34,8 @@ class AdapterSettingsEnergies(
 
 
         val prix =
-            if (data.unit.equals("litre")) String.format("%.2f", data.price)
+            if (data.unit.lowercase().equals("litre")) String.format("%.2f", data.price)
             else String.format("%.3f", data.price)
-
-//        ${String.format("%." + String.format("%df", if (data.unit.equals("litre")) 2 else 3), data.price)}
 
         txt.text = "${data.type} : $prix $ le ${data.unit}"
 

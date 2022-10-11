@@ -65,7 +65,8 @@ class AdapterDestinations(
 
         var lp = lvSteps?.layoutParams
 
-        lp?.height = 16 + (this.destinations?.get(pos)?.steps!!.size * ada.measuredHeight)
+        // +4 parceque
+        lp?.height = (this.destinations?.get(pos)?.steps!!.size * (ada.measuredHeight + 4))
         lvSteps?.layoutParams = lp
 
 
@@ -98,6 +99,8 @@ class AdapterDestinations(
         val estimationTotalValue = dialog.findViewById<TextView>(R.id.estimation_total_value)
         val estimationKmValue = dialog.findViewById<TextView>(R.id.estimation_km_value)
         val estimationVehicleValue = dialog.findViewById<TextView>(R.id.estimation_vehicle_value)
+        val estimationEnergyValue = dialog.findViewById<TextView>(R.id.estimation_energy_value)
+
         val estimationCoutValue = dialog.findViewById<TextView>(R.id.estimation_cout_value)
 
         dialogTitle.text = "Estimation : ${destination?.name}"
@@ -124,6 +127,12 @@ class AdapterDestinations(
         val data = destination!!.settings!!.vehicles[0]
 
         estimationVehicleValue.text = "${data.type} : (${data.energy}) ${data.capacity} ${data.unit} pour ${data.distance} ${data.mesure}"
+
+        val energy = destination!!.settings!!.energies[0]
+        val prix =
+            if (energy.unit.lowercase().equals("litre")) String.format("%.2f", energy.price)
+            else String.format("%.3f", energy.price)
+        estimationEnergyValue.text = "(${energy.type}) $prix $ au ${energy.unit}"
 
         var unPlein = (destination!!.settings!!.vehicles[0].capacity * destination!!.settings!!.energies[0].price)
         var nbPlein = (destination!!.trip_meters / 1000) / destination!!.settings!!.vehicles[0].distance
