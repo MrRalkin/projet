@@ -46,19 +46,19 @@
     <string name="dialogEstimation_costs">Coûts</string>
     <string name="dialogEstimation_cost">Coût</string>
 
-    <string name="dialogEstimation_acknowledge">Ok</string>
+    <string name="dialogEstimation_acknowledge">Sauvegarder</string>
     <string name="settingAddActivity_captionBtn">Caption</string>
     <string name="settingAddActivity_name">Nom</string>
     <string name="settingAddActivity_time">Temps</string>
     <string name="settingAddActivity_duration">Durée</string>
     <string name="settingAddActivity_cancelBtn">Annuler</string>
-    <string name="settingAddActivity_addBtn">Ajouter</string>
+    <string name="settingAddActivity_addBtn">Sauvegarder</string>
     <string name="settingAddEnergy_captionBtn">Caption</string>
     <string name="settingAddEnergy_type">Type</string>
     <string name="settingAddEnergy_price">Prix</string>
     <string name="settingAddEnergy_unit">Unité</string>
     <string name="settingAddEnergy_cancelBtn">Canceler</string>
-    <string name="settingAddEnergy_acknowledgeBtn">Ok</string>
+    <string name="settingAddEnergy_acknowledgeBtn">Sauvegarder</string>
     <string name="settingAddVehicule_captionBtn">Caption</string>
     <string name="settingAddVehicule_type">Type</string>
     <string name="settingAddVehicule_energy">Énergie</string>
@@ -67,7 +67,7 @@
     <string name="settingAddVehicule_capacity">Capacité</string>
     <string name="settingAddVehicule_unit">Unité</string>
     <string name="settingAddVehicule_cancelBtn">Annuler</string>
-    <string name="settingAddVehicule_acknowledgeBtn">Ok</string>
+    <string name="settingAddVehicule_acknowledgeBtn">Sauvegarder</string>
     <string name="settingUser_captionBtn">Caption</string>
     <string name="settingUser_name">Nom</string>
     <string name="settingUser_address">Adresse</string>
@@ -76,7 +76,7 @@
     <string name="settingUser_postalCode">Code Postal</string>
     <string name="settingUser_country">Pays</string>
     <string name="settingUser_cancelBtn">Annuler</string>
-    <string name="settingUser_acknowledgeBtn">Ok</string>
+    <string name="settingUser_acknowledgeBtn">Sauvegarder</string>
     <string name="tab_1">Vehicules</string>
     <string name="tab_2">Activitees</string>
     <string name="tab1Fragment_radio1">Vehicule Electrique</string>
