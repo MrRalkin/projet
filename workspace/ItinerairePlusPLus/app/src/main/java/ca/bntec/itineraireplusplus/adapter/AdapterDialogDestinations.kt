@@ -43,7 +43,7 @@ class AdapterDialogDestinations(
 
         val tvDestinationName = returnView?.findViewById<TextView>(R.id.tv_dialog_destination_name)
 
-        tvDestinationName!!.text = "${this.steps?.get(pos)?.step}: De ${this.steps?.get(pos)?.start!!.name} A ${this.steps?.get(pos)?.end!!.name}"
+        tvDestinationName!!.text = "${this.steps?.get(pos)?.step}/${count} : De ${this.steps?.get(pos)?.start!!.name} A ${this.steps?.get(pos)?.end!!.name}"
 
         tvDestinationName.setOnClickListener {
             displayNearBy(this.steps?.get(pos)!!.activities!!)
