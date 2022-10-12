@@ -44,7 +44,7 @@
             <ListView
                 android:id="@+id/lv_recentes_destinations"
                 android:layout_width="match_parent"
-                android:layout_height="145dp"/>
+                android:layout_height="150dp"/>
 
             <Button
                 android:id="@+id/main_adddestination_btn"
@@ -52,11 +52,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:text="@string/main_addDestinationBtn"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="80dp"
                 app:icon="@drawable/ic_add"
                 android:layout_marginStart="67dp"/>
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floating_action_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_margin="16dp"
+                android:background="@drawable/ic_launcher_round"
+                app:srcCompat="@drawable/ic_baseline_chat_24"
+                app:fabSize="normal"
+                app:backgroundTint="@color/light_blue_shade"/>
+
         </LinearLayout>
+
+
 
     </LinearLayout>
 

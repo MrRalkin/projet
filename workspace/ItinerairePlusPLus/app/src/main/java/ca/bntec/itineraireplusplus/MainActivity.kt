@@ -2,29 +2,32 @@ package ca.bntec.itineraireplusplus
 
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
-import androidx.core.content.ContextCompat.startActivity
+import androidx.appcompat.app.AppCompatActivity
 import classes.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import interfaces.user.IUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import ca.bntec.itineraireplusplus.data.TestData
 
 
 class MainActivity : AppCompatActivity() {
     val db = AppGlobal.instance.userManager
     lateinit var user: IUser
+    lateinit var fab: FloatingActionButton
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val txt = findViewById<TextView>(R.id.hello)
+
+        fab =  findViewById(R.id.floating_action_button)
 
         MainScope().launch(Dispatchers.IO) {
             if (db.userIsAuthenticated()) {
@@ -34,6 +37,7 @@ class MainActivity : AppCompatActivity() {
                         txt.text = "Bonjour\n${user.name}"
                         recentesDestinations()
                         newDestBtnListener()
+                        fab()
                     }
                 })
             } else {
@@ -154,6 +158,12 @@ class MainActivity : AppCompatActivity() {
         main_adddestination_btn.setOnClickListener { // opening a login activity on clicking login text.
             val i = Intent(this, AddDestinationActivity::class.java)
             startActivity(i)
+        }
+    }
+
+    fun fab(){
+        fab.setOnClickListener {
+            // mettre le code ici
         }
     }
 }
