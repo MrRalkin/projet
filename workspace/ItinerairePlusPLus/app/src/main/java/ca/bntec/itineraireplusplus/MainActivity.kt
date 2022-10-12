@@ -1,5 +1,7 @@
 package ca.bntec.itineraireplusplus
 
+import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -19,7 +21,6 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     val db = AppGlobal.instance.userManager
     lateinit var user: IUser
-    lateinit var fab: FloatingActionButton
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +28,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val txt = findViewById<TextView>(R.id.hello)
 
-        fab =  findViewById(R.id.floating_action_button)
+        val ivLogoSsn = findViewById<ImageView>(R.id.iv_logo_ssn)
+
+        ivLogoSsn.setOnClickListener(){
+            modalDialogAbout()
+        }
 
         MainScope().launch(Dispatchers.IO) {
             if (db.userIsAuthenticated()) {
@@ -37,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                         txt.text = "Bonjour\n${user.name}"
                         recentesDestinations()
                         newDestBtnListener()
-                        fab()
+
                     }
                 })
             } else {
@@ -161,10 +166,40 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun fab(){
-        fab.setOnClickListener {
-            // mettre le code ici
+    @SuppressLint("SetTextI18n")
+    private fun modalDialogAbout() {
+
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_about_layout)
+
+        val tvAboutTitle = dialog.findViewById<TextView>(R.id.tv_about_title)
+        val tvAboutText = dialog.findViewById<TextView>(R.id.tv_about_text)
+        val ivSSNTeam = dialog.findViewById<ImageView>(R.id.iv_ssn_team)
+
+        val btnOk = dialog.findViewById<Button>(R.id.btnOk)
+
+        tvAboutTitle.text = "À propos"
+        tvAboutText.text = """
+        Itinéraire Plus Plus
+        Version 0.1
+        
+        (C) Octobre 2022
+        
+        Équipe SSN Team
+        
+        Sergei Bergen
+        
+        Serge Kalonji-Kasuku
+        
+        Nicol Larouche
+        
+    """.trimIndent()
+
+        btnOk.setOnClickListener {
+            dialog.dismiss()
         }
+        dialog.show()
     }
+
 }
 

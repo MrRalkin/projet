@@ -24,7 +24,6 @@
             android:textStyle="bold"
             android:textSize="24sp"
             android:textColor="@color/white" />
-        <!--            android:layout_marginStart="120dp"-->
 
         <LinearLayout
             android:id="@+id/Layout1"
@@ -56,42 +55,16 @@
                 app:icon="@drawable/ic_add"
                 android:layout_marginStart="67dp"/>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floating_action_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/iv_logo_ssn"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_gravity="bottom|right"
-                android:layout_margin="16dp"
-                android:background="@drawable/ic_launcher_round"
-                app:srcCompat="@drawable/ic_baseline_chat_24"
-                app:fabSize="normal"
-                app:backgroundTint="@color/light_blue_shade"/>
+                android:src="@drawable/ic_launcher_round" />
 
         </LinearLayout>
-
 
 
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <!--<Button
-        android:id="@+id/setData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Set Data"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hello" />
-    <Button
-        android:id="@+id/getData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Get Data"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setData" />-->
