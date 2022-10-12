@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/popup_activity_essence"
+        android:title="Essence" />
+    <item android:id="@+id/popup_activity_dormir"
+        android:title="Dormir" />
+    <item android:id="@+id/popup_activity_manger"
+        android:title="Manger" />
+    <item android:id="@+id/popup_activity_recharge"
+        android:title="Recharge" />
+
+</menu>

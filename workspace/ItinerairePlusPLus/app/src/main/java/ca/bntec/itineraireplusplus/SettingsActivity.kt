@@ -430,7 +430,31 @@ class SettingsActivity : AppCompatActivity() {
             dialogTitle.text = "Modifier l'énergie"
             btnOk.text = "Sauvegarder"
         }
-
+        type.setOnClickListener {
+            val popupMenu: PopupMenu = PopupMenu(this, type)
+            popupMenu.menuInflater.inflate(R.menu.popup_menu_energy, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.popup_essence ->
+                        type.setText(appGlobal.ENERGY_ESSENCE)
+                    R.id.popup_electricite ->
+                        type.setText(appGlobal.ENERGY_ELECTRICITE)
+                }
+                true
+            })
+            popupMenu.show()
+            true
+        }
+        unit.setOnClickListener {
+            val popupMenu: PopupMenu = PopupMenu(this, unit)
+            popupMenu.menuInflater.inflate(R.menu.popup_menu_units, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                unit.setText(item.title)
+                true
+            })
+            popupMenu.show()
+            true
+        }
         btnCancel.setOnClickListener { dialog.dismiss() }
         btnOk.setOnClickListener(View.OnClickListener {
             if (type.text.toString().isEmpty()) {
@@ -527,6 +551,30 @@ class SettingsActivity : AppCompatActivity() {
             dialogTitle.text = "Modifier une activité"
             btnOk.text = "Sauvegarder"
         }
+
+        name.setOnClickListener {
+            val popupMenu: PopupMenu = PopupMenu(this, name)
+            popupMenu.menuInflater.inflate(R.menu.popup_menu_activities, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                when (item.itemId) {
+
+                    R.id.popup_activity_essence ->
+                        name.setText(appGlobal.ACTIVITY_ESSENCE)
+                    R.id.popup_activity_dormir ->
+                        name.setText(appGlobal.ACTIVITY_DORMIR)
+                    R.id.popup_activity_manger ->
+                        name.setText(appGlobal.ACTIVITY_MANGER)
+                    R.id.popup_activity_recharge ->
+                        name.setText(appGlobal.ACTIVITY_RECHARGE)
+
+                }
+                true
+            })
+            popupMenu.show()
+            true
+        }
+
+
         btnCancel.setOnClickListener { dialog.dismiss() }
         btnOk.setOnClickListener(View.OnClickListener {
             if (name.text.toString().isEmpty()) {
