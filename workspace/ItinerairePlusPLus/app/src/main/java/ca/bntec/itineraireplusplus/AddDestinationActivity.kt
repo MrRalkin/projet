@@ -8,17 +8,15 @@ import android.view.View
 import android.widget.*
 import ca.bntec.itineraireplusplus.tools.Tools
 import classes.AppGlobal
-import classes.settings.Settings
+import classes.settings.*
 import com.google.android.material.textfield.TextInputEditText
 import interfaces.user.IUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import classes.settings.Activity
-import classes.settings.Energy
-import classes.settings.Vehicle
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import interfaces.user.IActivity
 import interfaces.user.IEnergy
 import interfaces.user.IVehicle
 
@@ -51,7 +49,15 @@ class AddDestinationActivity : AppCompatActivity() {
 
     private val db = appGlobal.userManager
     var radioGroup: RadioGroup? = null
-
+    var isElectric: Boolean = false
+    var dDormir: Int = 0
+    var tDormir: Int = 0
+    var dManger: Int = 0
+    var tManger: Int = 0
+    var tEssence: Int = 0
+    var dEssence: Int = 0
+    var dRecharge: Int = 0
+    var tRecharge: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_destination)
@@ -59,6 +65,11 @@ class AddDestinationActivity : AppCompatActivity() {
         title = "Nouvelle destination"
 
         appGlobal.curSetting = Settings()
+        appGlobal.name = ""
+        appGlobal.curDestination = Destination()
+        appGlobal.destAddress = ""
+        appGlobal.departAddress = ""
+        appGlobal.isCurDestinationSaved = false
 
         // Initialisation des champs texts et du bouton de calcul de destination
         inputDepart = findViewById(R.id.textInputEdit_depart)
@@ -82,7 +93,7 @@ class AddDestinationActivity : AppCompatActivity() {
         pickDurationManger = findViewById(R.id.pickDurationManger)
         pickTimeDormir = findViewById(R.id.pickTimeDormir)
         pickDurationDormir = findViewById(R.id.pickDurationDormir)
-
+        creerListeners()
         MainScope().launch(Dispatchers.IO) {
             if (db.userIsAuthenticated()) {
                 user = db.userGetCurrent()!!
@@ -96,12 +107,10 @@ class AddDestinationActivity : AppCompatActivity() {
                     }
                 })
 
-                radioButtonStatus()
                 afficherActivity()
-                remplirBoutons()
-                creerListeners()
                 createCheckboxListener()
-
+                remplirBoutons()
+                radioButtonStatus()
             }
         }
 
@@ -143,13 +152,13 @@ class AddDestinationActivity : AppCompatActivity() {
         if (vehicle.any { it.energy == appGlobal.VEHICLE_ESSENCE }) {
             radioButtonEssence.visibility = View.VISIBLE;
         } else {
-            radioButtonEssence.visibility = View.GONE;
+            radioButtonEssence.visibility = View.INVISIBLE;
         }
 
         if (vehicle.any { it.energy == appGlobal.ENERGY_ELECTRICITE }) {
             radioButtonElectrique.visibility = View.VISIBLE;
         } else {
-            radioButtonElectrique.visibility = View.GONE;
+            radioButtonElectrique.visibility = View.INVISIBLE;
         }
 
         val firstVehicle =
@@ -174,41 +183,55 @@ class AddDestinationActivity : AppCompatActivity() {
             checkBoxRecharge.isChecked = true
             radioButtonEssence.isChecked = false
             checkBoxEssence.isChecked = false
-            setSetting(true)
+            isElectric = true
+            setSetting()
         } else {
             radioButtonElectrique.isChecked = false
             checkBoxRecharge.isChecked = false
             radioButtonEssence.isChecked = true
             checkBoxEssence.isChecked = true
-            setSetting(false)
+            isElectric = false
+            setSetting()
         }
     }
 
 
-    private fun setSetting(isElectric: Boolean) {
+    private fun setSetting() {
 
         appGlobal.curSetting.vehicles = ArrayList<IVehicle>()
         appGlobal.curSetting.energies = ArrayList<IEnergy>()
-
-        removeActivity(appGlobal.ACTIVITY_RECHARGE)
-        removeActivity(appGlobal.ACTIVITY_ESSENCE)
-
+        appGlobal.curSetting.activities = ArrayList<IActivity>()
         if (isElectric) {
             appGlobal.curSetting.vehicles.add(getVehicle(appGlobal.VEHICLE_ELECTRIQUE))
             appGlobal.curSetting.energies.add(getEnergy(appGlobal.ENERGY_ELECTRICITE))
-            appGlobal.curSetting.activities.add(getActivity(appGlobal.ACTIVITY_RECHARGE))
+            var activity = getActivity(appGlobal.ACTIVITY_RECHARGE)
+            activity.duration = dRecharge
+            activity.time = tRecharge
+            appGlobal.curSetting.activities.add(activity)
         } else {
             appGlobal.curSetting.vehicles.add(getVehicle(appGlobal.VEHICLE_ESSENCE))
             appGlobal.curSetting.energies.add(getEnergy(appGlobal.VEHICLE_ESSENCE))
-            appGlobal.curSetting.activities.add(getActivity(appGlobal.ACTIVITY_ESSENCE))
+            var activity = getActivity(appGlobal.ACTIVITY_ESSENCE)
+            activity.duration = dEssence
+            activity.time = tEssence
+            appGlobal.curSetting.activities.add(activity)
+
+        }
+        if (checkBoxManger.isChecked) {
+            var activity = getActivity(appGlobal.ACTIVITY_MANGER)
+            activity.duration = dManger
+            activity.time = tManger
+            appGlobal.curSetting.activities.add(activity)
+        }
+        if (checkBoxDormir.isChecked) {
+            var activity = getActivity(appGlobal.ACTIVITY_DORMIR)
+            activity.duration =dDormir
+            activity.time = tDormir
+
+            appGlobal.curSetting.activities.add(activity)
         }
     }
 
-    private fun removeActivity(anActivity : String) {
-        var idx = findActivity(anActivity)
-        if (idx != -1)
-            appGlobal.curSetting.activities.removeAt(idx)
-    }
 
     // Mettre a jour les donnees sur le vehicule dans appGlobal
     private fun getVehicle(energy: String): Vehicle {
@@ -285,15 +308,23 @@ class AddDestinationActivity : AppCompatActivity() {
 
     private fun remplirBoutons() {
         var a = getActivity(appGlobal.ACTIVITY_MANGER)
+        tManger=a.time
+        dManger=a.duration
         pickTimeManger.text = Tools.convertSecondsToTime(a.time, Tools.FMT_HM_SHORT)
         pickDurationManger.text = Tools.convertSecondsToTime(a.duration, Tools.FMT_HM_SHORT)
         a = getActivity(appGlobal.ACTIVITY_ESSENCE)
+        tEssence=a.time
+        dEssence=a.duration
         pickTimeEssence.text = Tools.convertSecondsToTime(a.time, Tools.FMT_HM_SHORT)
         pickDurationEssence.text = Tools.convertSecondsToTime(a.duration, Tools.FMT_HM_SHORT)
         a = getActivity(appGlobal.ACTIVITY_RECHARGE)
+        tRecharge=a.time
+        dRecharge=a.duration
         pickTimeRecharge.text = Tools.convertSecondsToTime(a.time, Tools.FMT_HM_SHORT)
         pickDurationRecharge.text = Tools.convertSecondsToTime(a.duration, Tools.FMT_HM_SHORT)
         a = getActivity(appGlobal.ACTIVITY_DORMIR)
+        tDormir=a.time
+        dDormir=a.duration
         pickTimeDormir.text = Tools.convertSecondsToTime(a.time, Tools.FMT_HM_SHORT)
         pickDurationDormir.text = Tools.convertSecondsToTime(a.duration, Tools.FMT_HM_SHORT)
     }
@@ -308,7 +339,7 @@ class AddDestinationActivity : AppCompatActivity() {
         }
         pickDurationManger.setOnClickListener {
             if (checkBoxManger.isChecked) {
-                timeModal(pickDurationManger,"Manger - $strDuration")
+                timeModal(pickDurationManger, "Manger - $strDuration")
             }
         }
         pickTimeEssence.setOnClickListener {
@@ -318,7 +349,7 @@ class AddDestinationActivity : AppCompatActivity() {
         }
         pickDurationEssence.setOnClickListener {
             if (checkBoxEssence.isChecked) {
-                timeModal(pickDurationEssence,"Essence - $strDuration")
+                timeModal(pickDurationEssence, "Essence - $strDuration")
             }
         }
         pickTimeRecharge.setOnClickListener {
@@ -343,7 +374,7 @@ class AddDestinationActivity : AppCompatActivity() {
         }
     }
 
-    private fun timeModal(pickTimeDuration: TextView, titre : String) {
+    private fun timeModal(pickTimeDuration: TextView, titre: String) {
         val materialTimePicker: MaterialTimePicker = MaterialTimePicker.Builder()
             .setTitleText(titre)
             .setHour(pickTimeDuration.text.subSequence(0, 2).toString().toInt())
@@ -366,60 +397,46 @@ class AddDestinationActivity : AppCompatActivity() {
         }
     }
 
+
     private fun addToSettings(tv: TextView, seconds: Int) {
 
-        var indice = 0
-        when (tv.id) {
+         when (tv.id) {
             R.id.pickDurationDormir -> {
-                indice = findActivity(appGlobal.ACTIVITY_DORMIR)
-                appGlobal.curSetting.activities[indice].duration = seconds
+                 dDormir = seconds
             }
             R.id.pickTimeDormir -> {
-                indice = findActivity(appGlobal.ACTIVITY_DORMIR)
-                appGlobal.curSetting.activities[indice].time = seconds
+                tDormir = seconds
             }
             R.id.pickTimeManger -> {
-                indice = findActivity(appGlobal.ACTIVITY_MANGER)
-                appGlobal.curSetting.activities[indice].duration = seconds
+                tManger = seconds
             }
             R.id.pickDurationManger -> {
-                indice = findActivity(appGlobal.ACTIVITY_MANGER)
-                appGlobal.curSetting.activities[indice].time = seconds
+                dManger = seconds
             }
             R.id.pickTimeEssence -> {
-                indice = findActivity(appGlobal.ACTIVITY_ESSENCE)
-                appGlobal.curSetting.activities[indice].duration = seconds
+                tEssence = seconds
             }
             R.id.pickDurationEssence -> {
-                indice = findActivity(appGlobal.ACTIVITY_ESSENCE)
-                appGlobal.curSetting.activities[indice].time = seconds
+                dEssence = seconds
             }
             R.id.pickTimeRecharge -> {
-                indice = findActivity(appGlobal.ACTIVITY_RECHARGE)
-                appGlobal.curSetting.activities[indice].duration = seconds
+                tRecharge = seconds
             }
             R.id.pickDurationRecharge -> {
-                indice = findActivity(appGlobal.ACTIVITY_RECHARGE)
-                appGlobal.curSetting.activities[indice].time = seconds
+                dRecharge = seconds
             }
         }
+        setSetting()
     }
 
     private fun createCheckboxListener() {
+
         checkBoxManger.setOnClickListener {
-            if (checkBoxManger.isChecked) {
-                appGlobal.curSetting.activities.add(getActivity(appGlobal.ACTIVITY_MANGER))
-            } else {
-                appGlobal.curSetting.activities.remove(getActivity(appGlobal.ACTIVITY_MANGER))
-            }
+            setSetting()
         }
 
         checkBoxDormir.setOnClickListener {
-            if (checkBoxDormir.isChecked) {
-                appGlobal.curSetting.activities.add(getActivity(appGlobal.ACTIVITY_DORMIR))
-            } else {
-                appGlobal.curSetting.activities.remove(getActivity(appGlobal.ACTIVITY_DORMIR))
-            }
+            setSetting()
         }
     }
 }
