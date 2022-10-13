@@ -10,6 +10,7 @@ interface IDataManager {
     suspend fun userLogout(): ActionResult
     suspend fun userGetById(id: String): IUser?
     suspend fun userGetByEmail(email: String): IUser?
+    suspend fun userGetCurrent(fromWeb:Boolean): IUser?
     suspend fun userGetCurrent(): IUser?
     suspend fun userUpdate(user:IUser): ActionResult
     suspend fun userUpdateCurrent(user:IUser): ActionResult

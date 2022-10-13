@@ -85,7 +85,7 @@ class SettingsActivity : AppCompatActivity() {
 
         btnCancelChanges = findViewById(R.id.setting_btn_cancel_changes)
         btnCancelChanges.setOnClickListener { view ->
-            getUserData()
+            getUserData(true)
         }
 
         btnVehicleAdd = findViewById(R.id.setting_vehicle_btn_add)
@@ -148,10 +148,17 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun getUserData() {
+    private fun getUserData(fromWeb: Boolean = false) {
 
         MainScope().launch(Dispatchers.IO) {
-            user = async { db.userGetCurrent()!! }.await()
+            if(fromWeb){
+                user = async { db.userGetCurrent(true)!! }.await()
+            }else{
+                user = async { db.userGetCurrent()!! }.await()
+            }
+
+
+
             isDataChanged = false
             showData(user)
         }
@@ -375,7 +382,12 @@ class SettingsActivity : AppCompatActivity() {
     fun vehicleDelete(vehicle: IVehicle) {
 
         if (user.settings.vehicles.count() <= 1) {
-            Snackbar.make(context, viewUser, "Impossible de supprimer le dernier enregistrement", Snackbar.LENGTH_SHORT)
+            Snackbar.make(
+                context,
+                viewUser,
+                "Impossible de supprimer le dernier enregistrement",
+                Snackbar.LENGTH_SHORT
+            )
                 .show()
             return
         }
@@ -487,7 +499,12 @@ class SettingsActivity : AppCompatActivity() {
 
     fun energyDelete(energy: IEnergy) {
         if (user.settings.energies.count() <= 1) {
-            Snackbar.make(context, viewUser, "Impossible de supprimer le dernier enregistrement", Snackbar.LENGTH_SHORT)
+            Snackbar.make(
+                context,
+                viewUser,
+                "Impossible de supprimer le dernier enregistrement",
+                Snackbar.LENGTH_SHORT
+            )
                 .show()
             return
         }
@@ -534,7 +551,7 @@ class SettingsActivity : AppCompatActivity() {
 
         name.setText(item.name)
         time.text = Tools.convertSecondsToTime(item.time, Tools.FMT_HM_SHORT)
-        duration.text =Tools.convertSecondsToTime(item.duration, Tools.FMT_HM_SHORT)
+        duration.text = Tools.convertSecondsToTime(item.duration, Tools.FMT_HM_SHORT)
 
         if (idx < 0) {
             dialogTitle.text = "Ajouter une activité"
@@ -595,7 +612,12 @@ class SettingsActivity : AppCompatActivity() {
 
     fun activityDelete(activity: IActivity) {
         if (user.settings.activities.count() <= 1) {
-            Snackbar.make(context, viewUser, "Impossible de supprimer le dernier enregistrement", Snackbar.LENGTH_SHORT)
+            Snackbar.make(
+                context,
+                viewUser,
+                "Impossible de supprimer le dernier enregistrement",
+                Snackbar.LENGTH_SHORT
+            )
                 .show()
             return
         }

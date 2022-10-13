@@ -129,6 +129,16 @@ class FsDataManager : IDataManager {
         return null
     }
 
+    override suspend fun userGetCurrent(fromWeb:Boolean): IUser? {
+        val credential = mAuth.currentUser
+
+        if (credential != null) {
+                curUser = userGetById(credential.uid)
+                return curUser
+             }
+        return null
+    }
+
     override suspend fun userGetCurrent(): IUser? {
         val credential = mAuth.currentUser
 
@@ -136,11 +146,10 @@ class FsDataManager : IDataManager {
             if (curUser != null) {
                 return curUser
             } else {
-                curUser = userGetById(credential.uid)
+                userGetCurrent(true)
                 return curUser
             }
         }
-
         return null
     }
 
