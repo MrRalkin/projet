@@ -461,6 +461,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             {
                 saveUserData()
                 appGlobal.isCurDestinationSaved = true
+                btnSaveData.isEnabled = false
             }
             dialog.dismiss()
         }
