@@ -95,8 +95,7 @@
                 android:textAlignment="center"
                 android:text="@string/dialogStepDtls_activity"
                 android:textStyle="bold"
-                android:textSize="16dp"
-                />
+                android:textSize="16dp"/>
 
             <ListView
                 android:id="@+id/detail_step_activity_value"
@@ -118,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="Ok" />
+                android:text="Ok"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

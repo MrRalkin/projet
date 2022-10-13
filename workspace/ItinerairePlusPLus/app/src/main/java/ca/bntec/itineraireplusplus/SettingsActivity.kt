@@ -2,20 +2,18 @@ package ca.bntec.itineraireplusplus
 
 import android.app.Dialog
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import androidx.annotation.MenuRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import ca.bntec.itineraireplusplus.adapter.AdapterSettingsActivities
 import ca.bntec.itineraireplusplus.adapter.AdapterSettingsEnergies
 import ca.bntec.itineraireplusplus.adapter.AdapterSettingsVehicles
 import ca.bntec.itineraireplusplus.tools.Tools
-import classes.settings.Activity
 import classes.AppGlobal
+import classes.settings.Activity
 import classes.settings.Energy
 import classes.settings.Vehicle
 import com.google.android.material.snackbar.Snackbar
@@ -33,7 +31,7 @@ import kotlinx.coroutines.launch
 
 class SettingsActivity : AppCompatActivity() {
     val appGlobal = AppGlobal.instance
-    val db = appGlobal.userManager
+    private val db = appGlobal.userManager
     lateinit var listViewVehicles: ListView
     lateinit var listViewEnergies: ListView
     lateinit var listViewActivities: ListView
@@ -124,8 +122,6 @@ class SettingsActivity : AppCompatActivity() {
             userEdit()
         }
 
-
-
         getUserData()
     }
 
@@ -139,7 +135,7 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    fun setUserData() {
+    private fun setUserData() {
         MainScope().launch(Dispatchers.IO) {
             val result = async { db.userUpdateCurrent(user) }.await()
             if (result.isSuccess) {
@@ -152,7 +148,7 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    fun getUserData() {
+    private fun getUserData() {
 
         MainScope().launch(Dispatchers.IO) {
             user = async { db.userGetCurrent()!! }.await()
@@ -161,14 +157,16 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    fun showData(user: IUser) {
+    private fun showData(user: IUser) {
         this@SettingsActivity.runOnUiThread(java.lang.Runnable {
 
             txtName.text = user.name
             val txtMessage = """
-                    Adresse: ${user.address.address}
-                    Ville:${user.address.city}, (${user.address.state})
-                    Pays:${user.address.country}, Zip:${user.address.zip}
+                    Adresse:
+                    ${user.address.address}
+                    ${user.address.city}, ${user.address.state}
+                    ${user.address.country},
+                    ${user.address.zip}
                 """.trimIndent()
             txtAddress.text = txtMessage
 
@@ -180,7 +178,7 @@ class SettingsActivity : AppCompatActivity() {
         })
     }
 
-    fun setSaveButtons() {
+    private fun setSaveButtons() {
         if (isDataChanged) {
             btnSaveChanges.visibility = View.VISIBLE
             btnCancelChanges.visibility = View.VISIBLE
@@ -190,28 +188,28 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    fun listVehiclesShow(items: ArrayList<IVehicle>) {
+    private fun listVehiclesShow(items: ArrayList<IVehicle>) {
         this@SettingsActivity.runOnUiThread(java.lang.Runnable {
             listViewVehicles.adapter =
                 AdapterSettingsVehicles(context, R.layout.adapter_settings_vehicles, items)
         })
     }
 
-    fun listEnergiesShow(items: ArrayList<IEnergy>) {
+    private fun listEnergiesShow(items: ArrayList<IEnergy>) {
         this@SettingsActivity.runOnUiThread(java.lang.Runnable {
             listViewEnergies.adapter =
                 AdapterSettingsEnergies(context, R.layout.adapter_settings_energies, items)
         })
     }
 
-    fun listActivitiesShow(items: ArrayList<IActivity>) {
+    private fun listActivitiesShow(items: ArrayList<IActivity>) {
         this@SettingsActivity.runOnUiThread(java.lang.Runnable {
             listViewActivities.adapter =
                 AdapterSettingsActivities(context, R.layout.adapter_settings_activities, items)
         })
     }
 
-    fun userEdit() {
+    private fun userEdit() {
 
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.settings_edit_user_info)
@@ -257,7 +255,6 @@ class SettingsActivity : AppCompatActivity() {
         dialog.show()
     }
 
-
     fun vehicleAddEdit(vehicle: IVehicle, idx: Int) {
         val item: IVehicle = vehicle
         val dialog = Dialog(context)
@@ -293,25 +290,20 @@ class SettingsActivity : AppCompatActivity() {
             popupMenu.menuInflater.inflate(R.menu.popup_menu_units, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
                 unit.setText(item.title)
-             //   when (item.itemId) {
-
-//                    R.id.popup_litres ->
-//                        unit.setText("litre")
-//                    R.id.popup_kwh ->
-//                        unit.setText("kWh")
-            //    }
                 true
             })
             popupMenu.show()
             true
         }
 
-
-
         type.setText(item.type)
         energy.setText(item.energy)
         distance.setText(item.distance.toString())
+
+        mesure.isEnabled = false
+        item.mesure = "km"
         mesure.setText(item.mesure)
+
         capacity.setText(item.capacity.toString())
         unit.setText(item.unit)
         if (idx < 0) {
@@ -383,7 +375,7 @@ class SettingsActivity : AppCompatActivity() {
     fun vehicleDelete(vehicle: IVehicle) {
 
         if (user.settings.vehicles.count() <= 1) {
-            Snackbar.make(context, viewUser, "Can't delete last record", Snackbar.LENGTH_SHORT)
+            Snackbar.make(context, viewUser, "Impossible de supprimer le dernier enregistrement", Snackbar.LENGTH_SHORT)
                 .show()
             return
         }
@@ -394,7 +386,7 @@ class SettingsActivity : AppCompatActivity() {
         val dialogTitle = dialog.findViewById<TextView>(R.id.dialogTitle)
         var propertyValue = dialog.findViewById<EditText>(R.id.propertyValue)
 
-        dialogTitle.setText("Supprimer le vehicule")
+        dialogTitle.text = "Supprimer le vehicule"
         propertyValue.setText(vehicle.type)
         propertyValue.isEnabled = false
         propertyValue.setTextColor(ContextCompat.getColor(context, R.color.black))
@@ -495,7 +487,7 @@ class SettingsActivity : AppCompatActivity() {
 
     fun energyDelete(energy: IEnergy) {
         if (user.settings.energies.count() <= 1) {
-            Snackbar.make(context, viewUser, "Can't delete last record", Snackbar.LENGTH_SHORT)
+            Snackbar.make(context, viewUser, "Impossible de supprimer le dernier enregistrement", Snackbar.LENGTH_SHORT)
                 .show()
             return
         }
@@ -505,7 +497,7 @@ class SettingsActivity : AppCompatActivity() {
         val btnOk = dialog.findViewById<Button>(R.id.btnOk)
         val dialogTitle = dialog.findViewById<TextView>(R.id.dialogTitle)
         val propertyValue = dialog.findViewById<EditText>(R.id.propertyValue)
-        dialogTitle.setText("Supprimer l'énergie")
+        dialogTitle.text = "Supprimer l'énergie"
         propertyValue.setText(energy.type)
         propertyValue.isEnabled = false
         propertyValue.setTextColor(ContextCompat.getColor(context, R.color.black))
@@ -541,8 +533,8 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         name.setText(item.name)
-        time.setText(Tools.convertSecondsToTime(item.time, Tools.FMT_HM_SHORT))
-        duration.setText(Tools.convertSecondsToTime(item.duration, Tools.FMT_HM_SHORT))
+        time.text = Tools.convertSecondsToTime(item.time, Tools.FMT_HM_SHORT)
+        duration.text =Tools.convertSecondsToTime(item.duration, Tools.FMT_HM_SHORT)
 
         if (idx < 0) {
             dialogTitle.text = "Ajouter une activité"
@@ -574,7 +566,6 @@ class SettingsActivity : AppCompatActivity() {
             true
         }
 
-
         btnCancel.setOnClickListener { dialog.dismiss() }
         btnOk.setOnClickListener(View.OnClickListener {
             if (name.text.toString().isEmpty()) {
@@ -604,7 +595,7 @@ class SettingsActivity : AppCompatActivity() {
 
     fun activityDelete(activity: IActivity) {
         if (user.settings.activities.count() <= 1) {
-            Snackbar.make(context, viewUser, "Can't delete last record", Snackbar.LENGTH_SHORT)
+            Snackbar.make(context, viewUser, "Impossible de supprimer le dernier enregistrement", Snackbar.LENGTH_SHORT)
                 .show()
             return
         }
@@ -631,11 +622,11 @@ class SettingsActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    fun toggleVisible(view: View) {
+    private fun toggleVisible(view: View) {
         view.isVisible = !view.isVisible
     }
 
-    fun showMessage(message: String) {
+    private fun showMessage(message: String) {
         this@SettingsActivity.runOnUiThread(java.lang.Runnable {
             Snackbar.make(context, viewUser, message, Snackbar.LENGTH_SHORT).show()
         })
@@ -663,10 +654,9 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    fun convertirStrToSec(strToConvert: String): Int {
+    private fun convertirStrToSec(strToConvert: String): Int {
         var h = strToConvert.subSequence(0, 2).toString().toInt()
         var m = strToConvert.subSequence(3, 5).toString().toInt()
         return (h * 3600) + (m * 60)
     }
-
 }

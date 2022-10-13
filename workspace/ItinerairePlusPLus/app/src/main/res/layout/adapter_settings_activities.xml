@@ -29,8 +29,7 @@
             app:iconPadding="0dp"
             android:paddingStart="2dp"
             android:paddingEnd="2dp"
-            app:icon="@drawable/ic_edit"
-            />
+            app:icon="@drawable/ic_edit"/>
         <Button
             android:id="@+id/setting_activity_btn_delete"
             android:layout_width="30dp"
@@ -45,8 +44,7 @@
             android:paddingStart="2dp"
             android:paddingEnd="2dp"
             app:icon="@drawable/ic_delete"
-            android:backgroundTint="@color/design_default_color_error"
-            />
+            android:backgroundTint="@color/design_default_color_error"/>
     </LinearLayout>
 
 </LinearLayout>

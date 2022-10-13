@@ -1,8 +1,6 @@
 package classes.settings
 
 import android.os.Parcelable
-import dbfirestore.FsAddress
-import dbfirestore.FsCoord
 import interfaces.user.IAddress
 import interfaces.user.ICoord
 import interfaces.user.IDestination
@@ -22,5 +20,4 @@ class Destination(
     override var trip_time: Int = 0,
     override var trip_meters: Int = 0,
     override var steps: @RawValue ArrayList<IStep>? = ArrayList<IStep>(),
-
-    ) : IDestination(), Parcelable
+) : IDestination(), Parcelable

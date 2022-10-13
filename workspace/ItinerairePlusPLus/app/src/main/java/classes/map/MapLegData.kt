@@ -1,7 +1,6 @@
 package classes.map
 
 import classes.settings.Coord
-import interfaces.user.ICoord
 
 class MapLegData (
     var legDistance:Int=0,

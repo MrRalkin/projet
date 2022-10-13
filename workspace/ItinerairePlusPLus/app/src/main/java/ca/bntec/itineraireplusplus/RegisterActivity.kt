@@ -24,7 +24,7 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var userEmailEdt: TextInputEditText
     lateinit var loginTV: TextView
     lateinit var registerBtn: Button
-    val userManager = AppGlobal.instance.userManager
+    private val userManager = AppGlobal.instance.userManager
     lateinit var loadingPB: ProgressBar
     lateinit var msgShow: Toast
 
@@ -33,7 +33,6 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
         msgShow = Toast.makeText(this, "", Toast.LENGTH_SHORT)
 
-        // initializing all our variables.
         userNameEdt = findViewById(R.id.idEdtUserName)
         userEmailEdt = findViewById(R.id.idEdtEmail)
         passwordEdt = findViewById(R.id.idEdtPassword)
@@ -43,79 +42,52 @@ class RegisterActivity : AppCompatActivity() {
         registerBtn = findViewById(R.id.idBtnRegister)
 
 
-        // adding on click for login tv.
-        loginTV.setOnClickListener { // opening a login activity on clicking login text.
+        loginTV.setOnClickListener {
             val i = Intent(this, LoginActivity::class.java)
             startActivity(i)
         }
 
-
-        // adding click listener for register button.
         registerBtn.setOnClickListener {
-            // hiding our progress bar.
             loadingPB.visibility = View.VISIBLE
 
-            // getting data from our edit text.
             val userName = userNameEdt.text.toString()
             val pwd = passwordEdt.text.toString()
             val cnfPwd = confirmPwdEdt.text.toString()
             val email = userEmailEdt.text.toString()
-            // checking if the password and confirm password is equal or not.
             if (pwd != cnfPwd) {
-                showMessage(
-                    "Please check both having same password..",
-                   )
-            } else if (TextUtils.isEmpty(userName) && TextUtils.isEmpty(email) && TextUtils.isEmpty(
-                    pwd
-                ) && TextUtils.isEmpty(
-                    cnfPwd
-                )
-            ) {
-
-                // checking if the text fields are empty or not.
-                showMessage(
-                    "Please enter your credentials.."
-                )
-
+                showMessage("Veuillez vérifier que les deux mot de passe sont identiques")
+                loadingPB.visibility = View.GONE
+            } else if (TextUtils.isEmpty(userName) && TextUtils.isEmpty(email) && TextUtils.isEmpty(pwd)
+                && TextUtils.isEmpty(cnfPwd)) {
+                showMessage("Veuillez saisir vos identifiants...")
+                loadingPB.visibility = View.GONE
             } else {
-
-
                 MainScope().launch(Dispatchers.IO) {
-
                     val result =
                         async { userManager.userRegister(Register(userName, email, pwd)) }.await()
                     if (result.isSuccess) {
 
-                        // in on success method we are hiding our progress bar and opening a login activity.
                         this@RegisterActivity.runOnUiThread(java.lang.Runnable {
                             loadingPB.visibility = View.GONE
-                            showMessage("User Registered..")
+                            showMessage("Utilisateur enregistré...")
 
-
-                        val i = Intent(this@RegisterActivity, MainActivity::class.java)
-                        startActivity(i)
-                        finish()
+                            val i = Intent(this@RegisterActivity, MainActivity::class.java)
+                            startActivity(i)
+                            finish()
                         })
                     } else {
 
-                        // in else condition we are displaying a failure toast message.
-
                         this@RegisterActivity.runOnUiThread(java.lang.Runnable {
                             loadingPB.visibility = View.GONE
-                            showMessage("Fail to register user..")
+                            showMessage("L'enregistrement de l'utilisateur a échoué...")
                         })
-
                     }
-
                 }
-
             }
         }
-
     }
 
-
-    fun showMessage(message: String) {
+    private fun showMessage(message: String) {
         msgShow.setText(message)
         msgShow.show()
 

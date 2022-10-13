@@ -48,7 +48,6 @@
             android:drawableTint="@color/white"
             android:paddingStart="2dp"
             android:paddingEnd="2dp"  />
-
     </LinearLayout>
 
     <TextView

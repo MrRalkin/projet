@@ -93,29 +93,22 @@ class CreateSteps {
             var currentTime = 0
 
             var indexForCoord = 0
-//            var c:Coord
             while (indexForCoord < listOfCoord.size) {
 
-//                c = listOfCoord[indexForCoord]
-
-//                println("==>> $indexForCoord: ${c.latitude},${c.longitude}")
                 indexForCoord++
 
                 if ((indexForCoord % nbCoordOneKm).toInt() == 0) {
 
                     currentKm++
-//                    println("==>> km   : $currentKm")
                 }
                 if ((indexForCoord % nbCoordOneMinute).toInt() == 0) {
 
                     currentTime++
-//                    println("==>> time : $currentTime")
                 }
 
                 if (currentKm == currentUserKm) {
 
                     currentUserKm += userKm
-//                    println("==>> currentUserKm : $currentUserKm")
                     listOfCoordToKeep[indiceKm] = true
                 }
 
@@ -123,9 +116,6 @@ class CreateSteps {
 
                     currentUserDormir += userDormir
                     currentUserKm = (currentKm + userKm)
-
-//                    println("==>> currentUserDormir : $currentUserDormir")
-//                    println("==>> currentUserKm     : $currentUserKm")
 
                     listOfCoordToKeep[indiceDormir] = true
                     listOfCoordToKeep[indiceKm] = true
@@ -135,8 +125,6 @@ class CreateSteps {
 
                     currentUserManger += userManger
                     currentUserKm = (currentKm + userKm)
-//                    println("==>> currentUserManger : $currentUserManger")
-//                    println("==>> currentUserKm     : $currentUserKm")
 
                     listOfCoordToKeep[indiceManger] = true
                     listOfCoordToKeep[indiceKm] = true
@@ -156,24 +144,12 @@ class CreateSteps {
                     }
 
                     val step = addCoordToStep(++stepCount, fromCoord, toCoord)
-//                    println("==============================================================>>")
-//                    println("==>> ADD STEP: $stepCount: ${toCoord.latitude},${toCoord.longitude}")
-//                    println("==>> km   : $currentKm")
-//                    println("==>> time : $currentTime")
-//                    println("==>> currentUserKm : $currentUserKm")
-//                    println("==>> currentUserDormir : $currentUserDormir")
-//                    println("==>> currentUserManger : $currentUserManger")
-//                    println("==>>")
 
                     step.trip_time = (currentTime * 60)
                     dest.trip_time = step.trip_time
                     step.activities = addActivityToStep(settings as Settings, listOfCoordToKeep)
 
                     dest.steps!!.add(step)
-
-//                    for (i in 0 until step.activities!!.size) {
-//                        dest.trip_time += step.activities!![i].duration
-//                    }
 
                     fromCoord = copyCoord(toCoord)
 
@@ -188,14 +164,6 @@ class CreateSteps {
 
                 val step = addCoordToStep(++stepCount, fromCoord, toCoord)
 
-//                println("==============================================================>>")
-//                println("==>> ADD STEP: $stepCount: ${toCoord.latitude},${toCoord.longitude}")
-//                println("==>> km   : $currentKm")
-//                println("==>> time : $currentTime")
-//                println("==>> currentUserKm : $currentUserKm")
-//                println("==>> currentUserDormir : $currentUserDormir")
-//                println("==>> currentUserManger : $currentUserManger")
-//                println("==>>")
                 step.trip_time = ((listOfCoord.size / nbCoordOneMinute) * 60).toInt()
                 dest.trip_time = step.trip_time
                 step.activities = addActivityToStep(settings as Settings, listOfCoordToKeep)
@@ -260,7 +228,12 @@ class CreateSteps {
             return c
         }
 
-
+        /***
+         * Pour test
+         *
+         * Permet de dumper les infos d'une destination.
+         *
+         */
 //        fun dumpDestination(d: Destination) {
 //            println("Destination     : ${d.name}")
 //            println("Temps (seconds) : ${Tools.convertSecondsToTime(d.trip_time, Tools.FMT_OTHER)}")

@@ -9,19 +9,16 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import classes.*
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import classes.AppGlobal
 import interfaces.user.IUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-
 class MainActivity : AppCompatActivity() {
-    val db = AppGlobal.instance.userManager
+    private val db = AppGlobal.instance.userManager
     lateinit var user: IUser
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,54 +50,26 @@ class MainActivity : AppCompatActivity() {
                 })
             }
         }
-
-      /*  var btnSetData = findViewById<Button>(R.id.setData)
-        btnSetData.setOnClickListener() {
-            TestData().setTestData(user)
-        }
-
-        var btnResetDate = findViewById<Button>(R.id.getData)
-        btnResetDate.setOnClickListener() {
-            resetSettings()
-        }*/
-
-    }
-
-    fun resetSettings() {
-        MainScope().launch(Dispatchers.IO) {
-            var result = async { db.resetSettingsToDefault() }.await()
-            var t = result.isSuccess
-            println("********************* RESET SETTINGS *********************")
-            println("*** >>> " + if (result.isSuccess) {result.successMessage} else {result.errorMessage})
-            println("**********************************************************")
-        }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // adding a click listener for option selected on below line.
-        val id = item.itemId
-        return when (id) {
+        return when (item.itemId) {
             R.id.idSettings->{
                 showSettings()
                 true
             }
-
             R.id.idDestinations->{
                 showDestinations()
                 true
             }
-          
             R.id.idAddDestination->{
                 addDestinations()
                 true
             }
             R.id.idLogOut -> {
-                // displaying a toast message on user logged out inside on click.
-                Toast.makeText(applicationContext, "User Logged Out", Toast.LENGTH_LONG).show()
-                // on below line we are signing out our user.
+                Toast.makeText(applicationContext, "Utilisateur déconnecté", Toast.LENGTH_LONG).show()
                 MainScope().launch(Dispatchers.IO) {
-                    var result = async { db.userLogout() }.await()
+                    async { db.userLogout() }.await()
                     val i = Intent(this@MainActivity, LoginActivity::class.java)
                     startActivity(i)
                     finish()
@@ -111,17 +80,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    fun showSettings(){
+    private fun showSettings(){
         val i = Intent(this@MainActivity, SettingsActivity::class.java)
         startActivity(i)
     }
 
-    fun showDestinations(){
+    private fun showDestinations(){
         val i = Intent(this@MainActivity, DestinationsActivity::class.java)
         startActivity(i)
     }
-    fun addDestinations(){
+    private fun addDestinations(){
         val i = Intent(this@MainActivity, AddDestinationActivity::class.java)
         startActivity(i)
     }
@@ -131,12 +99,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun recentesDestinations(){
-        // use arrayadapter and define an array
         val arrayAdapter: ArrayAdapter<*>
-//        val previousdest = arrayOf(
-//            user.destinations?.get(0)?.name,  user.destinations?.get(1)?.name,  user.destinations?.get(2)?.name,
-//            user.destinations?.get(3)?.name,  user.destinations?.get(4)?.name
-//        )
 
         val previousdest = ArrayList<String>()
 
@@ -149,7 +112,6 @@ class MainActivity : AppCompatActivity() {
                 break
         }
 
-        // access the listView from xml file
         var mListView = findViewById<ListView>(R.id.lv_recentes_destinations)
         arrayAdapter = ArrayAdapter(this,
             R.layout.listrow, R.id.textView2,previousdest)
@@ -158,9 +120,9 @@ class MainActivity : AppCompatActivity() {
         mListView.setBackgroundColor(Color.argb(80,0,0 ,0))
     }
 
-    fun newDestBtnListener() {
-        var main_adddestination_btn = findViewById<Button>(R.id.main_adddestination_btn)
-        main_adddestination_btn.setOnClickListener { // opening a login activity on clicking login text.
+    private fun newDestBtnListener() {
+        val mainAddDestinationBtn = findViewById<Button>(R.id.main_adddestination_btn)
+        mainAddDestinationBtn.setOnClickListener {
             val i = Intent(this, AddDestinationActivity::class.java)
             startActivity(i)
         }
@@ -200,6 +162,5 @@ class MainActivity : AppCompatActivity() {
         }
         dialog.show()
     }
-
 }
 

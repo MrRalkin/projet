@@ -38,10 +38,10 @@ class MapData {
                 /** Traversing all legs  */
                 for (j in 0 until jLegs.length()) {
 
-                    var duration: JSONObject = (jLegs[j] as JSONObject).getJSONObject("duration")
-                    var distaance: JSONObject = (jLegs[j] as JSONObject).getJSONObject("distance")
+                    val duration: JSONObject = (jLegs[j] as JSONObject).getJSONObject("duration")
+                    val distance: JSONObject = (jLegs[j] as JSONObject).getJSONObject("distance")
                     mapLegData.legDuration = duration.getInt("value")
-                    mapLegData.legDistance = distaance.getInt("value")
+                    mapLegData.legDistance = distance.getInt("value")
 
                     jSteps = (jLegs[j] as JSONObject).getJSONArray("steps")
                     /** Traversing all steps  */
@@ -71,34 +71,32 @@ class MapData {
         } catch (e: JSONException) {
             e.printStackTrace()
         } catch (e: Exception) {
+            e.printStackTrace()
         }
         return routes
     }
 
-
     suspend fun getActivityPlaces(coord: Coord, type: String, key: String, step:Int): ArrayList<NearPlace> {
-        var result = ArrayList<NearPlace>()
+        val result = ArrayList<NearPlace>()
 
         val uLocation = "location=" + coord.latitude + "," + coord.longitude
         val uKey = "key=$key"
         val uRadius = "radius=30000"
-        var uType = "type=$type"
+        val uType = "type=$type"
         val uOutput = "json"
         val uParams =
             "$uLocation&$uRadius&$uType&$uKey"
 
-        var link = "https://maps.googleapis.com/maps/api/place/nearbysearch/$uOutput?$uParams"
-
+        val link = "https://maps.googleapis.com/maps/api/place/nearbysearch/$uOutput?$uParams"
 
         try {
-            var data = downloadUrl(link)
-            var t = JSONObject(data)
-            var places: JSONArray? = null
+            val data = downloadUrl(link)
+            val t = JSONObject(data)
             if (t["status"] != null && t["status"] == "OK") {
-                var results = t.getJSONArray("results")
+                val results = t.getJSONArray("results")
                 for (idx in 0 until results.length()) {
-                    var line: JSONObject = results[idx] as JSONObject
-                    var nearPlace: NearPlace = NearPlace()
+                    val line: JSONObject = results[idx] as JSONObject
+                    val nearPlace: NearPlace = NearPlace()
                     nearPlace.step=step
                     nearPlace.name = line.getString("name")
                     nearPlace.business_status = line.getString("business_status")
@@ -121,7 +119,7 @@ class MapData {
                         line.getJSONObject("geometry").getJSONObject("viewport")
                             .getJSONObject("southwest").getString("lng")
                     nearPlace.type = type
-                    var i: Int = getDistance(coord, nearPlace.location!!, uKey)
+                    val i: Int = getDistance(coord, nearPlace.location!!, uKey)
                     nearPlace.distance = i
                     result.add(nearPlace)
 
@@ -141,14 +139,11 @@ class MapData {
         val org = "origins=${origins.latitude},${origins.longitude}"
         val dest = "destinations=${destinations.latitude},${destinations.longitude}"
         val output = "json"
-        val parameters =
-            "$org&$dest&&$apiKey"
-        var link =
-            "https://maps.googleapis.com/maps/api/distancematrix/$output?$parameters"
+        val parameters = "$org&$dest&&$apiKey"
+        val link = "https://maps.googleapis.com/maps/api/distancematrix/$output?$parameters"
         try {
-            var data = downloadUrl(link)
-//            var distance:Int=0
-            var rows = JSONObject(data).getJSONArray("rows")
+            val data = downloadUrl(link)
+            val rows = JSONObject(data).getJSONArray("rows")
                 for(row in 0 until rows.length()){
 
                     var elements= (rows[row] as JSONObject ).getJSONArray("elements")
@@ -158,25 +153,9 @@ class MapData {
                     }
 
                 }
-
-
-
-//            var distance:Int=0
-//            for(idx in 0 until t.length()){
-//                var line: JSONObject = t[idx] as JSONObject
-//                var i = line.getJSONObject("distance").getInt("value")
-//                result+=i
-//            }
-            //result = t.getJSONObject("distance").getInt("value")
-
-
-
-
-
         } catch (e: Exception) {
             println(e.message)
         }
-
 
         return result
     }
@@ -198,7 +177,6 @@ class MapData {
             }
             data = sb.toString()
             br.close()
-//            Log.d("data", data)
         } catch (e: Exception) {
             Log.d("Exception", e.toString())
         } finally {
@@ -242,5 +220,4 @@ class MapData {
         }
         return poly
     }
-
 }

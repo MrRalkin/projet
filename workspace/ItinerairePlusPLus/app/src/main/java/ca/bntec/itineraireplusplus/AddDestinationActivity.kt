@@ -138,7 +138,6 @@ class AddDestinationActivity : AppCompatActivity() {
     // Savoir le type de vehicule choisi par l'utilisateur et mettre a jour les donnees dans l'Array appGlobal
     private fun radioButtonStatus() {
 
-
         val vehicle = user.settings.vehicles
 
         if (vehicle.any { it.energy == appGlobal.VEHICLE_ESSENCE }) {
@@ -352,7 +351,7 @@ class AddDestinationActivity : AppCompatActivity() {
             .setTimeFormat(TimeFormat.CLOCK_24H)
             .build()
 
-        materialTimePicker.show(supportFragmentManager, "Tab2Fragment")
+        materialTimePicker.show(supportFragmentManager, "SSNTeam")
 
         materialTimePicker.addOnPositiveButtonClickListener {
 

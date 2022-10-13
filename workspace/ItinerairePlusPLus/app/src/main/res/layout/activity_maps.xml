@@ -4,9 +4,8 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    <fragment
         xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
@@ -26,8 +25,7 @@ android:layout_height="match_parent">
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="8dp"
-            android:text="Voir les étapes"
-            />
+            android:text="Voir les étapes"/>
 
         <Button
             android:id="@+id/btn_save_data"
@@ -35,10 +33,6 @@ android:layout_height="match_parent">
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
-            android:text="Sauvegarder les étapes"
-            />
+            android:text="Sauvegarder les étapes"/>
     </LinearLayout>
-
 </RelativeLayout>
-
-    <!--        android:gravity="center|top"-->

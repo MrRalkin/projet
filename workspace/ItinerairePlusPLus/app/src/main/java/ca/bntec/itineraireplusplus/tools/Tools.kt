@@ -50,8 +50,6 @@ class Tools {
             seconds -= m * MINUTES
             val s = seconds
 
-//            stringFormatted = String.format("%d semaine(s) %d jour(s) %d heure(s) %d minute(s) %d seconde(s)", w, j , h , m , s);
-
             val sh = if(h > 1) "s" else ""
             val sm = if(m > 1) "s" else ""
             val ss = if(s > 1) "s" else ""

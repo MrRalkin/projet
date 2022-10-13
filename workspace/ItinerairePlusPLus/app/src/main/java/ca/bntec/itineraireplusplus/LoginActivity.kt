@@ -22,7 +22,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var passwordEdt: TextInputEditText
     lateinit var loginBtn: Button
     lateinit var newUserTV: TextView
-    val userManager = AppGlobal.instance.userManager
+    private val userManager = AppGlobal.instance.userManager
     lateinit var loadingPB: ProgressBar
     lateinit var msgShow: Toast
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,16 +44,14 @@ class LoginActivity : AppCompatActivity() {
 
 
         loginBtn.setOnClickListener(View.OnClickListener {
-            // hiding our progress bar.
             loadingPB.visibility = View.VISIBLE
-            // getting data from our edit text on below line.
             val email = userNameEdt.text.toString()
             val password = passwordEdt.text.toString()
-            // on below line validating the text input.
             if (TextUtils.isEmpty(email) && TextUtils.isEmpty(password)) {
                 showMessage(
-                    "Please enter your credentials.."
+                    "Veuillez saisir vos identifiants"
                 )
+                loadingPB.visibility = View.GONE
                 return@OnClickListener
             }
 
@@ -62,10 +60,9 @@ class LoginActivity : AppCompatActivity() {
                 if (result.isSuccess) {
                     async { userManager.userGetCurrent() }.await()
                     this@LoginActivity.runOnUiThread(java.lang.Runnable {
-                        showMessage("Login Successful..")
+                        showMessage("Authentification réussi ...")
                         loadingPB.visibility = View.GONE
 
-                        // on below line we are opening our mainactivity.
                         val i = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(i)
                         finish()
@@ -74,18 +71,15 @@ class LoginActivity : AppCompatActivity() {
 
                     this@LoginActivity.runOnUiThread(java.lang.Runnable {
                         loadingPB.visibility = View.GONE
-                        showMessage("Please enter valid user credentials..")
+                        showMessage("Veuillez entrer des informations d'identification d'utilisateur valides")
                     })
                 }
             }
-
-
-        })
+       })
     }
 
     fun showMessage(message: String) {
         msgShow.setText(message)
         msgShow.show()
-
     }
 }

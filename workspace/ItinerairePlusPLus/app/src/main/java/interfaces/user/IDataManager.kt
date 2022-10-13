@@ -31,5 +31,4 @@ interface IDataManager {
     suspend fun getMapRawData(id:String):IMapRawData
     suspend fun delMapRawData(id:String):ActionResult
     suspend fun delExpiredRawData()
-
 }

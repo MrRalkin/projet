@@ -8,7 +8,6 @@
     android:background="@color/black_shade_1"
     tools:context=".LoginActivity">
 
-    <!--edit text for user name-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/idTILUserName"
         style="@style/LoginTextInputLayoutStyle"
@@ -34,7 +33,6 @@
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--edit text for password-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/idTILPassword"
         style="@style/LoginTextInputLayoutStyle"
@@ -61,7 +59,6 @@
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--button for login-->
     <Button
         android:id="@+id/idBtnLogin"
         android:layout_width="match_parent"
@@ -75,7 +72,6 @@
         android:textAllCaps="false"
         />
 
-    <!--text view for creating a new account-->
     <TextView
         android:id="@+id/idTVNewUser"
         android:layout_width="match_parent"
@@ -90,7 +86,6 @@
         android:textColor="@color/white"
         android:textSize="18sp" />
 
-    <!--progress-bar for loading indicator-->
     <ProgressBar
         android:id="@+id/idPBLoading"
         android:layout_width="wrap_content"

@@ -14,5 +14,4 @@ class Point(
     override var name: String = "",
     override var coord: @RawValue ICoord ?= FsCoord(),
     override var address: @RawValue  IAddress? = FsAddress(),
-
-    ) : IPoint(), Parcelable
+) : IPoint(), Parcelable

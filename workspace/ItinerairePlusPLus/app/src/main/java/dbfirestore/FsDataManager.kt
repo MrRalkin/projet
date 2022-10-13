@@ -2,8 +2,6 @@ package dbfirestore
 
 import classes.ActionResult
 import classes.AppGlobal
-import classes.map.NearPlace
-import classes.settings.Activity
 import classes.settings.Destination
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -17,9 +15,7 @@ import interfaces.user.*
 import kotlinx.coroutines.tasks.await
 
 class FsDataManager : IDataManager {
-    private fun dbInit() {
-
-    }
+    private fun dbInit() {}
 
     override suspend fun userIsAuthenticated(): Boolean {
 
@@ -67,8 +63,6 @@ class FsDataManager : IDataManager {
                 result.isSuccess = false
                 result.errorMessage = MESSAGE_USER_LOGIN_ERROR
             }
-
-
         } catch (e: Exception) {
             println(e.message)
             result.isSuccess = false
@@ -107,9 +101,7 @@ class FsDataManager : IDataManager {
 
             var snp: DocumentSnapshot? =
                 db.collection(FsContract.TbUser.COLLECTION_NAME).document(id).get().await()
-            //.whereEqualTo(FsContract.FsUser.COLUMN_EMAIL,email).get().await()
             val user: IUser = FsUser()
-            //for (item in snp.documents) {
             if (snp != null) {
 
                 user.id = id
@@ -198,7 +190,6 @@ class FsDataManager : IDataManager {
         try {
             var snp: QuerySnapshot =
                 db.collection(FsContract.TbRole.COLLECTION_NAME).get().await()
-            //.whereEqualTo(FsContract.FsRole.COLUMN_ID, id).get().await()
 
             for (item in snp.documents) {
                 if (item != null) {
@@ -270,7 +261,7 @@ class FsDataManager : IDataManager {
     }
 
     override suspend fun roleDelete(role: IRole): ActionResult {
-        var result = ActionResult(true, MESSAGE_USER_DELETED, "")
+        val result = ActionResult(true, MESSAGE_USER_DELETED, "")
         try {
             db.collection(FsContract.TbRole.COLLECTION_NAME).document(role.id.toString())
                 .delete()
@@ -283,7 +274,7 @@ class FsDataManager : IDataManager {
     }
 
     override suspend fun roleAdd(role: IRole): ActionResult {
-        var result = ActionResult(true, MESSAGE_ROLE_CREATED, "")
+        val result = ActionResult(true, MESSAGE_ROLE_CREATED, "")
         try {
             db.collection(FsContract.TbRole.COLLECTION_NAME).document(role.id.toString())
                 .set(role)
@@ -296,7 +287,7 @@ class FsDataManager : IDataManager {
     }
 
     override suspend fun roleUpdate(role: IRole): ActionResult {
-        var result = ActionResult(true, MESSAGE_ROLE_UPDATED, "")
+        val result = ActionResult(true, MESSAGE_ROLE_UPDATED, "")
         try {
             db.collection(FsContract.TbRole.COLLECTION_NAME).document(role.id.toString())
                 .set(role)
@@ -309,7 +300,7 @@ class FsDataManager : IDataManager {
     }
 
     override suspend fun roleAssign(user: IUser, role: IRole): ActionResult {
-        var result = ActionResult(true, MESSAGE_ROLE_ASSIGNED, "")
+        val result = ActionResult(true, MESSAGE_ROLE_ASSIGNED, "")
         try {
             user.role_id = role.id
             db.collection(FsContract.TbUser.COLLECTION_NAME).document(user.email).set(user)
@@ -322,7 +313,7 @@ class FsDataManager : IDataManager {
     }
 
     override suspend fun getPredefinedDestinations(): ArrayList<IPredefinedDestination> {
-        var destinations = ArrayList<IPredefinedDestination>()
+        val destinations = ArrayList<IPredefinedDestination>()
 
         try {
             var snp: QuerySnapshot =
@@ -350,14 +341,12 @@ class FsDataManager : IDataManager {
     }
 
     override suspend fun setPredefinedDestinations(destinations: ArrayList<IPredefinedDestination>): ActionResult {
-        var result = ActionResult(true, MESSAGE_USER_UPDATED, "")
+        val result = ActionResult(true, MESSAGE_USER_UPDATED, "")
         try {
-
             for (dest in destinations) {
                 db.collection(FsContract.TbPredefinedDestination.COLLECTION_NAME)
                     .document(dest.name).set(dest)
             }
-
         } catch (e: Exception) {
             println(e.message)
             result.isSuccess = false
@@ -367,7 +356,7 @@ class FsDataManager : IDataManager {
     }
 
     private fun getDestination(item: HashMap<String, Any>): FsDestination {
-        var result = FsDestination()
+        val result = FsDestination()
         try {
             result.destinationId = item[FsContract.TbDestination.FD_ID].toString()
             result.name = item[FsContract.TbDestination.FD_NAME].toString()
@@ -385,7 +374,7 @@ class FsDataManager : IDataManager {
             val items =
                 item[FsContract.TbDestination.FD_STEPS] as ArrayList<HashMap<String, FsStep>>
 
-            var steps = ArrayList<IStep>()
+            val steps = ArrayList<IStep>()
             for (stp in items) {
                 steps.add(getStep(stp as HashMap<String, Any>))
             }
@@ -400,7 +389,7 @@ class FsDataManager : IDataManager {
     }
 
     private fun getStep(item: HashMap<String, Any>): FsStep {
-        var result = FsStep()
+        val result = FsStep()
         try {
             result.step = item[FsContract.TbStep.FD_STEP].toString().toInt()
             result.start = getPoint(item[FsContract.TbStep.FD_START] as HashMap<String, Any>)
@@ -409,7 +398,7 @@ class FsDataManager : IDataManager {
             val items =
                 item[FsContract.TbStep.FD_ACTIVITIES] as ArrayList<HashMap<String, FsActivity>>
 
-            var activities = ArrayList<IActivity>()
+            val activities = ArrayList<IActivity>()
             for (act in items) {
                 activities.add(getActivity(act as HashMap<String, Any>))
             }
@@ -422,7 +411,7 @@ class FsDataManager : IDataManager {
     }
 
     private fun getPoint(item: HashMap<String, Any>): FsPoint {
-        var result = FsPoint()
+        val result = FsPoint()
         try {
             result.name = item[FsContract.TbPoint.FD_NAME].toString()
             result.coord = getCoord(item[FsContract.TbPoint.FD_COORD] as HashMap<String, Any>)
@@ -436,7 +425,7 @@ class FsDataManager : IDataManager {
     }
 
     private fun getActivity(item: HashMap<String, Any>): FsActivity {
-        var result = FsActivity()
+        val result = FsActivity()
         try {
             result.activity = item[FsContract.TbActivity.FD_ACTIVITY].toString().toInt()
             result.name = item[FsContract.TbActivity.FD_NAME].toString()
@@ -445,7 +434,7 @@ class FsDataManager : IDataManager {
 
             val items =
                 item[FsContract.TbActivity.FD_NEARPLACES] as ArrayList<HashMap<String, FsNearPlace>>
-            var places = ArrayList<INearPlace>()
+            val places = ArrayList<INearPlace>()
             for (pls in items) {
                 places.add(getNearPlace(pls as HashMap<String, Any>))
             }
@@ -459,7 +448,7 @@ class FsDataManager : IDataManager {
     }
 
     private fun getNearPlace(item: HashMap<String, Any>): FsNearPlace {
-        var result = FsNearPlace()
+        val result = FsNearPlace()
         try {
             result.business_status = item[FsContract.TbNearPlace.FD_BUSINESS_STATUS].toString()
             result.location =
@@ -483,7 +472,7 @@ class FsDataManager : IDataManager {
     }
 
     private fun getCoord(item: HashMap<String, Any>): FsCoord {
-        var result = FsCoord()
+        val result = FsCoord()
         try {
             result.latitude = item[FsContract.TbCoord.FD_LATITUDE].toString()
             result.longitude = item[FsContract.TbCoord.FD_LATITUDE].toString()
@@ -495,7 +484,7 @@ class FsDataManager : IDataManager {
     }
 
     private fun getAddress(item: HashMap<String, Any>): FsAddress {
-        var result = FsAddress()
+        val result = FsAddress()
         try {
             result.address = item[FsContract.TbAddress.FD_ADDRESS].toString()
             result.city = item[FsContract.TbAddress.FD_CITY].toString()
@@ -511,7 +500,7 @@ class FsDataManager : IDataManager {
     }
 
     private fun getVehicle(item: HashMap<String, Any>): FsVehicle {
-        var result = FsVehicle()
+        val result = FsVehicle()
         try {
             result.type = item[FsContract.TbVehicle.FD_TYPE].toString()
             result.energy = item[FsContract.TbVehicle.FD_ENERGY].toString()
@@ -526,7 +515,7 @@ class FsDataManager : IDataManager {
     }
 
     private fun getEnergy(item: HashMap<String, Any>): FsEnergy {
-        var result = FsEnergy()
+        val result = FsEnergy()
         try {
             result.type = item[FsContract.TbEnergy.FD_TYPE].toString()
             result.price = item[FsContract.TbEnergy.FD_PRICE].toString().toDouble()
@@ -541,7 +530,7 @@ class FsDataManager : IDataManager {
     override suspend fun resetSettingsToDefault(): ActionResult {
         var result = ActionResult(true, MESSAGE_RESET_SETTING_SUCCESS, "")
 
-        var settings = getSettingsDefault()
+        val settings = getSettingsDefault()
         if (curUser != null) {
             curUser!!.settings = settings
         }
@@ -550,7 +539,7 @@ class FsDataManager : IDataManager {
     }
 
     override suspend fun setMapRawData(rawData: IMapRawData): ActionResult {
-        var result = ActionResult(true, MESSAGE_SET_MAP_RAW_DATA, "")
+        val result = ActionResult(true, MESSAGE_SET_MAP_RAW_DATA, "")
         try {
             db.collection(FsContract.TbMapRawData.COLLECTION_NAME).document(rawData.destinationId)
                 .set(rawData)
@@ -563,9 +552,9 @@ class FsDataManager : IDataManager {
     }
 
     override suspend fun getMapRawData(id: String): IMapRawData {
-        var result: IMapRawData = FsMapRawData("", 0, "")
+        val result: IMapRawData = FsMapRawData("", 0, "")
         try {
-            var snp: DocumentSnapshot? =
+            val snp: DocumentSnapshot? =
                 db.collection(FsContract.TbMapRawData.COLLECTION_NAME).document(id).get().await()
 
             if (snp != null) {
@@ -581,7 +570,7 @@ class FsDataManager : IDataManager {
     }
 
     override suspend fun delMapRawData(id: String): ActionResult {
-        var result = ActionResult(true, MESSAGE_DELETE_MAP_RAW_DATA, "")
+        val result = ActionResult(true, MESSAGE_DELETE_MAP_RAW_DATA, "")
         try {
             db.collection(FsContract.TbMapRawData.COLLECTION_NAME).document(id).delete()
         } catch (e: Exception) {
@@ -597,7 +586,7 @@ class FsDataManager : IDataManager {
     }
 
     private fun getSettings(item: HashMap<String, Any>): FsSettings {
-        var result = FsSettings()
+        val result = FsSettings()
         result.vehicles = ArrayList<IVehicle>()
         result.activities = ArrayList<IActivity>()
         result.energies = ArrayList<IEnergy>()
@@ -625,7 +614,7 @@ class FsDataManager : IDataManager {
 
     private fun getSettingsDefault(): ISettings {
         val appGlobal = AppGlobal.instance
-        var result: ISettings = FsSettings()
+        val result: ISettings = FsSettings()
 
         result.energies = ArrayList<IEnergy>()
         result.activities = ArrayList<IActivity>()
@@ -668,18 +657,18 @@ class FsDataManager : IDataManager {
         val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
         private var roles = ArrayList<IRole>()
         private var curUser: IUser? = null
-        private val MESSAGE_USER_REGISTERED = "L'utilisateur a été créé."
-        private val MESSAGE_USER_SIGNIN = "L'utilisateur est connecté."
-        private val MESSAGE_USER_SIGNOUT = "L'utilisateur est déconnecté."
-        private val MESSAGE_USER_LOGIN_ERROR = "Connexion impossible"
-        private val MESSAGE_USER_UPDATED = "L'utilisateur a été mis-à-jour."
-        private val MESSAGE_USER_DELETED = "L'utilisateur a été supprimé."
-        private val MESSAGE_ROLE_CREATED = "Le rôle a été créé."
-        private val MESSAGE_ROLE_DELETED = "Le rôle a été supprimé."
-        private val MESSAGE_ROLE_UPDATED = "Le rôle a été mis-à-jour."
-        private val MESSAGE_ROLE_ASSIGNED = "Le rôle a été assigné."
-        private val MESSAGE_RESET_SETTING_SUCCESS = "Configuration par défaut mis-à-jour."
-        private val MESSAGE_SET_MAP_RAW_DATA = "Le map data a été suvgardé"
-        private val MESSAGE_DELETE_MAP_RAW_DATA = "Le map data a été supprimé"
+        private const val MESSAGE_USER_REGISTERED = "L'utilisateur a été créé."
+        private const val MESSAGE_USER_SIGNIN = "L'utilisateur est connecté."
+        private const val MESSAGE_USER_SIGNOUT = "L'utilisateur est déconnecté."
+        private const val MESSAGE_USER_LOGIN_ERROR = "Connexion impossible"
+        private const val MESSAGE_USER_UPDATED = "L'utilisateur a été mis-à-jour."
+        private const val MESSAGE_USER_DELETED = "L'utilisateur a été supprimé."
+        private const val MESSAGE_ROLE_CREATED = "Le rôle a été créé."
+        private const val MESSAGE_ROLE_DELETED = "Le rôle a été supprimé."
+        private const val MESSAGE_ROLE_UPDATED = "Le rôle a été mis-à-jour."
+        private const val MESSAGE_ROLE_ASSIGNED = "Le rôle a été assigné."
+        private const val MESSAGE_RESET_SETTING_SUCCESS = "Configuration par défaut mis-à-jour."
+        private const val MESSAGE_SET_MAP_RAW_DATA = "Le map data a été suvgardé"
+        private const val MESSAGE_DELETE_MAP_RAW_DATA = "Le map data a été supprimé"
     }
 }

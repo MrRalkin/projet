@@ -1,12 +1,9 @@
 package ca.bntec.itineraireplusplus
 
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import ca.bntec.itineraireplusplus.adapter.AdapterDestinations
-import ca.bntec.itineraireplusplus.adapter.AdapterSteps
 import classes.AppGlobal
 import interfaces.user.IUser
 import kotlinx.coroutines.Dispatchers
@@ -26,10 +23,10 @@ class DestinationsActivity: AppCompatActivity() {
         MainScope().launch(Dispatchers.IO) {
             user = async { db.userGetCurrent()!! }.await()
 
-            var lv_destinations = findViewById<ListView>(R.id.lv_destinations)
+            val lvDestinations = findViewById<ListView>(R.id.lv_destinations)
 
             val adapterDestinations = AdapterDestinations(this@DestinationsActivity, user.destinations)
-            lv_destinations.adapter = adapterDestinations
+            lvDestinations.adapter = adapterDestinations
         }
     }
 }

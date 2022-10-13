@@ -1,6 +1,5 @@
 package classes
 
-import android.media.audiofx.Equalizer.Settings
 import classes.settings.Destination
 import dbfirestore.FsDataManager
 import interfaces.user.IDataManager
@@ -10,7 +9,6 @@ import classes.settings.Settings as destSettings
 
 class AppGlobal private constructor() {
 
-    val TITRE_NOUVELLE_ACTIVITE = "Nouvelle destination"
     val ACTIVITY_ESSENCE = "Essence"
     val ACTIVITY_DORMIR = "Dormir"
     val ACTIVITY_MANGER = "Manger"

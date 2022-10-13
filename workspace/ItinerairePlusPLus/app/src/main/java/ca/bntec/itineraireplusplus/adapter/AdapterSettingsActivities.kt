@@ -1,5 +1,6 @@
 package ca.bntec.itineraireplusplus.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ class AdapterSettingsActivities(
     ArrayAdapter<IActivity>(mCtx, resource, items) {
 
 
+    @SuppressLint("SetTextI18n", "ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
         val layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)

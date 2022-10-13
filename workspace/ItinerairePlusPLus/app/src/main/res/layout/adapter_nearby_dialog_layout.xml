@@ -16,13 +16,11 @@
             android:id="@+id/tv_nearby_name"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="vide"
-            />
+            android:text="vide"/>
         <TextView
             android:id="@+id/tv_nearby_distance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="vide"
-            />
+            android:text="vide"/>
     </LinearLayout>
 </LinearLayout>

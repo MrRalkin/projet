@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".AddDestinationActivity">
 
-<!-- activity_add_destination -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_name"
         style="@style/LoginTextInputLayoutStyle"
@@ -60,8 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
-            android:text="253 ch du Richelieu, Qc, Canada"
-            android:hint="Depart"
+            android:text=""
+            android:hint="Départ"
             android:maxLength="255" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -89,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
-            android:text="Apple Park, Californie, USA"
+            android:text=""
             android:hint="Destination"
             android:maxLength="255" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -164,8 +163,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:orientation="horizontal"
-            android:layout_gravity="center"
-         >
+            android:layout_gravity="center">
 
             <CheckBox
                 android:id="@+id/checkboxManger"
@@ -178,7 +176,7 @@
             <TextView
                 android:id="@+id/pickTimeManger"
                 style="@style/TextAppearance.MaterialComponents.Body2"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_width="110dp"
                 android:layout_height="30dp"
                 android:text="Choisir Heure"
@@ -190,10 +188,10 @@
             <TextView
                 android:id="@+id/pickDurationManger"
                 style="@style/TextAppearance.MaterialComponents.Body2"
-                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
                 android:layout_width="110dp"
                 android:layout_height="30dp"
-                android:text="Choisir Duree"
+                android:text="Choisir Durée"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:textColor="@color/white"
@@ -225,7 +223,7 @@
             <TextView
                 android:id="@+id/pickTimeEssence"
                 style="@style/TextAppearance.MaterialComponents.Body2"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_width="110dp"
                 android:layout_height="30dp"
                 android:text="Choisir Heure"
@@ -237,10 +235,10 @@
             <TextView
                 android:id="@+id/pickDurationEssence"
                 style="@style/TextAppearance.MaterialComponents.Body2"
-                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
                 android:layout_width="110dp"
                 android:layout_height="30dp"
-                android:text="Choisir Duree"
+                android:text="Choisir Durée"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:textColor="@color/white"
@@ -270,7 +268,7 @@
             <TextView
                 android:id="@+id/pickTimeRecharge"
                 style="@style/TextAppearance.MaterialComponents.Body2"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_width="110dp"
                 android:layout_height="30dp"
                 android:text="Choisir Heure"
@@ -282,10 +280,10 @@
             <TextView
                 android:id="@+id/pickDurationRecharge"
                 style="@style/TextAppearance.MaterialComponents.Body2"
-                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
                 android:layout_width="110dp"
                 android:layout_height="30dp"
-                android:text="Choisir Duree"
+                android:text="Choisir Durée"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:textColor="@color/white"
@@ -312,7 +310,7 @@
             <TextView
                 android:id="@+id/pickTimeDormir"
                 style="@style/TextAppearance.MaterialComponents.Body2"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_width="110dp"
                 android:layout_height="30dp"
                 android:text="Choisir Heure"
@@ -324,10 +322,10 @@
             <TextView
                 android:id="@+id/pickDurationDormir"
                 style="@style/TextAppearance.MaterialComponents.Body2"
-                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
                 android:layout_width="110dp"
                 android:layout_height="30dp"
-                android:text="Choisir Duree"
+                android:text="Choisir Durée"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:textColor="@color/white"

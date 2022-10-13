@@ -37,7 +37,6 @@
                 android:text="@string/dialog_name"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
-
         </LinearLayout>
 
         <LinearLayout

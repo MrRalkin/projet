@@ -64,7 +64,7 @@
         <TextView
             android:id="@+id/dialog_pickTimeTitle"
             style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_width="110dp"
             android:layout_height="30dp"
             android:text="@string/dialog_pickTime"
@@ -75,7 +75,7 @@
         <TextView
             android:id="@+id/dialog_pickDurationTitle"
             style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
             android:layout_width="110dp"
             android:layout_height="30dp"
             android:text="@string/dialog_pickDuration"
@@ -99,7 +99,7 @@
         <TextView
             android:id="@+id/pickTimeActivity"
             style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_width="110dp"
             android:layout_height="30dp"
             android:text="00:00"
@@ -111,7 +111,7 @@
         <TextView
             android:id="@+id/pickDurationActivity"
             style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
             android:layout_width="110dp"
             android:layout_height="30dp"
             android:text="00:00"

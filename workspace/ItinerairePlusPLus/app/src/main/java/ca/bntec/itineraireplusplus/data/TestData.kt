@@ -13,6 +13,14 @@ class TestData {
     private val appGlobal = AppGlobal.instance
     private val db = appGlobal.userManager
 
+    /****
+     * Classe de test
+     *
+     * Utilisé uniquement pour injecter des données temporaire pour fin de tests.
+     *
+     * */
+
+
     fun setTestData(user: IUser) {
 
         val destinations = ArrayList<IDestination>()

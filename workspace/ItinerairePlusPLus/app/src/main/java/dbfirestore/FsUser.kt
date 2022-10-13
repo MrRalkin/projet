@@ -17,5 +17,4 @@ class FsUser(
     override var role_id: Int = 0,
     override var destinations: @RawValue ArrayList<IDestination>? = null,
     override var settings:@RawValue  ISettings = FsSettings(),
-) : IUser, Parcelable {
-}
+) : IUser, Parcelable
