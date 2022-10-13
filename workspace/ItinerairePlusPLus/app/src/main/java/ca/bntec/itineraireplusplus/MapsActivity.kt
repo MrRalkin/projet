@@ -15,7 +15,7 @@ import ca.bntec.itineraireplusplus.adapter.AdapterDialogDestinations
 import ca.bntec.itineraireplusplus.databinding.ActivityMapsBinding
 import ca.bntec.itineraireplusplus.tools.CreateSteps
 import classes.AppGlobal
-import classes.StepActivities
+import classes.map.StepActivities
 import classes.map.MapData
 import classes.map.MapLegData
 import classes.map.MapRawData

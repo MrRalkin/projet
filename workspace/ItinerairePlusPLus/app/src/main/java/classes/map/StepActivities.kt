@@ -1,4 +1,4 @@
-package classes
+package classes.map
 
 import classes.settings.Coord
 import interfaces.user.ICoord
