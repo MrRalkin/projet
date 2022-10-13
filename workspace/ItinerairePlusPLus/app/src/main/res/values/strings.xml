@@ -97,4 +97,8 @@
     <string name="menu_vos_destinations">Vos Destinations</string>
     <string name="menu_ajouter_une_destination">Ajouter une Destination</string>
     <string name="menu_quitter">Quitter</string>
+    <string name="estimation_activites_name">Activités</string>
+    <string name="estimation_activites_restaurants">Restaurants :</string>
+    <string name="estimation_activity_hotels">Hotêls :</string>
+    <string name="estimation_activity_energy">Stations Services :</string>
 </resources>

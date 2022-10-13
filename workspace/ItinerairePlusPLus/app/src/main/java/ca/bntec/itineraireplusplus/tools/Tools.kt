@@ -22,8 +22,8 @@ class Tools {
          * Formats de sortie:
          *
          * format long
-         *  [9]9 heure(s) [9]9 minute(s) [9]9 seconde(s)
-         *  [9]9 heure(s) [9]9 minute(s)
+         *  [9]9 hr(s) [9]9 min(s) [9]9 sec(s)
+         *  [9]9 hr(s) [9]9 min(s)
          * format court
          *  hh:mm:ss
          *  hh:mm
@@ -58,16 +58,16 @@ class Tools {
                 when (type) {
                     FMT_HMS_SHORT -> String.format("%02d:%02d%02d", h, m, s)
                     FMT_HMS_LONG ->
-                        if (s > 0 && h > 0) String.format("%d heure%s %d minute%s %d seconde%s", h, sh, m, sm, s, ss)
-                        else if (s > 0 && m > 0) String.format("%d minute%s %d seconde%s", m, sm, s, ss)
-                        else if (s > 0) String.format("%d seconde%s", s, ss)
-                        else if (m > 0) String.format("%d minute%s", m, sm)
-                        else String.format("%d heure%s", h, sh)
+                        if (s > 0 && h > 0) String.format("%d hr%s %d min%s %d sec%s", h, sh, m, sm, s, ss)
+                        else if (s > 0 && m > 0) String.format("%d min%s %d sec%s", m, sm, s, ss)
+                        else if (s > 0) String.format("%d sec%s", s, ss)
+                        else if (m > 0) String.format("%d min%s", m, sm)
+                        else String.format("%d hr%s", h, sh)
                     FMT_HM_SHORT -> String.format("%02d:%02d", h, m)
                     FMT_HM_LONG ->
-                        if (m > 0 && h > 0) String.format("%d heure%s %d minute%s", h, sh, m, sm)
-                        else if (h > 0) String.format("%d heure%s", h, sh)
-                        else String.format("%d minute%s", m, sm)
+                        if (m > 0 && h > 0) String.format("%d hr%s %d min%s", h, sh, m, sm)
+                        else if (h > 0) String.format("%d hr%s", h, sh)
+                        else String.format("%d min%s", m, sm)
                     FMT_OTHER -> otherFormat(w, d, h, m, s)
                     else -> otherFormat(w, d, h, m, s)
                 }

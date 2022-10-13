@@ -52,8 +52,8 @@ class SettingsActivity : AppCompatActivity() {
     lateinit var btnEnergyAdd: Button
     lateinit var btnEnergyMoreLess: Button
     lateinit var btnEditUser: Button
-    lateinit var pickTimeActivity: TextView
-    lateinit var pickDurationActivity: TextView
+//    lateinit var pickTimeActivity: TextView
+//    lateinit var pickDurationActivity: TextView
 
     var isDataChanged = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -231,7 +231,7 @@ class SettingsActivity : AppCompatActivity() {
         zip.setText(user.address.zip)
         country.setText(user.address.country)
 
-        dialogTitle.setText("Modification de l'utilisateur")
+        dialogTitle.text = "Modification de l'utilisateur"
         btnCancel.setOnClickListener { dialog.dismiss() }
         btnOk.setOnClickListener(View.OnClickListener {
             if (name.text.toString().isEmpty()) {

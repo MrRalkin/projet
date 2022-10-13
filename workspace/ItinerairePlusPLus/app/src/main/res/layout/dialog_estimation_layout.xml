@@ -38,7 +38,7 @@
 
             <TextView
                 android:id="@+id/estimation_deplacement"
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="@string/dialogEstimation_trip"
                 android:textAlignment="textEnd"
@@ -58,7 +58,7 @@
 
             <TextView
                 android:id="@+id/estimation_arret"
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="@string/dialogEstimation_stop"
                 android:textAlignment="textEnd"
@@ -79,7 +79,7 @@
 
             <TextView
                 android:id="@+id/estimation_total"
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="@string/dialogEstimation_total"
                 android:textAlignment="textEnd"
@@ -147,7 +147,84 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/estimation_activites_name"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:id="@+id/ll_estimation_activity_manger"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/estimation_activity_manger"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:text="@string/estimation_activites_restaurants"
+                android:textAlignment="textEnd"
+                android:paddingEnd="4dp"/>
+
+            <TextView
+                android:id="@+id/estimation_activity_manger_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_estimation_activity_dormir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/estimation_activity_dormir"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:text="@string/estimation_activity_hotels"
+                android:textAlignment="textEnd"
+                android:paddingEnd="4dp"/>
+
+            <TextView
+                android:id="@+id/estimation_activity_dormir_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_estimation_activity_energy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/estimation_activity_energy"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:text="@string/estimation_activity_energy"
+                android:textAlignment="textEnd"
+                android:paddingEnd="4dp"/>
+
+            <TextView
+                android:id="@+id/estimation_activity_energy_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/dialogEstimation_costs"
+            android:layout_marginTop="10dp"
             android:textAlignment="center"
             android:textSize="16sp"
             android:textStyle="bold"/>

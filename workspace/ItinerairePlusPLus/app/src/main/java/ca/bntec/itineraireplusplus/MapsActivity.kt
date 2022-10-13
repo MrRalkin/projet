@@ -438,7 +438,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val dialogTitle = dialog.findViewById<TextView>(R.id.estimation_title)
         val lvDialogDestinations = dialog.findViewById<ListView>(R.id.lv_dialog_destinations)
 
-        val btnCancel = dialog.findViewById<Button>(R.id.btnCancel)
+        val btnVoirCarte = dialog.findViewById<Button>(R.id.btnCancel)
         val btnOk = dialog.findViewById<Button>(R.id.btnOk)
 
         if (appGlobal.isCurDestinationSaved)
@@ -451,8 +451,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val adapterDialogDestinations = AdapterDialogDestinations(this@MapsActivity,appGlobal.curDestination.steps!!)
         lvDialogDestinations.adapter = adapterDialogDestinations
 
-        // Ici le bouton Cancel sert pour aller voir la carte.
-        btnCancel.setOnClickListener {
+        btnVoirCarte.setOnClickListener {
             dialog.dismiss()
         }
 
@@ -470,11 +469,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun saveUserData() {
         MainScope().launch(Dispatchers.IO) {
-            var user = async { db.userGetCurrent() }.await()
+            val user = async { db.userGetCurrent() }.await()
 
             user!!.destinations!!.add(appGlobal.curDestination)
 
-            var result = async { db.userUpdateCurrent(user) }.await()
+            val result = async { db.userUpdateCurrent(user) }.await()
 
             if (result.isSuccess) {
                 showMessage(result.successMessage)

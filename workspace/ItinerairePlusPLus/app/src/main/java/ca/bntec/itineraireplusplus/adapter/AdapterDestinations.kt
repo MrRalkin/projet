@@ -1,13 +1,13 @@
 package ca.bntec.itineraireplusplus.adapter
 
 import android.annotation.SuppressLint
-import android.app.ActionBar
 import android.app.Dialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -16,7 +16,6 @@ import ca.bntec.itineraireplusplus.R
 import ca.bntec.itineraireplusplus.tools.Tools
 import classes.AppGlobal
 import interfaces.user.IDestination
-import interfaces.user.IStep
 
 class AdapterDestinations(
     var ctx: DestinationsActivity,
@@ -102,15 +101,33 @@ class AdapterDestinations(
         val estimationVehicleValue = dialog.findViewById<TextView>(R.id.estimation_vehicle_value)
         val estimationEnergyValue = dialog.findViewById<TextView>(R.id.estimation_energy_value)
 
+        val llEstimationActivityManger = dialog.findViewById<LinearLayout>(R.id.ll_estimation_activity_manger)
+        val estimationActivityMangerValue = dialog.findViewById<TextView>(R.id.estimation_activity_manger_value)
+
+        val llEstimationActivityDormir = dialog.findViewById<LinearLayout>(R.id.ll_estimation_activity_dormir)
+        val estimationActivityDormirValue = dialog.findViewById<TextView>(R.id.estimation_activity_dormir_value)
+
+        val llEstimationActivityEnergy = dialog.findViewById<LinearLayout>(R.id.ll_estimation_activity_energy)
+        val estimationActivityEnergyValue = dialog.findViewById<TextView>(R.id.estimation_activity_energy_value)
+
         val estimationCoutValue = dialog.findViewById<TextView>(R.id.estimation_cout_value)
 
         dialogTitle.text = "Estimation : ${destination?.name}"
 
+        var totalEnergy = 0
+        var totalManger = 0
+        var totalDormir = 0
         var stepTripTime = 0
         for (step in destination!!.steps!!) {
 
             for (activity in step.activities!!) {
                 stepTripTime += activity.duration
+
+                when (activity.name) {
+                    AppGlobal.instance.ACTIVITY_MANGER -> totalManger++
+                    AppGlobal.instance.ACTIVITY_DORMIR -> totalDormir++
+                    else -> totalEnergy++
+                }
             }
         }
 
@@ -129,9 +146,24 @@ class AdapterDestinations(
 
         estimationVehicleValue.text = "${data.type} : (${data.energy}) ${data.capacity} ${data.unit} pour ${data.distance} ${data.mesure}"
 
+        if (totalManger > 0) {
+            estimationActivityMangerValue.text = "$totalManger fois"
+            llEstimationActivityManger.isVisible = true
+        }
+
+        if (totalDormir > 0) {
+            estimationActivityDormirValue.text = "$totalDormir fois"
+            llEstimationActivityDormir.isVisible = true
+        }
+
+        if (totalEnergy > 0) {
+            estimationActivityEnergyValue.text = "$totalEnergy fois"
+            llEstimationActivityEnergy.isVisible = true
+        }
+
         val energy = destination!!.settings!!.energies[0]
         val prix =
-            if (energy.unit.lowercase().equals("litre")) String.format("%.2f", energy.price)
+            if (energy.unit.lowercase().equals("litres")) String.format("%.2f", energy.price)
             else String.format("%.3f", energy.price)
         estimationEnergyValue.text = "(${energy.type}) $prix $ au ${energy.unit}"
 

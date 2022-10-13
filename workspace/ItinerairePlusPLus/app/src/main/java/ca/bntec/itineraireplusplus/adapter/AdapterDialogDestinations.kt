@@ -21,7 +21,7 @@ class AdapterDialogDestinations(
     var ctx: MapsActivity,
     private var steps : ArrayList<IStep>
 ) : BaseAdapter() {
-
+    val appGlobal = AppGlobal.instance
     var inf: LayoutInflater? = LayoutInflater.from(ctx)
 
     override fun getCount(): Int {
@@ -53,7 +53,6 @@ class AdapterDialogDestinations(
     }
 
     private fun displayNearBy(activities : ArrayList<IActivity>) {
-        val appGlobal = AppGlobal.instance
         val dialog = Dialog(ctx)
         dialog.setContentView(R.layout.dialog_nearby_layout)
         val dialogTitle = dialog.findViewById<TextView>(R.id.nearby_title)
@@ -127,7 +126,12 @@ class AdapterDialogDestinations(
         lv : ListView,
         nearPlaces : ArrayList<INearPlace>
     ) {
-        tvName.text = actName
+        when (actName) {
+            appGlobal.ACTIVITY_DORMIR -> tvName.text = "Hotêls"
+            appGlobal.ACTIVITY_MANGER -> tvName.text = "Restaurants"
+            else -> tvName.text = "Stations services"
+        }
+
         ll.visibility = View.VISIBLE
 
         val adapterNearByDialog = AdapterNearByDialog(ctx, nearPlaces)
