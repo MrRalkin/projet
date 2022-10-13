@@ -121,7 +121,7 @@
             android:layout_height="match_parent"
             android:text="@string/tab1Fragment_radio1"
             android:textStyle="bold"
-            android:visibility="gone" />
+            android:visibility="invisible" />
 
         <RadioButton
             android:id="@+id/radio_button_essence"
@@ -130,7 +130,7 @@
             android:layout_marginLeft="20dp"
             android:text="@string/tab1Fragment_radio2"
             android:textStyle="bold"
-            android:visibility="gone" />
+            android:visibility="invisible" />
     </RadioGroup>
 
     <TextView
