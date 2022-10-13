@@ -103,13 +103,14 @@ class MainActivity : AppCompatActivity() {
 
         val previousdest = ArrayList<String>()
 
+        var maxDestination = user.destinations!!.size
+
         val nbDest = if (user.destinations!!.size > 5) 5 else user.destinations!!.size
 
-        for ((idx, destination) in user.destinations!!.withIndex()) {
-            if (idx < nbDest)
-                previousdest.add(destination.name)
-            else
-                break
+        var idx = 1
+        while (idx <= nbDest) {
+            previousdest.add(user.destinations!![maxDestination - idx].name)
+            idx++
         }
 
         var mListView = findViewById<ListView>(R.id.lv_recentes_destinations)
