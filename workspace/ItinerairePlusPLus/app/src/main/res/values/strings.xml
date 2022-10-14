@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">ItinérairePlusPlus</string>
-<!--    <string name="setting_user_profile_btn_view">View profile</string>-->
-<!--    <string name="setting_user_profile_btn_edit">Edit profile</string>-->
-<!--    <string name="setting_user_setting_btn_edit">Edit settings</string>-->
     <string name="title_activity_maps">Destination Courante</string>
     <string name="login_userName">Entrez votre nom</string>
     <string name="login_password">Entrez votre mot de passe</string>
@@ -45,7 +42,6 @@
     <string name="dialogEstimation_vehicle">Véhicule</string>
     <string name="dialogEstimation_costs">Coûts</string>
     <string name="dialogEstimation_cost">Coût</string>
-
     <string name="dialogEstimation_acknowledge">Sauvegarder</string>
     <string name="dialogEstimation_ok">OK</string>
     <string name="settingAddActivity_captionBtn">Caption</string>
@@ -92,9 +88,9 @@
     <string name="addDestination_activitiesMsg">Veuillez choisir une ou plusieures activités</string>
     <string name="main_welcomeMsg">Bienvenue Dans l\'Itinéraire Plus Plus</string>
     <string name="main_addDestinationBtn">Ajouter une\nnouvelle destination</string>
-    <string name="main_listViewTitle">Vos destinations récentes</string>
+    <string name="main_listViewTitle">Mes destinations récentes</string>
     <string name="menu_configuration">Configuration</string>
-    <string name="menu_vos_destinations">Vos Destinations</string>
+    <string name="menu_vos_destinations">Mes Destinations</string>
     <string name="menu_ajouter_une_destination">Ajouter une Destination</string>
     <string name="menu_quitter">Quitter</string>
     <string name="estimation_activites_name">Activités</string>
