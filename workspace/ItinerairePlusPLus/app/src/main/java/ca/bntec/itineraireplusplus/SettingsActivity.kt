@@ -166,7 +166,17 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun showData(user: IUser) {
         this@SettingsActivity.runOnUiThread(java.lang.Runnable {
-
+            if(user.settings.activities.count()<4){
+                btnActivityAdd.visibility=View.VISIBLE
+            }
+            else{
+                btnActivityAdd.visibility=View.INVISIBLE
+            }
+            if(user.settings.energies.count()<2){
+                btnEnergyAdd.visibility=View.VISIBLE
+            }else{
+                btnEnergyAdd.visibility=View.INVISIBLE
+            }
             txtName.text = user.name
             val txtMessage = """
                     Adresse:

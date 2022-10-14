@@ -105,33 +105,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout_dest" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="match_parent"
+    <Spinner
+        android:id="@+id/spn_vehicles"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/vehicle_type_msgLayout">
-
-        <RadioButton
-            android:id="@+id/radio_button_electrique"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/tab1Fragment_radio1"
-            android:textStyle="bold"
-            android:visibility="invisible" />
-
-        <RadioButton
-            android:id="@+id/radio_button_essence"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:text="@string/tab1Fragment_radio2"
-            android:textStyle="bold"
-            android:visibility="invisible" />
-    </RadioGroup>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vehicle_type_msgLayout"
+        android:layout_marginTop="15dp"
+        />
 
     <TextView
         android:id="@+id/activities_msgLayout"
@@ -144,7 +126,7 @@
         android:text="@string/addDestination_activitiesMsg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/spn_vehicles" />
 
     <LinearLayout
         android:id="@+id/checkBox_container"

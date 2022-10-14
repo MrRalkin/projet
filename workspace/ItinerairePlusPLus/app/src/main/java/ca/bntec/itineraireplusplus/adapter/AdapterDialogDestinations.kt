@@ -126,6 +126,7 @@ class AdapterDialogDestinations(
         lv : ListView,
         nearPlaces : ArrayList<INearPlace>
     ) {
+        var list = nearPlaces.sortedBy { it.distance }
         when (actName) {
             appGlobal.ACTIVITY_DORMIR -> tvName.text = "Hotêls"
             appGlobal.ACTIVITY_MANGER -> tvName.text = "Restaurants"
@@ -134,7 +135,7 @@ class AdapterDialogDestinations(
 
         ll.visibility = View.VISIBLE
 
-        val adapterNearByDialog = AdapterNearByDialog(ctx, nearPlaces)
+        val adapterNearByDialog = AdapterNearByDialog(ctx, ArrayList(list))
         lv.adapter = adapterNearByDialog
     }
  }

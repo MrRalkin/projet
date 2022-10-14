@@ -30,8 +30,9 @@ class AddDestinationActivity : AppCompatActivity() {
     lateinit var inputName: TextInputEditText
     lateinit var btnShowDestination: Button
     lateinit var user: IUser
-    lateinit var radioButtonElectrique: RadioButton
-    lateinit var radioButtonEssence: RadioButton
+
+    //    lateinit var radioButtonElectrique: RadioButton
+//    lateinit var radioButtonEssence: RadioButton
     lateinit var checkBoxManger: CheckBox
     lateinit var checkBoxRecharge: CheckBox
     lateinit var checkBoxEssence: CheckBox
@@ -46,8 +47,10 @@ class AddDestinationActivity : AppCompatActivity() {
     lateinit var pickDurationRecharge: TextView
     lateinit var pickTimeDormir: TextView
     lateinit var pickDurationDormir: TextView
+    lateinit var spinner: Spinner
 
     private val db = appGlobal.userManager
+    var vehicle: IVehicle = Vehicle()
     var radioGroup: RadioGroup? = null
     var isElectric: Boolean = false
     var dDormir: Int = 0
@@ -77,8 +80,8 @@ class AddDestinationActivity : AppCompatActivity() {
         inputName = findViewById(R.id.textInputEdit_name)
         btnShowDestination = findViewById(R.id.btnShowDestination)
 
-        radioButtonEssence = findViewById(R.id.radio_button_essence)
-        radioButtonElectrique = findViewById(R.id.radio_button_electrique)
+//        radioButtonEssence = findViewById(R.id.radio_button_essence)
+//        radioButtonElectrique = findViewById(R.id.radio_button_electrique)
         checkBoxManger = findViewById(R.id.checkboxManger)
         checkBoxDormir = findViewById(R.id.checkboxDormir)
         checkBoxRecharge = findViewById(R.id.checkboxRecharge)
@@ -93,6 +96,7 @@ class AddDestinationActivity : AppCompatActivity() {
         pickDurationManger = findViewById(R.id.pickDurationManger)
         pickTimeDormir = findViewById(R.id.pickTimeDormir)
         pickDurationDormir = findViewById(R.id.pickDurationDormir)
+        spinner = findViewById(R.id.spn_vehicles)
         creerListeners()
         MainScope().launch(Dispatchers.IO) {
             if (db.userIsAuthenticated()) {
@@ -106,14 +110,35 @@ class AddDestinationActivity : AppCompatActivity() {
                         })
                     }
                 })
-
-                afficherActivity()
-                createCheckboxListener()
-                remplirBoutons()
-                radioButtonStatus()
+                this@AddDestinationActivity.runOnUiThread(java.lang.Runnable {
+                    vehicle = user.settings.vehicles.first()
+                    setSpinner()
+                    setChecked()
+                    afficherActivity()
+                    createCheckboxListener()
+                    remplirBoutons()
+                })
+                //  radioButtonStatus()
             }
         }
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                //setSetting()
+            }
 
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                vehicle =
+                    user.settings.vehicles.filter { it.type == spinner.selectedItem.toString() }
+                        .first()
+                setChecked()
+            }
+
+        }
         // Prise en charge des coordonnees d'adresses entrees par l'utilisateur et lancement de l'activite MapsActivity
         btnShowDestination.setOnClickListener() {
 
@@ -144,56 +169,93 @@ class AddDestinationActivity : AppCompatActivity() {
         }
     }
 
+    fun setSpinner() {
+
+        val vehicles: ArrayList<IVehicle> = user.settings.vehicles
+        var list: ArrayList<String> = ArrayList<String>()
+
+        if (vehicles.size > 0) {
+            for (v in vehicles) {
+                list.add(v.type)
+            }
+            var dataAdapter: ArrayAdapter<String> =
+                ArrayAdapter(context, R.layout.main_spinner_style, list)
+            dataAdapter.setDropDownViewResource(R.layout.main_spinner_style);
+            spinner.setAdapter(dataAdapter);
+        }
+//        if (vehicle.type.isEmpty()) {
+//            vehicle = vehicles.first()
+//        }
+    }
+
     // Savoir le type de vehicule choisi par l'utilisateur et mettre a jour les donnees dans l'Array appGlobal
     private fun radioButtonStatus() {
 
-        val vehicle = user.settings.vehicles
+//        val vehicles = user.settings.vehicles
+//
+//        if (vehicles.any { it.energy == appGlobal.VEHICLE_ESSENCE }) {
+//            radioButtonEssence.visibility = View.VISIBLE;
+//        } else {
+//            radioButtonEssence.visibility = View.INVISIBLE;
+//        }
+//
+//        if (vehicles.any { it.energy == appGlobal.ENERGY_ELECTRICITE }) {
+//            radioButtonElectrique.visibility = View.VISIBLE;
+//        } else {
+//            radioButtonElectrique.visibility = View.INVISIBLE;
+//        }
+//
+//        val firstVehicle =
+//            vehicles.first { it.energy == appGlobal.ENERGY_ELECTRICITE || it.energy == appGlobal.ENERGY_ESSENCE }
 
-        if (vehicle.any { it.energy == appGlobal.VEHICLE_ESSENCE }) {
-            radioButtonEssence.visibility = View.VISIBLE;
-        } else {
-            radioButtonEssence.visibility = View.INVISIBLE;
-        }
-
-        if (vehicle.any { it.energy == appGlobal.ENERGY_ELECTRICITE }) {
-            radioButtonElectrique.visibility = View.VISIBLE;
-        } else {
-            radioButtonElectrique.visibility = View.INVISIBLE;
-        }
-
-        val firstVehicle =
-            vehicle.first { it.energy == appGlobal.ENERGY_ELECTRICITE || it.energy == appGlobal.ENERGY_ESSENCE }
-
-        if (firstVehicle.energy == appGlobal.ENERGY_ELECTRICITE) {
-            setChecked(R.id.radio_button_electrique)
-        } else {
-            setChecked(R.id.radio_button_essence)
-        }
-
-        radioGroup = findViewById(R.id.radioGroup)
-        radioGroup?.setOnCheckedChangeListener { group, checkedId ->
-            // Responds to child RadioButton checked/unchecked
-            setChecked(checkedId)
-        }
+//        if (vehicle.energy == appGlobal.ENERGY_ELECTRICITE) {
+//            setChecked(R.id.radio_button_electrique)
+//        } else {
+//            setChecked(R.id.radio_button_essence)
+//        }
+//
+//        radioGroup = findViewById(R.id.radioGroup)
+//        radioGroup?.setOnCheckedChangeListener { group, checkedId ->
+//            // Responds to child RadioButton checked/unchecked
+//            setChecked(checkedId)
+//        }
     }
 
-    private fun setChecked(id: Int) {
-        if (id == R.id.radio_button_electrique) {
-            radioButtonElectrique.isChecked = true
+    private fun setChecked() {
+        if (vehicle.energy == appGlobal.ENERGY_ELECTRICITE) {
+            //radioButtonElectrique.isChecked = true
             checkBoxRecharge.isChecked = true
-            radioButtonEssence.isChecked = false
+            // radioButtonEssence.isChecked = false
             checkBoxEssence.isChecked = false
             isElectric = true
             setSetting()
         } else {
-            radioButtonElectrique.isChecked = false
+            // radioButtonElectrique.isChecked = false
             checkBoxRecharge.isChecked = false
-            radioButtonEssence.isChecked = true
+            //radioButtonEssence.isChecked = true
             checkBoxEssence.isChecked = true
             isElectric = false
             setSetting()
         }
     }
+
+//    private fun setChecked(id: Int) {
+//        if (id == R.id.radio_button_electrique) {
+//            radioButtonElectrique.isChecked = true
+//            checkBoxRecharge.isChecked = true
+//            radioButtonEssence.isChecked = false
+//            checkBoxEssence.isChecked = false
+//            isElectric = true
+//            setSetting()
+//        } else {
+//            radioButtonElectrique.isChecked = false
+//            checkBoxRecharge.isChecked = false
+//            radioButtonEssence.isChecked = true
+//            checkBoxEssence.isChecked = true
+//            isElectric = false
+//            setSetting()
+//        }
+//    }
 
 
     private fun setSetting() {
@@ -225,7 +287,7 @@ class AddDestinationActivity : AppCompatActivity() {
         }
         if (checkBoxDormir.isChecked) {
             var activity = getActivity(appGlobal.ACTIVITY_DORMIR)
-            activity.duration =dDormir
+            activity.duration = dDormir
             activity.time = tDormir
 
             appGlobal.curSetting.activities.add(activity)
@@ -308,23 +370,23 @@ class AddDestinationActivity : AppCompatActivity() {
 
     private fun remplirBoutons() {
         var a = getActivity(appGlobal.ACTIVITY_MANGER)
-        tManger=a.time
-        dManger=a.duration
+        tManger = a.time
+        dManger = a.duration
         pickTimeManger.text = Tools.convertSecondsToTime(a.time, Tools.FMT_HM_SHORT)
         pickDurationManger.text = Tools.convertSecondsToTime(a.duration, Tools.FMT_HM_SHORT)
         a = getActivity(appGlobal.ACTIVITY_ESSENCE)
-        tEssence=a.time
-        dEssence=a.duration
+        tEssence = a.time
+        dEssence = a.duration
         pickTimeEssence.text = Tools.convertSecondsToTime(a.time, Tools.FMT_HM_SHORT)
         pickDurationEssence.text = Tools.convertSecondsToTime(a.duration, Tools.FMT_HM_SHORT)
         a = getActivity(appGlobal.ACTIVITY_RECHARGE)
-        tRecharge=a.time
-        dRecharge=a.duration
+        tRecharge = a.time
+        dRecharge = a.duration
         pickTimeRecharge.text = Tools.convertSecondsToTime(a.time, Tools.FMT_HM_SHORT)
         pickDurationRecharge.text = Tools.convertSecondsToTime(a.duration, Tools.FMT_HM_SHORT)
         a = getActivity(appGlobal.ACTIVITY_DORMIR)
-        tDormir=a.time
-        dDormir=a.duration
+        tDormir = a.time
+        dDormir = a.duration
         pickTimeDormir.text = Tools.convertSecondsToTime(a.time, Tools.FMT_HM_SHORT)
         pickDurationDormir.text = Tools.convertSecondsToTime(a.duration, Tools.FMT_HM_SHORT)
     }
@@ -400,9 +462,9 @@ class AddDestinationActivity : AppCompatActivity() {
 
     private fun addToSettings(tv: TextView, seconds: Int) {
 
-         when (tv.id) {
+        when (tv.id) {
             R.id.pickDurationDormir -> {
-                 dDormir = seconds
+                dDormir = seconds
             }
             R.id.pickTimeDormir -> {
                 tDormir = seconds
