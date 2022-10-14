@@ -182,8 +182,7 @@ class SettingsActivity : AppCompatActivity() {
                     Adresse:
                     ${user.address.address}
                     ${user.address.city}, ${user.address.state}
-                    ${user.address.country},
-                    ${user.address.zip}
+                    ${user.address.country}, ${user.address.zip}
                 """.trimIndent()
             txtAddress.text = txtMessage
 

@@ -15,13 +15,15 @@ import ca.bntec.itineraireplusplus.DestinationsActivity
 import ca.bntec.itineraireplusplus.R
 import ca.bntec.itineraireplusplus.tools.Tools
 import classes.AppGlobal
+import interfaces.user.IActivity
 import interfaces.user.IDestination
+import interfaces.user.INearPlace
 
 class AdapterDestinations(
     var ctx: DestinationsActivity,
     private var destinations: ArrayList<IDestination>?
 ) : BaseAdapter() {
-
+    var appGlobal = AppGlobal.instance
     var inf: LayoutInflater? = LayoutInflater.from(ctx)
 
     override fun getCount(): Int {
